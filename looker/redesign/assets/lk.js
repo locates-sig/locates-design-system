@@ -362,7 +362,7 @@
     ["demografico", "Demográfico", "demografia-2022.html"],
     ["socioeconomico", "Socioeconômico", "socioeconomia-2022.html"],
     ["pois", "Pontos de interesse", "pois-comercio.html"],
-    ["empresas", "Empresas", "#"],
+    ["empresas", "Empresas", "empresas.html"],
     ["equipamentos", "Equipamentos urb.", "equipamentos-urbanos.html"],
   ];
   const ESTUDO_SUB = {
@@ -371,6 +371,7 @@
     demografico: [["2022", "Demografia 2022", "demografia-2022.html"], ["2010-2022", "Demografia 2010 × 2022", "demografia-2010-2022.html"]],
     socioeconomico: [["2022", "Socioeconomia 2022", "socioeconomia-2022.html"], ["2010", "Socioeconomia 2010", "socioeconomia-2010.html"]],
     pois: [["comercio", "Comércio e serviços", "pois-comercio.html"], ["pgt", "Polos de tráfego", "pois-pgt.html"]],
+    empresas: [["empresas", "Empresas", "empresas.html"]],
     equipamentos: [["equipamentos", "Equipamentos urbanos", "equipamentos-urbanos.html"]],
   };
   const OBS = [
@@ -395,7 +396,7 @@
   function footer(p) {
     const logo = `<img src="../../assets/Logos/logo.svg" alt="Locates">`;
     if (p.report === "obs") return `<footer class="lk-footer">${logo}<span class="lk-footer__right">© <b>LOCATES</b> 2026<br>Todos os direitos reservados.</span></footer><div class="lk-footnote">Data da última atualização: ${esc(p.updated || "28/09/2026")} | <a href="#" onclick="return false">Política de Privacidade</a></div>`;
-    return `<footer class="lk-footer">${logo}<span>•</span><span>(48) 98816-5403</span><span>•</span><span>www.locates.com.br</span><span class="lk-footer__right">© <b>LOCATES</b> 2026<br>Versão do relatório: 1.1 · Todos os direitos reservados.</span></footer><div class="lk-footnote">Dados atualizados pela última vez: ${esc(p.updated || "28/09/2026")} (alguns itens na página não foram atualizados) | <a href="#" onclick="return false">Política de Privacidade</a></div>`;
+    return `<footer class="lk-footer">${logo}<span>•</span><span>(48) 98816-5403</span><span>•</span><span>www.locates.com.br</span><span class="lk-footer__right">© <b>LOCATES</b> 2026<br>Versão do relatório: 1.1 · Todos os direitos reservados.</span></footer><div class="lk-footnote">${p.footnote ? esc(p.footnote) : `Dados atualizados pela última vez: ${esc(p.updated || "28/09/2026")} (alguns itens na página não foram atualizados)`} | <a href="#" onclick="return false">Política de Privacidade</a></div>`;
   }
   function page(p, body) {
     const root = document.querySelector("main");
