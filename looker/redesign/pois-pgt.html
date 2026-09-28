@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pontos de interesse · Polos de tráfego · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const { fmt } = LBI;
+const cats = [["Universidade", 1, "graduation-cap"], ["Aeroporto", 0, "plane"], ["Parque, praça ou marina", 0, "trees"], ["Estádio", 0, "trophy"], ["Shopping", 0, "shopping-bag"], ["Hospital", 0, "hospital"], ["Terminal de ônibus ou trem", 0, "bus"], ["Parque de diversão ou zoo", 0, "ferris-wheel"], ["Centro de convenções", 0, "presentation"], ["Teatro, cinema ou museu", 0, "drama"], ["Praia", 0, "waves"]];
+document.querySelector("main").innerHTML = `
+  <div class="bi-toolbar"><div data-subnav></div><span class="bi-toolbar__spacer"></span>
+    <div class="summary"><div class="summary__item"><span class="summary__label">PGTs no raio</span><span class="summary__value">1</span></div><div class="summary__item"><span class="summary__label">Mais próximo</span><span class="summary__value">216 m</span></div></div></div>
+  <div class="grid grid--3">
+    <section class="card card--flush span-2">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa dos polos geradores de tráfego</h2><p class="card__subtitle">Equipamentos que atraem grande fluxo de pessoas e veículos</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    <section class="card">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">PGTs por categoria</h2><p class="card__subtitle">Quantidade no raio · categorias sem ocorrência em cinza</p></div></div>
+      <ul id="b-cat"></ul>
+    </section>
+  </div>
+  <section class="card card--flush">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Lista de polos geradores de tráfego</h2><p class="card__subtitle">Ordenada pela distância até o imóvel</p></div></div>
+    <div id="t-pgt" style="margin-top:16px"></div>
+  </section>`;
+LBI.shell({ section: "pois", sub: "pgt" });
+LBI.map("#map", { seed: 101, height: 480, radius: true, slider: true, water: "bay", points: { n: 1, spread: 60, r: 8, colors: ["--cat-2"] },
+  legend: `<ul class="legend"><li><span class="swatch" style="border-radius:50%;background:var(--cat-2)"></span>Universidade</li></ul>` });
+LBI.bars("#b-cat", { fmt: "int", inline: true, rows: cats.map(([label, value, icon]) => ({ label, value, icon })) });
+LBI.table("#t-pgt", { columns: [{ label: "Categoria" }, { label: "Distância (m)", num: true, sort: "ascending" }], rows: [["Universidade", 216]], pager: "1–1 de 1" });
+LBI.icons();
+</script>
+</body>
+</html>

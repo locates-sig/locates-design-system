@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Socioeconômico · 2010 · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const { fmt } = LBI, M = LBI_MERCADO;
+const cls = ["A", "B", "C", "D", "E"], ords = ["--ord-5", "--ord-4", "--ord-3", "--ord-2", "--ord-1"];
+const pop = [1059, 2470, 1171, 2573, 743], renda = [12.8e6, 11.3e6, 2.44e6, 2.6e6, 349.5e3];
+const tot = (a) => a.reduce((x, y) => x + y, 0);
+document.querySelector("main").innerHTML = `
+  <div class="bi-toolbar"><div data-subnav></div></div>
+  <div class="bi-toolbar">${LBI.rangeHtml({ label: "Distância do imóvel", min: 0, max: 1000, lo: 0, hi: 1000, unit: " m" })}</div>
+  <div class="grid grid--3">
+    <section class="card card--flush">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Setores censitários</h2><p class="card__subtitle">Censo 2010 · setores do raio</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    ${M.card("b-pop", "População por classe social", "Pessoas no setor · classe A (maior renda) a E")}
+    ${M.card("b-renda", "Renda total por classe social", "Soma da renda mensal dos moradores")}
+  </div>
+  <div class="grid grid--2">
+    ${M.card("g-pop", "População por classe · homens × mulheres", "Pessoas", `<div class="card__aside"><ul class="legend"><li><span class="swatch" style="background:var(--sex-m)"></span>Homens</li><li><span class="swatch" style="background:var(--sex-f)"></span>Mulheres</li></ul></div>`)}
+    ${M.card("g-renda", "Renda total por classe · homens × mulheres", "R$ por mês", `<div class="card__aside"><ul class="legend"><li><span class="swatch" style="background:var(--sex-m)"></span>Homens</li><li><span class="swatch" style="background:var(--sex-f)"></span>Mulheres</li></ul></div>`)}
+  </div>
+  <div class="grid grid--2">
+    <section class="card">
+      <div class="card__head"><span class="card__icon"><i data-lucide="briefcase"></i></span><div class="card__titles"><h2 class="card__title">População economicamente ativa</h2><p class="card__subtitle">PEA · pessoas ocupadas ou procurando trabalho</p></div></div>
+      <div class="kpi kpi--plain"><span class="kpi__value">8.055</span></div>
+      <div id="s-pea"></div>
+    </section>
+    <section class="card">
+      <div class="card__head"><span class="card__icon"><i data-lucide="user-x"></i></span><div class="card__titles"><h2 class="card__title">População desocupada</h2><p class="card__subtitle">Pessoas sem trabalho</p></div></div>
+      <div class="kpi kpi--plain"><span class="kpi__value">2.801</span></div>
+      <div id="s-des"></div>
+    </section>
+  </div>`;
+LBI.shell({ section: "socioeconomico", sub: "2010" });
+LBI.map("#map", { seed: 89, height: 360, controls: false, slider: true, sectors: { n: 10, spread: 150, colors: ords, opacity: 0.55 }, parks: 5,
+  legend: `<ul class="legend">${cls.map((c, i) => `<li><span class="swatch" style="background:var(${ords[i]})"></span>${c}</li>`).join("")}</ul>` });
+LBI.bars("#b-pop", { fmt: "int", rows: cls.map((c, i) => ({ label: `Classe ${c} · ${fmt.pct((pop[i] / tot(pop)) * 100)}`, value: pop[i], color: ords[i] })) });
+LBI.bars("#b-renda", { fmt: (v) => "R$ " + fmt.compact(v), rows: cls.map((c, i) => ({ label: `Classe ${c} · ${fmt.pct((renda[i] / tot(renda)) * 100)}`, value: renda[i], color: ords[i] })) });
+LBI.grouped("#g-pop", { categories: cls.map((c) => "Classe " + c), fmt: "int", height: 260, series: [
+  { name: "Homens", color: "--sex-m", values: [779, 1392, 515, 1240, 269] }, { name: "Mulheres", color: "--sex-f", values: [280, 1087, 656, 1346, 491] }] });
+LBI.grouped("#g-renda", { categories: cls.map((c) => "Classe " + c), fmt: (v) => fmt.brl0(v), labelFmt: (v) => fmt.compact(v), tickFmt: (v) => fmt.compact(v), height: 260, series: [
+  { name: "Homens", color: "--sex-m", values: [9735563, 6619559, 1082957, 1258749, 123090] }, { name: "Mulheres", color: "--sex-f", values: [3085035, 4705166, 1354858, 1325067, 226456] }] });
+const hm = (h, m) => ({ label: "", items: [{ label: "Homens", value: h, color: "--sex-m", ink: "dark" }, { label: "Mulheres", value: m, color: "--sex-f" }], fmt: (v) => fmt.pct(v, 2) });
+LBI.stackbar("#s-pea", hm(51.49, 48.51));
+LBI.stackbar("#s-des", hm(38, 62));
+LBI.icons();
+</script>
+</body>
+</html>

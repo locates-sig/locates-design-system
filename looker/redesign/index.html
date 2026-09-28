@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telas do BI · Locates</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+<style>
+  main > .grid { align-items: start; }
+  .intro { display: flex; flex-direction: column; gap: 6px; max-width: 760px; }
+  .intro h1 { margin: 0; font: 600 24px/32px var(--font-sans); color: var(--primary); }
+  .intro p { margin: 0; color: var(--color-gray-secondary); }
+  .screens { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .screen { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--color-gray-100); }
+  .screen:last-child { border-bottom: 0; }
+  .screen__main { flex: 1; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--foreground); font-weight: 500; border-radius: var(--radius-lg); padding: 4px; margin: -4px; }
+  .screen__main:hover { background: var(--lilac-50); color: var(--primary); }
+  .screen__main > .lucide { margin-left: auto; color: var(--color-gray-400); }
+  .screen__title { flex: 1; }
+  .screen__orig { font-size: 12px; color: var(--color-gray-secondary); white-space: nowrap; }
+  .screen__orig a { font-weight: 600; text-decoration: none; margin-left: 4px; }
+</style>
+</head>
+<body>
+<main class="bi-main">
+  <div class="intro">
+    <h1>Telas do BI com o design system Locates</h1>
+    <p>17 telas do relatório (Looker Studio) redesenhadas com os tokens e componentes do sistema. Cada linha abre a tela nova; os números à direita abrem as capturas originais em <code>looker/</code>. O guia de implementação no Looker Studio está no README desta pasta.</p>
+  </div>
+  <div class="grid grid--3">
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Resumo executivo</h2></div></div>
+    <ul class="screens">
+      <li class="screen"><a class="screen__main" href="resumo.html"><span class="card__icon"><i data-lucide="layout-dashboard"></i></span><span class="screen__title">Resumo executivo</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../resumo/iScreen%20Shoter%20-%2020260928102857554.jpg">1</a> <a href="../resumo/iScreen%20Shoter%20-%20Safari%20-%20260928102949.jpg">2</a></span></li>
+    </ul>
+  </section>
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Mercado imobiliário</h2></div></div>
+    <ul class="screens">
+      <li class="screen"><a class="screen__main" href="mercado-residencial-venda.html"><span class="card__icon"><i data-lucide="building-2"></i></span><span class="screen__title">Residencial · Venda</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/venda/iScreen%20Shoter%20-%20Safari%20-%20260928103134.jpg">1</a> <a href="../mercado/venda/iScreen%20Shoter%20-%20Safari%20-%20260928103218.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-residencial-shortstay.html"><span class="card__icon"><i data-lucide="calendar-days"></i></span><span class="screen__title">Residencial · Shortstay</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/shortstay/iScreen%20Shoter%20-%20Safari%20-%20260928103747.jpg">1</a> <a href="../mercado/shortstay/iScreen%20Shoter%20-%20Safari%20-%20260928103812.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-residencial-longstay.html"><span class="card__icon"><i data-lucide="key-round"></i></span><span class="screen__title">Residencial · Longstay</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/longstay/iScreen%20Shoter%20-%20Safari%20-%20260928103518.jpg">1</a> <a href="../mercado/longstay/iScreen%20Shoter%20-%20Safari%20-%20260928103533.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-residencial-lancamentos.html"><span class="card__icon"><i data-lucide="sparkles"></i></span><span class="screen__title">Residencial · Lançamentos</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/lancamentos/iScreen%20Shoter%20-%20Safari%20-%20260928103603.jpg">1</a> <a href="../mercado/lancamentos/iScreen%20Shoter%20-%20Safari%20-%20260928103619.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-residencial-evolucao.html"><span class="card__icon"><i data-lucide="trending-up"></i></span><span class="screen__title">Residencial · Evolução</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/evolutivo/iScreen%20Shoter%20-%20Safari%20-%20260928103644.jpg">1</a> <a href="../mercado/evolutivo/iScreen%20Shoter%20-%20Safari%20-%20260928103705.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-comercial-venda.html"><span class="card__icon"><i data-lucide="store"></i></span><span class="screen__title">Comercial · Venda</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/venda/iScreen%20Shoter%20-%20Safari%20-%20260928103306.jpg">1</a> <a href="../mercado/venda/iScreen%20Shoter%20-%20Safari%20-%20260928103316.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-comercial-aluguel.html"><span class="card__icon"><i data-lucide="store"></i></span><span class="screen__title">Comercial · Aluguel</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/longstay/iScreen%20Shoter%20-%20Safari%20-%20260928103400.jpg">1</a> <a href="../mercado/longstay/iScreen%20Shoter%20-%20Safari%20-%20260928103430.jpg">2</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-comercial-evolucao.html"><span class="card__icon"><i data-lucide="trending-up"></i></span><span class="screen__title">Comercial · Evolução</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../mercado/evolutivo/iScreen%20Shoter%20-%20Safari%20-%20260928103726.jpg">1</a></span></li>
+      <li class="screen"><a class="screen__main" href="mercado-obras.html"><span class="card__icon"><i data-lucide="hard-hat"></i></span><span class="screen__title">Obras (CNO)</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../cno/iScreen%20Shoter%20-%20Safari%20-%20260928103848.jpg">1</a> <a href="../cno/iScreen%20Shoter%20-%20Safari%20-%20260928103905.jpg">2</a></span></li>
+    </ul>
+  </section>
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Demográfico</h2></div></div>
+    <ul class="screens">
+      <li class="screen"><a class="screen__main" href="demografia-2022.html"><span class="card__icon"><i data-lucide="users"></i></span><span class="screen__title">Demografia 2022</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928103932.jpg">1</a> <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928103956.jpg">2</a> <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928104004.jpg">3</a></span></li>
+      <li class="screen"><a class="screen__main" href="demografia-2010-2022.html"><span class="card__icon"><i data-lucide="users"></i></span><span class="screen__title">Demografia 2010 × 2022</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928104016.jpg">1</a> <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928104028.jpg">2</a></span></li>
+    </ul>
+  </section>
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Socioeconômico</h2></div></div>
+    <ul class="screens">
+      <li class="screen"><a class="screen__main" href="socioeconomia-2022.html"><span class="card__icon"><i data-lucide="wallet"></i></span><span class="screen__title">Socioeconomia 2022</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928104043.jpg">1</a></span></li>
+      <li class="screen"><a class="screen__main" href="socioeconomia-2010.html"><span class="card__icon"><i data-lucide="wallet"></i></span><span class="screen__title">Socioeconomia 2010</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928104100.jpg">1</a> <a href="../sociodemografico/iScreen%20Shoter%20-%20Safari%20-%20260928104106.jpg">2</a></span></li>
+    </ul>
+  </section>
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Pontos de interesse</h2></div></div>
+    <ul class="screens">
+      <li class="screen"><a class="screen__main" href="pois-comercio.html"><span class="card__icon"><i data-lucide="map-pin"></i></span><span class="screen__title">Comércio e serviços</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../pois/iScreen%20Shoter%20-%20Safari%20-%20260928104130.jpg">1</a></span></li>
+      <li class="screen"><a class="screen__main" href="pois-pgt.html"><span class="card__icon"><i data-lucide="map-pin"></i></span><span class="screen__title">Polos geradores de tráfego</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../pois/iScreen%20Shoter%20-%20Safari%20-%20260928104244.jpg">1</a></span></li>
+    </ul>
+  </section>
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Equipamentos urbanos</h2></div></div>
+    <ul class="screens">
+      <li class="screen"><a class="screen__main" href="equipamentos-urbanos.html"><span class="card__icon"><i data-lucide="landmark"></i></span><span class="screen__title">Equipamentos urbanos</span><i data-lucide="arrow-right"></i></a><span class="screen__orig">Original: <a href="../equipamentos-urbanos/iScreen%20Shoter%20-%20Safari%20-%20260928104340.jpg">1</a></span></li>
+    </ul>
+  </section>
+  </div>
+</main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script>LBI.shell({ section: "" }); LBI.icons();</script>
+</body>
+</html>
