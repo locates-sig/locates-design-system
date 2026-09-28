@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Valorização · Venda comercial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/lk.css">
+</head>
+<body>
+<main></main>
+<script src="assets/icons.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
+<script>
+LKM.obsValorizacao({
+  section: "venda", mode: "comercial", filters: [["Tipo negóci...", 1], ["Tipo imóvel", 0], ["Bairro", 0]], vars: [1.54, 1.74, 0.86], zero: false,
+  labels: ["09 2025", "10 2025", "11 2025", "12 2025", "01 2026", "02 2026", "03 2026", "04 2026", "05 2026", "06 2026", "07 2026", "08 2026"], values: [11661, 11292, 11419, 12156, 11389, 11472, 11561, 12882, 12737, 11584, 11892, 11762], mainFmt: (v) => LK.fmt.brl(v, 0)
+});
+LK.icons();
+</script>
+</body>
+</html>

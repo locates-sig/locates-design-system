@@ -5,32 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercado · Comercial · Venda · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-LBI_MERCADO.comercial({
-  page: { section: "mercado", sub: "comercial", mode: "venda" },
-  selects: [{ label: "Tipologia", value: "Comercial", count: 3 }],
-  summary: [["vm² médio", "R$ 11.057,74"], ["Área média", "42,8 m²"], ["Anúncios", "5"]],
-  mapTitle: "Mapa de anúncios", mapSub: "Comercial para venda · raio de 1 km", count: 5, seed: 53,
-  listSub: "Salas, lojas e conjuntos à venda",
-  area: [["31 a 50 m²", 4, 11140.36], ["51 a 80 m²", 1, 10727.27]],
-  valor: [["R$ 250 a 500 mil", 3, 9419.03], ["R$ 500 a 750 mil", 2, 13515.81]],
-  rows: [
-    ["Sala comercial à venda no Córrego Grande", 365000, 37, 9864.86],
-    ["Sala Comercial à Venda no Córrego Grand…", 320000, 37, 8648.65],
-    ["Sala Comercial de 55.32m² no bairro Córre…", 590000, 55, 10727.27],
-    ["Sala Comercial de 39.77m² no bairro Saco …", 380000, 39, 9743.59],
-    ["Loja de 46.3m² no bairro Córrego Grande", 750000, 46, 16304.35]
-  ],
-  pager: "1–5 de 5"
+LKM.estudoComercial({
+  mode: "venda", tipologia: ["Co...", 3], kpis: [["Vm²", "R$ 11.057,74"], ["Área", "42,8 m²", "lk-kpi__value--ink"]],
+  mapTitle: "Mapa de anúncios - Comercial para venda", seed: 53, points: 5, valorHead: "Metragens",
+  area: [["31 a 50m²", 4, 11140.36], ["51 a 80m²", 1, 10727.27]], valor: [["250 a 500 mil", 3, 9419.03], ["500 a 750 mil", 2, 13515.81]],
+  rows: [["Sala comercial à venda no Córrego Grande", 365000, 37, 9864.86], ["Sala Comercial à Venda no Córrego Grand…", 320000, 37, 8648.65], ["Sala Comercial de 55.32m² no bairro Córre…", 590000, 55, 10727.27], ["Sala Comercial de 39.77m² no bairro Saco …", 380000, 39, 9743.59], ["Loja de 46.3m² no bairro Córrego Grande", 750000, 46, 16304.35]], pager: "1 - 5 / 5"
 });
-LBI.icons();
+LK.icons();
 </script>
 </body>
 </html>

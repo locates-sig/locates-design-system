@@ -5,39 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pontos de interesse · Polos de tráfego · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
 <script>
-const { fmt } = LBI;
-const cats = [["Universidade", 1, "graduation-cap"], ["Aeroporto", 0, "plane"], ["Parque, praça ou marina", 0, "trees"], ["Estádio", 0, "trophy"], ["Shopping", 0, "shopping-bag"], ["Hospital", 0, "hospital"], ["Terminal de ônibus ou trem", 0, "bus"], ["Parque de diversão ou zoo", 0, "ferris-wheel"], ["Centro de convenções", 0, "presentation"], ["Teatro, cinema ou museu", 0, "drama"], ["Praia", 0, "waves"]];
-document.querySelector("main").innerHTML = `
-  <div class="bi-toolbar"><div data-subnav></div><span class="bi-toolbar__spacer"></span>
-    <div class="summary"><div class="summary__item"><span class="summary__label">PGTs no raio</span><span class="summary__value">1</span></div><div class="summary__item"><span class="summary__label">Mais próximo</span><span class="summary__value">216 m</span></div></div></div>
-  <div class="grid grid--3">
-    <section class="card card--flush span-2">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa dos polos geradores de tráfego</h2><p class="card__subtitle">Equipamentos que atraem grande fluxo de pessoas e veículos</p></div></div>
-      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">PGTs por categoria</h2><p class="card__subtitle">Quantidade no raio · categorias sem ocorrência em cinza</p></div></div>
-      <ul id="b-cat"></ul>
-    </section>
-  </div>
-  <section class="card card--flush">
-    <div class="card__head"><div class="card__titles"><h2 class="card__title">Lista de polos geradores de tráfego</h2><p class="card__subtitle">Ordenada pela distância até o imóvel</p></div></div>
-    <div id="t-pgt" style="margin-top:16px"></div>
-  </section>`;
-LBI.shell({ section: "pois", sub: "pgt" });
-LBI.map("#map", { seed: 101, height: 480, radius: true, slider: true, water: "bay", points: { n: 1, spread: 60, r: 8, colors: ["--cat-2"] },
-  legend: `<ul class="legend"><li><span class="swatch" style="border-radius:50%;background:var(--cat-2)"></span>Universidade</li></ul>` });
-LBI.bars("#b-cat", { fmt: "int", inline: true, rows: cats.map(([label, value, icon]) => ({ label, value, icon })) });
-LBI.table("#t-pgt", { columns: [{ label: "Categoria" }, { label: "Distância (m)", num: true, sort: "ascending" }], rows: [["Universidade", 216]], pager: "1–1 de 1" });
-LBI.icons();
+const icl = (items) => `<ul class="lk-iconlist">${items.map(([ic, l, v]) => `<li><span class="ic"><i data-lucide="${ic}"></i></span><span class="nm">${l}</span><span class="val">${v}</span></li>`).join("")}</ul>`;
+const mapCard = (title, legend) => `<section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">${title}</h2>${LK.range("Distância", "0", "1.000")}</div><div id="map"></div><div class="lk-map-legend"><b>Categoria:</b>${legend}</div></section>`;
+LK.page({ section: "pois", sub: "pgt" }, `
+  <div class="lk-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+    ${mapCard("Mapa dos Polos Geradores de <b>Tráfego - PGT</b>", '<span><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c2);margin-right:5px"></i>Universidade</span>')}
+    <section class="lk-card"><div class="lk-card__body"><div class="lk-grid" style="grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr)">
+      <div><h2 class="lk-card__title" style="margin-bottom:10px">Polos geradores <b>de tráfego</b></h2>${icl([["plane", "Aeroporto", 0], ["trees", "Parque, Praça ou Marina", 0], ["trophy", "Estádio", 0], ["shopping-bag", "Shopping", 0], ["graduation-cap", "Universidade", 1], ["hospital", "Hospital", 0], ["bus", "Terminal de Ônibus ou Trem", 0], ["ferris-wheel", "Parque de Diversão ou Zoo", 0], ["presentation", "Centro de Convenção", 0], ["drama", "Teatro, Cinema ou Museu", 0], ["umbrella", "Praia", 0]])}</div>
+      <div class="lk-col">
+        <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">PGT por <b>categoria</b></h2></div><div class="lk-card__body" id="p-cat"></div></section>
+        <section class="lk-card" style="flex:1"><div class="lk-card__head"><h2 class="lk-card__title">Lista de informações <b>dos PGT</b></h2></div><div id="t-pgt"></div></section>
+      </div></div></div></section>
+  </div>`);
+LK.map("#map", { seed: 101, height: 440, kind: "city", points: { n: 1, r: 9, colors: ["--c2"] } });
+LK.pie("#p-cat", { donut: true, items: [{ label: "Universidade", value: 100, color: "--c2" }] });
+LK.table("#t-pgt", { columns: [{ label: "Categoria", sort: "desc" }, { label: "Distância do PGT", align: "r" }], rows: [["Universidade", "216"]], pager: "1 - 1 / 1" });
+LK.icons();
 </script>
 </body>
 </html>

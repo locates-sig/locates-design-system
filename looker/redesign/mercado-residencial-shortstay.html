@@ -5,58 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercado · Residencial · Shortstay · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-const { fmt } = LBI, M = LBI_MERCADO;
-document.querySelector("main").innerHTML = M.toolbar({
-  spatial: true,
-  selects: [{ label: "Tipologia", value: "Todas" }],
-  summary: [["Diária média", "R$ 363,90"], ["Ocupação média", "71,12%"], ["Anúncios", "71"]],
-}) + `
-  <div class="bi-toolbar" aria-label="Filtros de faixa">
-    ${LBI.rangeHtml({ label: "Valor da diária", min: 114.01, max: 2060.66, lo: 114.01, hi: 2060.66, fmt: (v) => fmt.brl(v) })}
-    ${LBI.rangeHtml({ label: "Ocupação", min: 23.89, max: 98.85, lo: 23.89, hi: 98.85, fmt: (v) => fmt.pct(v, 2) })}
-    ${LBI.rangeHtml({ label: "Quartos", min: 1, max: 5, lo: 1, hi: 5 })}
-    ${LBI.rangeHtml({ label: "Hóspedes", min: 2, max: 12, lo: 2, hi: 12 })}
+const { fmt, card } = LK;
+LK.page({ section: "mercado", sub: "residencial" }, `
+  <div class="lk-bar">${LKM_MODES()}</div>
+  <div class="lk-grid" style="grid-template-columns:minmax(0,1fr) auto">
+    <div class="lk-bar">${LK.range("Valor Diária", "R$ 114,01", "R$ 2.060,66")}${LK.range("Ocupação", "23,89", "98,85")}${LK.range("Quartos", "1", "5")}${LK.range("Hóspedes", "2", "12")}${LK.dd("Tipologia", 0, true)}</div>
+    <div class="lk-bar">${LK.kpis([["Receita Diária", "R$ 363,90"], ["Ocupação %", "71,12", "lk-kpi__value--ink"]])}</div>
   </div>
-  <div class="grid grid--3">
-    <section class="card card--flush span-2">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa de anúncios</h2><p class="card__subtitle">Residencial para shortstay (temporada) · raio de 1 km</p></div>
-      <div class="card__aside"><span class="badge badge--secondary"><i data-lucide="map-pin"></i>71 anúncios</span></div></div>
-      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
-    </section>
-    <div class="stack">
-      ${M.card("c-q", "Anúncios por quartos", "Quantidade de anúncios")}
-      ${M.card("c-h", "Anúncios por hóspedes", "Capacidade máxima do imóvel")}
+  <div class="lk-grid" style="grid-template-columns:23% minmax(0,1fr) 23%">
+    <div class="lk-col" style="grid-row:span 2">
+      <section class="lk-card"><div class="lk-card__body" style="padding:10px 14px">${LK.seg("Filtro espacial:", ["Logradouro", "Raio", "Bairro"], "Raio")}</div></section>
+      <section class="lk-card"><div class="lk-card__body"><img class="lk-photo" src="assets/shortstay-foto.jpg" alt="Sala de estar de imóvel de temporada"></div>
+        <div class="lk-card__head" style="border-top:1px solid var(--lk-line-2)"><h2 class="lk-card__title">Receita <b>Diária Média</b></h2></div><div id="t-diaria"></div></section>
+      ${card({ title: "Taxa de Ocupação <b>Anual Média</b>", id: "t-ocup", flush: true })}
     </div>
-  </div>
-  <div class="grid grid--2">
-    ${M.card("b-diaria", "Diária média", "Anúncios por faixa de diária (R$)")}
-    ${M.card("c-ocup", "Taxa de ocupação anual média", "Anúncios por faixa de ocupação (% dos dias ofertados)")}
-  </div>
-  <section class="card card--flush">
-    <div class="card__head"><div class="card__titles"><h2 class="card__title">Anúncios</h2><p class="card__subtitle">Todos do tipo espaço inteiro · ordenado pela diária média · receita dos últimos 12 meses</p></div>
-    <div class="card__aside"><button class="btn btn--outline btn--sm" type="button"><i data-lucide="download"></i>Exportar CSV</button></div></div>
-    <div id="t-list" style="margin-top:16px"></div>
-  </section>`;
-LBI.shell({ section: "mercado", sub: "residencial", mode: "shortstay" });
-LBI.map("#map", { seed: 41, height: 520, radius: true, slider: true, water: "right", points: { n: 71, spread: 130 }, chip: "Somente anúncios georreferenciados aparecem no mapa" });
-LBI.columns("#c-q", { data: [["1", 33], ["2", 25], ["3", 10], ["4", 2], ["5", 1]], xTitle: "Quartos", xName: "Quartos:", valueName: "Anúncios", height: 170 });
-LBI.columns("#c-h", { data: [["2", 15], ["3", 9], ["4", 24], ["5", 7], ["6", 8], ["7", 2], ["8", 2], ["10", 3], ["12", 1]], xTitle: "Hóspedes", xName: "Hóspedes:", valueName: "Anúncios", height: 170 });
-LBI.bars("#b-diaria", { inline: true, fmt: "int", rows: [
-  { label: "R$ 100 a 250", value: 31 }, { label: "R$ 250 a 500", value: 26 }, { label: "R$ 500 a 750", value: 11 },
-  { label: "R$ 750 a 1.000", value: 1 }, { label: "R$ 1.000 a 1.500", value: 0 }, { label: "R$ 1.500 a 2.000", value: 1 }, { label: "R$ 2.000 a 3.000", value: 1 } ] });
-LBI.columns("#c-ocup", { data: [["20–30", 2], ["30–40", 3], ["40–50", 4], ["50–60", 5], ["60–70", 19], ["70–80", 13], ["80–90", 18], ["> 90", 7]], xTitle: "Ocupação (%)", xName: "Ocupação", valueName: "Anúncios", height: 230 });
-const nota = (v) => (v == null ? "—" : fmt.dec(v, 1));
-const dec = (v) => (Number.isInteger(v) ? fmt.int(v) : fmt.dec(v, 1));
-LBI.table("#t-list", {
-  columns: [{ label: "Título", title: true }, { label: "Diária média", num: true, fmt: (v) => fmt.brl0(v), sort: "descending" }, { label: "Dias ofertados", num: true }, { label: "Ocupação", num: true, bar: true, fmt: (v) => v + "%" }, { label: "Receita anual", num: true, fmt: (v) => fmt.brl0(v) }, { label: "Receita potencial", num: true, fmt: (v) => fmt.brl(v) }, { label: "Quartos", num: true }, { label: "Banheiros", num: true, fmt: dec }, { label: "Hóspedes", num: true }, { label: "Nota", num: true, fmt: nota }, { label: "Link", link: true }],
+    <div class="lk-col">
+      <div class="lk-title-bar">Mapa de anúncios - Residencial para shortstay</div>
+      <section class="lk-card" style="flex:1"><div id="map"></div></section>
+    </div>
+    ${card({ title: "Quadro de <b>ofertas</b>", chip: "Anúncios", body: `<div id="c-q"></div><div id="c-h"></div>` })}
+    <div class="lk-span-2">${card({ title: null, id: "t-list", flush: true })}</div>
+  </div>`);
+function LKM_MODES() { return LKM.MODES.residencial.map(([id, l, h]) => LK.btn(l, h, id === "shortstay")).join(""); }
+LK.map("#map", { seed: 41, height: 560, radius: true, slider: true, water: true, note: "Somente anúncios georreferenciados aparecem no mapa", points: { n: 71, spread: 120, colors: ["--c8"], alpha: 0.75 } });
+LK.table("#t-diaria", { columns: [{ label: "Valores (R$)", align: "c" }, { label: "Anúncios", align: "c", heat: "red" }], rows: [["100 a 250", 31], ["250 a 500", 26], ["500 a 750", 11], ["750 a 1000", 1], ["1500 a 2000", 1], ["2000 a 3000", 1]] });
+LK.table("#t-ocup", { columns: [{ label: "Ocupação (%)", align: "c" }, { label: "Anúncios", align: "c", heat: "red" }], rows: [["20 a 30", 2], ["30 a 40", 3], ["40 a 50", 4], ["50 a 60", 5], ["60 a 70", 19], ["70 a 80", 13], ["80 a 90", 18], ["Acima de 90", 7]] });
+LK.line("#c-q", { labels: ["1", "2", "3", "4", "5"], values: [33, 25, 10, 2, 1], xTitle: "Quartos", valueName: "Anúncios", height: 200 });
+LK.line("#c-h", { labels: ["2", "3", "4", "5", "6", "7", "8", "10", "12"], values: [15, 9, 24, 7, 8, 2, 2, 3, 1], xTitle: "Hóspedes", valueName: "Anúncios", height: 200, minLabelGap: 20 });
+const brl0 = (v) => fmt.brl(v, 0), dec = (v) => (Number.isInteger(v) ? fmt.int(v) : fmt.dec(v, 1)), nota = (v) => (v == null ? "null" : dec(v));
+LK.table("#t-list", {
+  columns: [{ label: "Título", title: true }, { label: "Tipo" }, { label: "Link", link: "Link", align: "c" }, { label: "Média Diária", align: "c", fmt: brl0, sort: "desc" }, { label: "Dias ofertados", align: "c" }, { label: "Taxa de Ocupação (dias ofertados)", align: "c", fmt: (v) => v + "%" }, { label: "Receita Anual", align: "c", fmt: brl0 }, { label: "Receita Potencial Anual", align: "c", fmt: (v) => fmt.brl(v) }, { label: "Quartos", align: "c" }, { label: "Banheiros", align: "c", fmt: dec }, { label: "Hóspedes", align: "c" }, { label: "Nota", align: "c", fmt: nota }],
   rows: [
     ["Comfort on the island of magic, in a …", 2061, 264, 24, 55638, 63144.79, 5, 4, 10, 5],
     ["House in a condominium with an exc…", 1516, 215, 30, 47009, 91600.61, 4, 5, 8, 5],
@@ -75,12 +61,11 @@ LBI.table("#t-list", {
     ["Full apartment, good location.", 473, 356, 69, 53924, 56089.1, 2, 2, 4, 5],
     ["Modern apartment with full amenitie…", 466, 330, 47, 61997, 62337.51, 2, 1, 4, 5],
     ["Spacious house in the heart of Floripa", 453, 185, 70, 44867, 52544.2, 3, 2.5, 10, 5]
-  ].map((r) => [...r, ""]),
-  foot: ["Média dos 71 anúncios", "R$ 364", "301,73", "71%", "R$ 54.366", "R$ 60.516,42", "1,77", "1,6", "4,34", "4,9", ""],
-  pager: "1–20 de 71",
-  maxHeight: 560,
+  ].map(([t, ...r]) => [t, "Espaço inteiro", "", ...r]),
+  foot: ["Total", "", "", "R$ 364", "301,73", "71%", "R$ 54.366", "R$ 60.516,42", "1,77", "1,6", "4,34", "4,9"],
+  pager: "1 - 20 / 71", maxHeight: 560,
 });
-LBI.icons();
+LK.icons();
 </script>
 </body>
 </html>

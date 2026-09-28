@@ -5,106 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Resumo executivo · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
 <script>
-const { fmt } = LBI, M = LBI_MERCADO;
-const up = (v) => `<span class="delta delta--up"><i data-lucide="arrow-up"></i>+${fmt.pct(v, 2)}</span>`;
-const dn = (v) => `<span class="delta delta--down"><i data-lucide="arrow-down"></i>${fmt.pct(v, 2)}</span>`;
-const kpi = (icon, label, value, foot, href) => `<div class="kpi"><span class="kpi__label"><i data-lucide="${icon}"></i>${label}</span><span class="kpi__value">${value}</span><span class="kpi__foot">${foot}${href ? `<a class="btn btn--link" href="${href}" style="margin-left:auto">Ver mais<i data-lucide="arrow-right"></i></a>` : ""}</span></div>`;
-document.querySelector("main").innerHTML = `
-  <div class="kpi-row">
-    ${kpi("building-2", "Venda · apartamentos", "R$ 13.437<small>/m²</small>", "Área média 84,92 m²", "mercado-residencial-venda.html")}
-    ${kpi("sparkles", "Lançamentos", "R$ 13.325<small>/m²</small>", "Área média 95,37 m²", "mercado-residencial-lancamentos.html")}
-    ${kpi("calendar-days", "Shortstay", "R$ 363,90<small>/diária</small>", "Ocupação 71,12%", "mercado-residencial-shortstay.html")}
-    ${kpi("wallet", "Renda média no setor", "R$ 10.285", "Entorno de 1 km: R$ 9.463,53", "socioeconomia-2022.html")}
-    ${kpi("users", "População residente", "15.995", up(32.89) + " vs. 2010", "demografia-2010-2022.html")}
-  </div>
-  <div class="grid grid--3">
-    <section class="card card--flush span-2">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Localização</h2><p class="card__subtitle">Lote analisado e entorno imediato</p></div>
-      <div class="card__aside"><span class="badge badge--success"><i data-lucide="trending-up"></i>Área valorizada</span></div></div>
-      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><span class="card__icon"><i data-lucide="ruler"></i></span><div class="card__titles"><h2 class="card__title">Viabilidade</h2><p class="card__subtitle">Perfil do terreno e zoneamento</p></div></div>
-      <div class="kpi kpi--plain"><span class="kpi__label">Área do terreno</span><span class="kpi__value">3.478,81<small>m²</small></span></div>
-      <hr class="divider">
-      <div><div class="eyebrow" style="margin-bottom:8px">Zoneamento (Plano Diretor)</div><div id="zon"></div></div>
-      <hr class="divider">
-      <div><div class="eyebrow" style="margin-bottom:4px">Quadro de áreas</div>
-        <ul class="facts"><li><span class="facts__label">Área construída</span><span class="facts__value muted">Não informada</span></li><li><span class="facts__label">Área privativa</span><span class="facts__value muted">Não informada</span></li></ul></div>
-    </section>
-  </div>
-  <div class="grid grid--3">
-    ${M.card("d-obras", "Obras no entorno", "Tipologia das 114 obras do CNO no raio", `<a class="btn btn--link card__aside" href="mercado-obras.html">Ver obras<i data-lucide="arrow-right"></i></a>`)}
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mix de comércios e serviços</h2><p class="card__subtitle">Áreas com concentração de comércios e serviços que se complementam</p></div></div>
-      <ul class="facts">
-        <li><i data-lucide="store"></i><span class="facts__label">Armazém, açougue e hortifrúti</span></li>
-        <li><i data-lucide="shopping-bag"></i><span class="facts__label">Comércio varejista</span></li>
-        <li><i data-lucide="utensils"></i><span class="facts__label">Gastronômico</span></li>
-        <li><i data-lucide="wine"></i><span class="facts__label">Vida noturna</span></li>
-        <li><i data-lucide="building"></i><span class="facts__label">Apartamento</span></li>
-      </ul>
-      <a class="btn btn--link" href="pois-comercio.html">Ver pontos de interesse<i data-lucide="arrow-right"></i></a>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Perfil de renda</h2><p class="card__subtitle">Moradores do setor censitário</p></div></div>
-      <div><div class="eyebrow" style="margin-bottom:8px">Classes de rendimento</div><div id="classes"></div></div>
-      <hr class="divider">
-      <div><div class="eyebrow" style="margin-bottom:8px">Distribuição de renda no entorno</div><div id="distrib"></div></div>
-    </section>
-  </div>
-  <div class="grid grid--3">
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Grupos etários predominantes</h2><p class="card__subtitle">Participação na população residente (2022)</p></div></div>
-      <ul id="idade"></ul>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Estado conjugal e renda</h2><p class="card__subtitle">Moradores do setor (2022)</p></div></div>
-      <div id="conj"></div>
-      <hr class="divider">
-      <div class="grid grid--2" style="gap:12px">
-        <div class="kpi kpi--plain"><span class="kpi__label">Renda média · setor</span><span class="kpi__value" style="font-size:20px">R$ 10.285,45</span></div>
-        <div class="kpi kpi--plain"><span class="kpi__label">Renda média · 1 km</span><span class="kpi__value" style="font-size:20px">R$ 9.463,53</span></div>
+const { card, fmt } = LK;
+const up = (t) => `<span class="lk-delta lk-up"><i data-lucide="arrow-up"></i>${t}</span>`;
+const tri = (k) => `<span class="lk-tri" style="color:${k === "o" ? "#b8b6c4" : "#e5484d"}">${k === "u" ? "▲" : k === "d" ? "▼" : "●"}</span>`;
+const mini = (title, rows, href, id) => `<section class="lk-card"><div class="lk-card__body"><div class="lk-mini"><div><p class="lk-mini__title">${title}</p><dl class="lk-kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div><div class="lk-thumb"><div id="${id}"></div><a href="${href}">Veja mais</a></div></div></div></section>`;
+LK.page({ section: "resumo", sub: "resumo", updated: "28/09/2026 08:49:44" }, `
+  <div class="lk-grid" style="grid-template-columns:43% minmax(0,1fr)">
+    <div class="lk-col">
+      <div class="lk-section-title">Localização</div>
+      <section class="lk-card" style="flex:1"><div id="map" style="position:relative"></div></section>
+      <div class="lk-section-title">Viabilidade</div>
+      <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title"><b>Viabilidade</b></h2></div><div class="lk-card__body">
+        <div class="lk-sub">Perfil do terreno</div>
+        <div class="lk-line-row"><span>Área do terreno</span><span style="font-size:18px">3.478,81 <small class="muted">m²</small></span></div>
+        <div style="font-size:13px;padding:4px 0">Zoneamento</div>
+        <div class="lk-zoning"><div style="flex:38.64">ARP-2.5 : 38,64%</div><div style="flex:37.83">ARM-5.5 : 37,83%</div><div style="flex:23.54">APL-E : 23,54%</div></div>
+        <div class="lk-sub" style="margin-top:10px">Quadro de Áreas</div>
+        <div class="lk-line-row"><span>Área construída</span><span>- <small class="muted">m²</small></span></div>
+        <div class="lk-line-row"><span>Área privativa</span><span>- <small class="muted">m²</small></span></div>
+      </div></section>
+    </div>
+    <div class="lk-col">
+      <div class="lk-section-title">Características locais</div>
+      <div class="lk-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));align-items:start">
+        <div class="lk-col">
+          <div class="lk-panel lk-panel--lilac">
+            <h2 class="lk-panel__title">Mercado Imobiliário - Apartamentos</h2>
+            ${mini("Média de LANÇAMENTOS", [["Valor de m²:", "R$ 13.325,34"], ["Área Média:", "95,37 m²"]], "mercado-residencial-lancamentos.html", "t1")}
+            ${mini("Média de VENDA", [["Valor de m²:", "R$ 13.437,65"], ["Área Média:", "84,92 m²"]], "mercado-residencial-venda.html", "t2")}
+            ${mini("Média SHORTSTAY", [["Valor de m²:", "R$ 363,90"], ["Ocupação (%):", "71,12"]], "mercado-residencial-shortstay.html", "t3")}
+            ${card({ title: "Obras no <b>entorno</b>", id: "p-obras" })}
+          </div>
+          <div class="lk-panel lk-panel--gray">
+            <h2 class="lk-panel__title">Mix de Comércios e Serviços</h2>
+            <section class="lk-card"><div class="lk-card__body">
+              <p style="margin:0;font-size:12.5px"><b style="color:var(--lk-purple)">Mix de Comércios e Serviços:</b> Áreas com concentração de comércios e serviços que se complementam.</p>
+              <ul class="lk-mix">
+                <li style="--c:#f08c3a">Armazém, Açougue e Hortifruti<i data-lucide="store"></i></li>
+                <li style="--c:#4f9fe0">Comércio Varejista<i data-lucide="shopping-bag"></i></li>
+                <li style="--c:#f08c3a">Gastronômico<i data-lucide="utensils"></i></li>
+                <li style="--c:#e5667a">Vida Noturna<i data-lucide="wine"></i></li>
+                <li style="--c:#4f7fe0">Apartamento<i data-lucide="building"></i></li>
+              </ul></div></section>
+          </div>
+        </div>
+        <div class="lk-panel lk-panel--green">
+          <h2 class="lk-panel__title">Sociodemografia</h2>
+          <section class="lk-card"><div class="lk-card__body"><div class="lk-grid" style="grid-template-columns:1fr 1fr;gap:14px">
+            <div><p class="lk-mini__title">Classes de rendimento:</p><dl class="lk-stats"><dt>Popular</dt><dd>4,8%</dd>${tri("d")}<dt>Média</dt><dd>28,6%</dd>${tri("o")}<dt>Alta</dt><dd>66,7%</dd>${tri("u")}</dl></div>
+            <div><p class="lk-mini__title">Distribuição de renda:</p><dl class="lk-stats"><dt>Homogênea</dt><dd>23,7%</dd>${tri("o")}<dt>Diversificada</dt><dd>36,8%</dd>${tri("u")}<dt>Desigual</dt><dd>39,5%</dd>${tri("u")}</dl></div>
+          </div></div></section>
+          <section class="lk-card"><div class="lk-card__body"><p class="lk-mini__title">Grupos etários predominantes</p>
+            <div class="lk-ages"><div><b>Crianças</b><i data-lucide="baby"></i>15,33%</div><div><b>Jovens</b><i data-lucide="user"></i>19,84%</div><div><b>Adultos</b><i data-lucide="user-round"></i>48,44%</div><div><b>Idosos</b><i data-lucide="user-round"></i>16,39%</div></div></div></section>
+          <div class="lk-grid" style="grid-template-columns:1fr 1fr">
+            <section class="lk-card"><div class="lk-card__body"><p class="lk-mini__title">Estado conjugal</p><dl class="lk-kv"><dt>Casados</dt><dd>57,00%</dd><dt>Solteiros</dt><dd>43,00%</dd></dl></div></section>
+            <section class="lk-card"><div class="lk-card__body"><p class="lk-mini__title">Renda média</p><dl class="lk-kv" style="grid-template-columns:1fr"><dt>Próxima ao imóvel</dt><dd>R$ 10.285,45</dd><dt>No entorno (1km)</dt><dd>R$ 9.463,53</dd></dl></div></section>
+          </div>
+          <section class="lk-card"><div class="lk-card__body"><p class="lk-mini__title">Crescimento de moradores (2010x2022)</p><ul class="lk-growth"><li><i data-lucide="users"></i>População residente${up("37,4%")}</li></ul></div></section>
+          <section class="lk-card"><div class="lk-card__body"><p class="lk-mini__title">Crescimento de casas e apartamentos (2010x2022)</p><ul class="lk-growth"><li><i data-lucide="house"></i>Casa${up("7,5%")}</li><li><i data-lucide="building-2"></i>Apartamento${up("108,65%")}</li></ul></div></section>
+          <section class="lk-card"><div class="lk-card__body"><p class="lk-mini__title">Crescimento de unidades hab. por moradores (2010x2022)</p><ul class="lk-growth">
+            <li><i data-lucide="user"></i>Domicílios com 1 morador${up("121,56%")}</li><li><i data-lucide="users"></i>Domicílios com 2 moradores${up("88,11%")}</li>
+            <li><i data-lucide="users"></i>Domicílios com 3 moradores${up("43,97%")}</li><li><i data-lucide="users"></i>Domicílios com 4 moradores${up("3,77%")}</li></ul></div></section>
+        </div>
       </div>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Crescimento 2010 × 2022</h2><p class="card__subtitle">Variação no setor censitário</p></div></div>
-      <ul class="facts">
-        <li><i data-lucide="users"></i><span class="facts__label">População residente</span>${up(32.89)}</li>
-        <li><i data-lucide="house"></i><span class="facts__label">Casas</span>${up(7.5)}</li>
-        <li><i data-lucide="building-2"></i><span class="facts__label">Apartamentos</span>${up(108.65)}</li>
-        <li><i data-lucide="user"></i><span class="facts__label">Domicílios com 1 morador</span>${up(115.62)}</li>
-        <li><i data-lucide="users"></i><span class="facts__label">Domicílios com 2 moradores</span>${up(88.11)}</li>
-        <li><i data-lucide="users"></i><span class="facts__label">Domicílios com 3 moradores</span>${up(43.97)}</li>
-        <li><i data-lucide="users"></i><span class="facts__label">Domicílios com 4 moradores</span>${up(3.77)}</li>
-      </ul>
-    </section>
-  </div>`;
-LBI.shell({ section: "resumo" });
-LBI.map("#map", { seed: 3, height: 460, style: "satellite", parcel: true, pin: false, parks: 2, label: "Itacorubi, Florianópolis-SC" });
-LBI.stackbar("#zon", { label: "Zoneamento do lote", items: [
-  { label: "ARP-2.5", value: 38.64, color: "--cat-1" }, { label: "ARM-5.5", value: 37.83, color: "--cat-2", ink: "dark" }, { label: "APL-E", value: 23.54, color: "--cat-3", ink: "dark" }],
-  fmt: (v) => fmt.pct(v, 2) });
-LBI.donut("#d-obras", { items: [
-  { label: "Residencial unifamiliar", value: 59, color: "--cat-1" }, { label: "Comercial (salas e lojas)", value: 37, color: "--cat-2" },
-  { label: "Residencial multifamiliar", value: 15, color: "--cat-3" }, { label: "Galpão industrial", value: 3, color: "--cat-4" }], fmt: "int", center: { value: "114", label: "obras" } });
-LBI.stackbar("#classes", { label: "Classes de rendimento", items: [
-  { label: "Popular", value: 4.8, color: "--ord-1", ink: "dark" }, { label: "Média", value: 28.6, color: "--ord-3" }, { label: "Alta", value: 66.7, color: "--ord-5" }], fmt: (v) => fmt.pct(v) });
-LBI.stackbar("#distrib", { label: "Distribuição de renda", items: [
-  { label: "Homogênea", value: 23.7, color: "--cat-1" }, { label: "Diversificada", value: 36.8, color: "--cat-2", ink: "dark" }, { label: "Desigual", value: 39.5, color: "--cat-3", ink: "dark" }], fmt: (v) => fmt.pct(v) });
-LBI.bars("#idade", { inline: true, fmt: (v) => fmt.pct(v, 2), rows: [
-  { label: "Crianças (0–14)", value: 15.33, icon: "baby", color: "--ord-2" }, { label: "Jovens (15–29)", value: 19.84, icon: "user", color: "--ord-3" },
-  { label: "Adultos (30–59)", value: 48.44, icon: "user", color: "--ord-4" }, { label: "Idosos (60+)", value: 16.39, icon: "user", color: "--ord-5" }] });
-LBI.stackbar("#conj", { label: "Estado conjugal", items: [{ label: "Casados", value: 57, color: "--cat-1" }, { label: "Solteiros", value: 43, color: "--cat-2", ink: "dark" }], fmt: (v) => fmt.pct(v, 2) });
-LBI.icons();
+    </div>
+  </div>`);
+LK.map("#map", { seed: 3, height: 440, style: "satellite", parcel: true, parks: 2 });
+document.getElementById("map").insertAdjacentHTML("beforeend", `<div class="lk-map-tag" style="top:52px">Itacorubi , Florianópolis-SC</div><div class="lk-map-tag" style="bottom:30px">Área Valorizada <b>$</b></div>`);
+["t1", "t2", "t3"].forEach((id, i) => LK.map("#" + id, { seed: 90 + i, controls: false, points: { n: 18, spread: 170, r: 14, colors: ["--c8"], alpha: 0.55 }, parks: 1 }));
+LK.pie("#p-obras", { donut: true, small: true, items: [{ label: "Residencial unifamiliar", value: 59, color: "--c4", text: "59" }, { label: "Comercial salas e lojas", value: 37, color: "--c5", text: "37" }, { label: "Residencial multifamiliar", value: 15, color: "--c6", text: "15" }, { label: "Galpão industrial", value: 3, color: "--c3", text: "3" }], minLabel: 0.02 });
+LK.icons();
 </script>
 </body>
 </html>

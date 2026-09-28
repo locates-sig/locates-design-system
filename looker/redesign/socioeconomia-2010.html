@@ -3,60 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Socioeconômico · 2010 · Locates BI</title>
+<title>Socioeconômico · Socioeconomia 2010 · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
 <script>
-const { fmt } = LBI, M = LBI_MERCADO;
-const cls = ["A", "B", "C", "D", "E"], ords = ["--ord-5", "--ord-4", "--ord-3", "--ord-2", "--ord-1"];
-const pop = [1059, 2470, 1171, 2573, 743], renda = [12.8e6, 11.3e6, 2.44e6, 2.6e6, 349.5e3];
-const tot = (a) => a.reduce((x, y) => x + y, 0);
-document.querySelector("main").innerHTML = `
-  <div class="bi-toolbar"><div data-subnav></div></div>
-  <div class="bi-toolbar">${LBI.rangeHtml({ label: "Distância do imóvel", min: 0, max: 1000, lo: 0, hi: 1000, unit: " m" })}</div>
-  <div class="grid grid--3">
-    <section class="card card--flush">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Setores censitários</h2><p class="card__subtitle">Censo 2010 · setores do raio</p></div></div>
-      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
-    </section>
-    ${M.card("b-pop", "População por classe social", "Pessoas no setor · classe A (maior renda) a E")}
-    ${M.card("b-renda", "Renda total por classe social", "Soma da renda mensal dos moradores")}
-  </div>
-  <div class="grid grid--2">
-    ${M.card("g-pop", "População por classe · homens × mulheres", "Pessoas", `<div class="card__aside"><ul class="legend"><li><span class="swatch" style="background:var(--sex-m)"></span>Homens</li><li><span class="swatch" style="background:var(--sex-f)"></span>Mulheres</li></ul></div>`)}
-    ${M.card("g-renda", "Renda total por classe · homens × mulheres", "R$ por mês", `<div class="card__aside"><ul class="legend"><li><span class="swatch" style="background:var(--sex-m)"></span>Homens</li><li><span class="swatch" style="background:var(--sex-f)"></span>Mulheres</li></ul></div>`)}
-  </div>
-  <div class="grid grid--2">
-    <section class="card">
-      <div class="card__head"><span class="card__icon"><i data-lucide="briefcase"></i></span><div class="card__titles"><h2 class="card__title">População economicamente ativa</h2><p class="card__subtitle">PEA · pessoas ocupadas ou procurando trabalho</p></div></div>
-      <div class="kpi kpi--plain"><span class="kpi__value">8.055</span></div>
-      <div id="s-pea"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><span class="card__icon"><i data-lucide="user-x"></i></span><div class="card__titles"><h2 class="card__title">População desocupada</h2><p class="card__subtitle">Pessoas sem trabalho</p></div></div>
-      <div class="kpi kpi--plain"><span class="kpi__value">2.801</span></div>
-      <div id="s-des"></div>
-    </section>
-  </div>`;
-LBI.shell({ section: "socioeconomico", sub: "2010" });
-LBI.map("#map", { seed: 89, height: 360, controls: false, slider: true, sectors: { n: 10, spread: 150, colors: ords, opacity: 0.55 }, parks: 5,
-  legend: `<ul class="legend">${cls.map((c, i) => `<li><span class="swatch" style="background:var(${ords[i]})"></span>${c}</li>`).join("")}</ul>` });
-LBI.bars("#b-pop", { fmt: "int", rows: cls.map((c, i) => ({ label: `Classe ${c} · ${fmt.pct((pop[i] / tot(pop)) * 100)}`, value: pop[i], color: ords[i] })) });
-LBI.bars("#b-renda", { fmt: (v) => "R$ " + fmt.compact(v), rows: cls.map((c, i) => ({ label: `Classe ${c} · ${fmt.pct((renda[i] / tot(renda)) * 100)}`, value: renda[i], color: ords[i] })) });
-LBI.grouped("#g-pop", { categories: cls.map((c) => "Classe " + c), fmt: "int", height: 260, series: [
-  { name: "Homens", color: "--sex-m", values: [779, 1392, 515, 1240, 269] }, { name: "Mulheres", color: "--sex-f", values: [280, 1087, 656, 1346, 491] }] });
-LBI.grouped("#g-renda", { categories: cls.map((c) => "Classe " + c), fmt: (v) => fmt.brl0(v), labelFmt: (v) => fmt.compact(v), tickFmt: (v) => fmt.compact(v), height: 260, series: [
-  { name: "Homens", color: "--sex-m", values: [9735563, 6619559, 1082957, 1258749, 123090] }, { name: "Mulheres", color: "--sex-f", values: [3085035, 4705166, 1354858, 1325067, 226456] }] });
-const hm = (h, m) => ({ label: "", items: [{ label: "Homens", value: h, color: "--sex-m", ink: "dark" }, { label: "Mulheres", value: m, color: "--sex-f" }], fmt: (v) => fmt.pct(v, 2) });
-LBI.stackbar("#s-pea", hm(51.49, 48.51));
-LBI.stackbar("#s-des", hm(38, 62));
-LBI.icons();
+const { card, fmt } = LK;
+const leg = `<ul class="lk-legend lk-legend--row" style="justify-content:center"><li><i style="background:var(--c4);border-radius:3px"></i>Homens</li><li><i style="background:var(--c6);border-radius:3px"></i>Mulheres</li></ul>`;
+LK.page({ section: "socioeconomico", sub: "2010", updated: "28/09/2026 10:40:49" }, `
+  <div class="lk-grid" style="grid-template-columns:32% minmax(0,1fr) minmax(0,1fr)">
+    <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Mapa dos <b>Setores Censitários</b></h2></div><div id="map"></div></section>
+    ${card({ title: "População por classe <b>social do setor</b>", body: `<div class="lk-letters lk-letters--cols"><span><b>A</b>1.059</span><span><b>B</b>2.470</span><span><b>C</b>1.171</span><span><b>D</b>2.573</span><span><b>E</b>743</span></div><div id="p-pop"></div>` })}
+    ${card({ title: "População por classe social do setor - <b>Homens X Mulheres</b>", body: `${leg}<div id="g-pop"></div>` })}
+    ${card({ title: "População Economicamente <b>Ativa - PEA</b>", body: `<div class="lk-bignum" style="margin:10px auto;min-width:220px"><span>PEA</span><b>8.055</b><div class="lk-trio" style="grid-template-columns:1fr 1fr;margin-top:6px"><div><span>Homens</span><b style="font-size:18px">51,49%</b></div><div><span>Mulheres</span><b style="font-size:18px">48,51%</b></div></div></div>
+      <p class="lk-subtitle" style="text-align:center">População desempregada</p>
+      <div class="lk-bignum" style="margin:6px auto;min-width:220px"><span>Desocupados</span><b>2.801</b><div class="lk-trio" style="grid-template-columns:1fr 1fr;margin-top:6px"><div><span>Homens</span><b style="font-size:18px">38,00%</b></div><div><span>Mulheres</span><b style="font-size:18px">62,00%</b></div></div></div>` })}
+    ${card({ title: "Renda total por <b>classe social (mensal)</b>", body: `<div class="lk-letters"><span><b>A</b>12,8 mi</span><span><b>B</b>11,3 mi</span><span><b>C</b>2,44 mi</span><span><b>D</b>2,6 mi</span><span><b>E</b>349,5 mi</span></div><div id="p-renda"></div>` })}
+    ${card({ title: "Renda total por classe social do setor - <b>Homens X Mulheres</b>", body: `${leg}<div id="g-renda"></div>` })}
+  </div>`);
+LK.map("#map", { seed: 89, height: 380, slider: true, sectors: { n: 10, colors: ["--c8"], opacity: 0.38 }, parks: 4 });
+LK.pie("#p-pop", { donut: true, items: [{ label: "Classe A", value: 13.2, color: "#c89be0" }, { label: "Classe B", value: 30.8, color: "#cfdc5a", ink: "#3d4200" }, { label: "Classe C", value: 14.6, color: "#e0689a" }, { label: "Classe D", value: 32.1, color: "#b0284f" }, { label: "Classe E", value: 9.3, color: "#6fcde0", ink: "#0e4450" }] });
+LK.pie("#p-renda", { donut: true, items: [{ label: "Classe A", value: 43.4, color: "--c4" }, { label: "Classe B", value: 38.4, color: "#4eb3c8" }, { label: "Classe C", value: 8.3, color: "--c6" }, { label: "Classe D", value: 8.8, color: "--c3" }, { label: "Classe E", value: 1.1, color: "#f2c94c", est: true }] });
+const cls = ["Classe A", "Classe B", "Classe C", "Classe D", "Classe E"];
+LK.grouped("#g-pop", { categories: cls, height: 300, series: [{ name: "Homens", color: "--c4", values: [779, 1392, 515, 1240, 269] }, { name: "Mulheres", color: "--c6", values: [280, 1087, 656, 1346, 491] }], tickFmt: (v) => (v >= 1000 ? fmt.dec(v / 1000, 1).replace(",0", "") + " mil" : fmt.int(v)) });
+LK.grouped("#g-renda", { categories: cls, height: 340, rotate: true, labelFmt: "int", series: [{ name: "Homens", color: "--c4", values: [9735563, 6619559, 1082957, 1258749, 123090] }, { name: "Mulheres", color: "--c6", values: [3085035, 4705166, 1354858, 1325067, 226456] }], tickFmt: (v) => fmt.dec(v / 1e6, 1).replace(",0", "") + " mi" });
+LK.icons();
 </script>
 </body>
 </html>

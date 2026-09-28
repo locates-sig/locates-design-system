@@ -5,44 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Equipamentos urbanos · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
 <script>
-const { fmt } = LBI;
-document.querySelector("main").innerHTML = `
-  <div class="bi-toolbar">${LBI.rangeHtml({ label: "Distância do imóvel", min: 0, max: 1000, lo: 0, hi: 1000, unit: " m" })}<span class="bi-toolbar__spacer"></span>
-    <div class="summary"><div class="summary__item"><span class="summary__label">Equipamentos no raio</span><span class="summary__value">21</span></div></div></div>
-  <div class="grid grid--3">
-    <section class="card card--flush span-2">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa de equipamentos urbanos</h2><p class="card__subtitle">Saúde e educação no raio selecionado</p></div></div>
-      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Quantidade por classe</h2><p class="card__subtitle">Equipamentos no raio</p></div></div>
-      <div class="grid grid--2" style="gap:12px">
-        <div class="kpi"><span class="kpi__label"><i data-lucide="stethoscope"></i>Saúde</span><span class="kpi__value">15</span></div>
-        <div class="kpi"><span class="kpi__label"><i data-lucide="school"></i>Escolas</span><span class="kpi__value">6</span></div>
+const icl = (items) => `<ul class="lk-iconlist">${items.map(([ic, l, v]) => `<li><span class="ic"><i data-lucide="${ic}"></i></span><span class="nm">${l}</span><span class="val">${v}</span></li>`).join("")}</ul>`;
+const mapCard = (title, legend) => `<section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">${title}</h2>${LK.range("Distância", "0", "1.000")}</div><div id="map"></div><div class="lk-map-legend"><b>Categoria:</b>${legend}</div></section>`;
+LK.page({ section: "equipamentos", sub: "equipamentos" }, `
+  <div class="lk-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+    <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Mapa com <b>equipamentos urbanos</b></h2>${LK.range("Distância", "0", "1.000")}</div><div id="map"></div></section>
+    <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Quantidade de <b>equipamentos urbanos</b></h2></div><div class="lk-card__body">
+      <div class="lk-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+        <section class="lk-card"><div class="lk-card__body" id="p-eq"></div></section>
+        <div class="lk-col"><section class="lk-card">${LK.score("Saúde", "15")}</section><section class="lk-card">${LK.score("Escolas", "6")}</section></div>
       </div>
-      <div id="s-classe"></div>
-    </section>
-  </div>
-  <section class="card card--flush">
-    <div class="card__head"><div class="card__titles"><h2 class="card__title">Lista de equipamentos urbanos</h2><p class="card__subtitle">Ordenada por nome</p></div></div>
-    <div id="t-eq" style="margin-top:16px"></div>
-  </section>`;
-LBI.shell({ section: "equipamentos" });
-LBI.map("#map", { seed: 107, height: 440, radius: true, slider: true, points: { n: 21, spread: 140, r: 7, colors: ["--cat-1", "--cat-2"], weights: [15, 6] },
-  legend: `<ul class="legend"><li><span class="swatch" style="border-radius:50%;background:var(--cat-1)"></span>Saúde</li><li><span class="swatch" style="border-radius:50%;background:var(--cat-2)"></span>Escolas</li></ul>` });
-LBI.stackbar("#s-classe", { label: "Participação por classe", items: [{ label: "Saúde", value: 15, color: "--cat-1" }, { label: "Escolas", value: 6, color: "--cat-2", ink: "dark" }], fmt: (v) => fmt.pct((v / 21) * 100) });
-LBI.table("#t-eq", { columns: [{ label: "Classe" }, { label: "Nome", sort: "descending" }],
-  rows: [["Saúde", "Vinicius Dutra Servicos Medicos"], ["Saúde", "Vignardi Servicos Medicos"], ["Saúde", "Tklf Fisiocor"], ["Saúde", "Mp Servicos Medicos"], ["Saúde", "Joyce Lucia Abreu Pereira Oliveira Psicologia"], ["Saúde", "Jessica Di Vizio Carvalho Psicologia"], ["Escolas", "INST DE ED ESPECIAL PROFº MANOEL BOAVENTURA"], ["Saúde", "Espaco Radiar"]],
-  pager: "1–8 de 21" });
-LBI.icons();
+      <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Lista de <b>equipamentos urbanos</b></h2></div><div id="t-eq"></div></section>
+    </div></section>
+  </div>`);
+LK.map("#map", { seed: 107, height: 480, points: { n: 21, spread: 130, r: 8, colors: ["--c1", "--c2"], weights: [15, 6] }, parks: 4 });
+LK.pie("#p-eq", { small: true, items: [{ label: "Saúde", value: 71.4, color: "--c1" }, { label: "Escolas", value: 28.6, color: "--c2" }] });
+LK.table("#t-eq", { columns: [{ label: "Classe" }, { label: "Nome", sort: "desc" }], pager: "1 - 21 / 21", rows: [["Saúde", "Vinicius Dutra Servicos Medicos"], ["Saúde", "Vignardi Servicos Medicos"], ["Saúde", "Tklf Fisiocor"], ["Saúde", "Mp Servicos Medicos"], ["Saúde", "Joyce Lucia Abreu Pereira Oliveira Psicologia"], ["Saúde", "Jessica Di Vizio Carvalho Psicologia"], ["Escolas", "INST DE ED ESPECIAL PROFº MANOEL BOAVENTURA"], ["Saúde", "Espaco Radiar"]] });
+LK.icons();
 </script>
 </body>
 </html>

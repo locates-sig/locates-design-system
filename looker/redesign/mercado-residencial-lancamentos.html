@@ -5,48 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercado · Residencial · Lançamentos · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-LBI_MERCADO.listing({
-  page: { section: "mercado", sub: "residencial", mode: "lancamentos" },
-  selects: [{ label: "Tipologia", value: "Apartamento", count: 1 }],
-  summary: [["vm² médio", "R$ 13.325,34"], ["Área média", "95,37 m²"], ["Anúncios", "27"]],
-  mapTitle: "Mapa de lançamentos", mapSub: "Residencial na planta ou recém-lançado · raio de 1 km", count: 27, seed: 31,
-  listSub: "Lançamentos residenciais à venda",
-  area: [["46 a 60 m²", 2, 12794.12], ["61 a 75 m²", 3, 12248.21], ["76 a 90 m²", 8, 12524.88], ["91 a 115 m²", 10, 15268.22], ["116 a 145 m²", 2, 11693.15], ["146 a 175 m²", 2, 10591.91]],
-  valor: [["R$ 500 a 750 mil", 2, 12794.12], ["R$ 751 mil a 1 mi", 10, 12331.87], ["R$ 1 a 1,5 mi", 7, 13454.28], ["R$ 1,5 a 2 mi", 7, 14023.6], ["R$ 2 a 3 mi", 1, 18532.11]],
-  quartos: [["1", 2], ["2", 10], ["3", 11], ["4", 4]],
-  banheiros: [["1", 2], ["2", 17], ["3", 3], ["4", 5]],
-  suites: [["1", 21], ["3", 4]],
-  rows: [
-    ["apartamento - Itacorubi - Floria…", 869000, 68, 12779.41],
-    ["FLORIANÓPOLIS - Apartamento…", 1000000, 78, 12820.51],
-    ["Apartamento à venda em Itacor…", 1000000, 78, 12820.51],
-    ["Apartamento à venda em Itacor…", 830000, 75, 11066.67],
-    ["Apartamento para venda possui…", 1000000, 78, 12820.51],
-    ["Apartamento para venda com 8…", 1000000, 80, 12500],
-    ["Apartamento para venda com 8…", 849000, 80, 10612.5],
-    ["Apartamento para Venda em Fl…", 1000000, 80, 12500],
-    ["Apartamento novo, com 80 m2, …", 1000000, 80, 12500],
-    ["Apartamento com 2 quartos, 2 v…", 890000, 69, 12898.55],
-    ["apartamento - Itacorubi - Floria…", 1500000, 119, 12605.04],
-    ["Itacorubi | Apartamento 3 quart…", 1680000, 101, 16633.66],
-    ["FLORIANóPOLIS - Apartamento…", 1600000, 98, 16326.53],
-    ["Casa com 03 suítes em Itacorub…", 1915000, 175, 10942.86],
-    ["Casa com 03 suítes em Itacorub…", 1700000, 166, 10240.96],
-    ["Apartamento-Padrao-para-Ven…", 1090000, 80, 13625],
-    ["Apartamento para Venda em Fl…", 1690000, 113, 14955.75],
-    ["Apartamento novo à venda vist…", 1458847, 101, 14444.03]
-  ],
-  pager: "1–20 de 27"
+LKM.estudoResidencial({
+  mode: "lancamentos", tipologia: ["Ap...", 1], kpis: [["Vm²", "R$ 13.325,34"], ["Área", "95,37 m²", "lk-kpi__value--ink"]],
+  mapTitle: "Mapa de anúncios - Residencial para venda", seed: 31, points: 27,
+  dorm: [["1", 2], ["2", 10], ["3", 11], ["4", 4]], banh: [["1", 2], ["2", 17], ["3", 3], ["4", 5]], suites: [["1", 21], ["3", 4]],
+  area: [["46 a 60m²", 2, 12794.12], ["61 a 75m²", 3, 12248.21], ["76 a 90m²", 8, 12524.88], ["91 a 115m²", 10, 15268.22], ["116 a 145m²", 2, 11693.15], ["146 a 175m²", 2, 10591.91]], valor: [["500 a 750 mil", 2, 12794.12], ["751 a 1 mi", 10, 12331.87], ["1 a 1.5 mi", 7, 13454.28], ["1.5 a 2 mi", 7, 14023.6], ["2 a 3 mi", 1, 18532.11]],
+  cols: LKM.COLS_SHORT.map((c) => (c.label === "vm²" ? { ...c, label: "vm2" } : c)),
+  rows: [["apartamento - Itacorubi - Floria…", 869000, 68, 12779.41], ["FLORIANÓPOLIS - Apartamento…", 1000000, 78, 12820.51], ["Apartamento à venda em Itacor…", 1000000, 78, 12820.51], ["Apartamento à venda em Itacor…", 830000, 75, 11066.67], ["Apartamento para venda possui…", 1000000, 78, 12820.51], ["Apartamento para venda com 8…", 1000000, 80, 12500], ["Apartamento para venda com 8…", 849000, 80, 10612.5], ["Apartamento para Venda em Fl…", 1000000, 80, 12500], ["Apartamento novo, com 80 m2, …", 1000000, 80, 12500], ["Apartamento com 2 quartos, 2 v…", 890000, 69, 12898.55], ["apartamento - Itacorubi - Floria…", 1500000, 119, 12605.04], ["Itacorubi | Apartamento 3 quart…", 1680000, 101, 16633.66], ["FLORIANóPOLIS - Apartamento…", 1600000, 98, 16326.53], ["Casa com 03 suítes em Itacorub…", 1915000, 175, 10942.86], ["Casa com 03 suítes em Itacorub…", 1700000, 166, 10240.96], ["Apartamento-Padrao-para-Ven…", 1090000, 80, 13625], ["Apartamento para Venda em Fl…", 1690000, 113, 14955.75], ["Apartamento novo à venda vist…", 1458847, 101, 14444.03]], pager: "1 - 20 / 27"
 });
-LBI.icons();
+LK.icons();
 </script>
 </body>
 </html>

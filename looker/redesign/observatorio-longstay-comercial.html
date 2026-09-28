@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Longstay · Comercial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/lk.css">
+</head>
+<body>
+<main></main>
+<script src="assets/icons.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
+<script>
+LKM.obsComercial({
+  section: "longstay", filters: [["Tipo negóci...", 1], ["Tipo imóvel", 0], ["Bairro", 0]], kpis: [["Total", "2.489"], ["Valor de m²", "R$ 70,20"], ["Área das unidades", "133,15 m²", "lk-kpi__value--ink"]],
+  seed: 149, area: [["Até 20m²", 226, 137.12], ["21 a 30m²", 661, 98.6], ["31 a 50m²", 1849, 83.75], ["51 a 80m²", 2321, 64.16], ["81 a 150m²", 2211, 64.18], ["151 a 300m²", 1477, 59.42], ["301 a 500m²", 582, 53.59], ["501 a 1000m²", 239, 51.66], ["Maior 1000m²", 50, 37.9]], valor: [["Até 1.500", 275, 37.76], ["1.500 a 2.500", 982, 59.81], ["2.500 a 3.500", 1638, 67.67], ["3.500 a 5.000", 2198, 72], ["5.000 a 7.000", 1296, 71.5], ["7.000 a 10.000", 1024, 68.73], ["10.000 a 15.000", 922, 80.1], ["15.000 a 20.000", 561, 74.31], ["Acima de 20.000", 720, 80.88]],
+  cols: [{ label: "Título", title: true, sort: "desc" }, { label: "Quartos", align: "c" }, { label: "Valor", align: "c", fmt: (v) => LK.fmt.brl(v) }, { label: "Área", align: "c" }, { label: "vm²", align: "c", fmt: (v) => LK.fmt.brl(v) }, { label: "Link", link: "Link do Anúncio", align: "c" }],
+  rows: [["📍 Excelente Oportunidade Comercial – Rua Tenente Silveira imóvel c/ 60m² de térreo mais subsolo", 0, 17000, 60, 283.33], ["🏢 SALA COMERCIAL PARA LOCAÇÃO – 55m² | MOBILIADA | 2 VAGAS DE GARAGEM", 1, 4000, 55, 72.73], ["✨Excelente oportunidade para instalar sua empresa em uma das regiões mais estratégicas da Trindade!", 1, 3250, 55, 59.09], ["Ótima sala comercial para locação no bairro Trindade!", 0, 1400, 30, 46.67], ["Ótima sala comercial para locação no bairro Trindade!", 0, 1500, 24, 62.5], ["Ótima sala comercial para locação no bairro Santa Mônica!", 0, 3500, 45, 77.78], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Itacorubi!", 0, 1900, 37, 51.35], ["Ótima sala comercial para locação no bairro Estreito!", 0, 2000, 31, 64.52], ["Ótima sala comercial para locação no bairro Córrego Grande!", 0, 2800, 74, 37.84], ["Ótima sala comercial para locação no bairro Centro!", 0, 4000, 44, 90.91], ["Ótima sala comercial no centro de Floripa!", 0, 1000, 39, 25.64], ["Ótima sala comercial no bairro Carvoeira!", 0, 1000, 26, 38.46]], pager: "1 - 20 / 2489"
+});
+LK.icons();
+</script>
+</body>
+</html>

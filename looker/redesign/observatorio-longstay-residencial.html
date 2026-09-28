@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Longstay · Residencial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/lk.css">
+</head>
+<body>
+<main></main>
+<script src="assets/icons.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
+<script>
+LKM.obsResidencial({
+  section: "longstay", filters: [["Tipo negóci...", 1], ["Tipo imóvel: ...", 1], ["Quartos", 0], ["Bairro", 0]], kpis: [["Total", "4.422"], ["Valor de m²", "R$ 72,85"], ["Área das unidades", "74,5 m²", "lk-kpi__value--ink"]],
+  seed: 139, countFmt: LK.fmt.mil,
+  dorm: [["0", 20], ["1", 1600], ["2", 1700], ["3", 950], ["4", 127], ["5", 4], ["6", 1]], banh: [["1", 2500], ["2", 1600], ["3", 530], ["4", 193], ["5", 76], ["6", 15], ["7", 1], ["8", 1]], suites: [["", 1100], ["0", 1200], ["1", 1900], ["2", 372], ["3", 191], ["4", 39]],
+  area: [["Até 45m²", 1225, 97.8], ["46 a 60m²", 685, 65.49], ["61 a 75m²", 886, 60.99], ["76 a 90m²", 570, 62.48], ["91 a 115m²", 494, 63.57], ["116 a 145m²", 264, 62.29], ["146 a 175m²", 135, 72.92], ["176 a 200m²", 60, 63.44], ["201 a 300m²", 85, 61.27], ["Maior 300m²", 18, 61.92]], valor: [["Até 1.500", 23, 53.52], ["1.500 a 2.500", 448, 59.06], ["2.500 a 3.500", 1114, 66.27], ["3.500 a 5.000", 1461, 73.38], ["5.000 a 7.000", 726, 75.81], ["7.000 a 10.000", 316, 77.53], ["10.000 a 15.000", 182, 92.59], ["15.000 a 20.000", 99, 103.57], ["Acima de 20.000", 53, 127.87]],
+  // A captura só mostra Título, Quartos e Valor desta lista
+  cols: [{ label: "Título", title: true, sort: "desc" }, { label: "Quartos", align: "c" }, { label: "Valor", align: "c", fmt: (v) => LK.fmt.brl(v) }],
+  rows: [["🏡 Apartamento mobiliado para locação no Itacorubi – Florianópolis", 3, 5800], ["😊 APARTAMENTO MOBILIADO PARA LOCAÇÃO NO VILLA DOS MARES – INGLESES 🌴✨", 2, 3500], ["❄️ Temporada de Inverno: Apartamento de 02 quartos em condomínio pé na areia - Canasvieiras!", 2, 3000], ["❄️ Temporada de Inverno na Lemuria Aparts – Conforto a 250m do Mar - aluguel mensal", 1, 1900], ["✨Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis✨", 1, 4750], ["✨Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis✨", 1, 4300], ["✨Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis✨", 1, 4750], ["✨Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis✨", 1, 4250], ["✨ Studio mobiliado de 35m² próximo à UFSC | Studio Vêneto ✨", 1, 2900], ["✨ Lindíssimo Apartamento Mobiliado de 03 Dormitórios para Locação próximo a Beira Mar Norte✨", 3, 5200], ["✨ Apartamento de 1 quarto Mobiliado para Locação – Rua Tereza Lopes - Campeche", 1, 1795], ["Ótimo studio totalmente mobiliado para locação no bairro Trindade!", 1, 3200], ["Ótimo studio para locação no bairro Trindade!", 1, 3000], ["Ótimo studio mobiliado de 1 dormitório no bairro Trindade!", 1, 1900], ["Ótimo apartamento semi-mobiliado de 2 dormitórios para locação no bairro Carvoeira, ao lado da UFSC!", 2, 2700], ["Ótimo apartamento para locação no bairro José Mendes!", 2, 4500], ["Ótimo apartamento no Centro de Florianópolis", 2, 12500], ["Ótimo apartamento no Centro com 2 vagas cobertas", 2, 5800]], pager: "1 - 20 / 4422"
+});
+LK.icons();
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Venda · Residencial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/lk.css">
+</head>
+<body>
+<main></main>
+<script src="assets/icons.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
+<script>
+LKM.obsResidencial({
+  section: "venda", filters: [["Tipo negóci...", 1], ["Tipo imóvel: ...", 1], ["Quartos", 0], ["Bairro", 0]], kpis: [["Total", "33.867"], ["Valor de m²", "R$ 14.554,41"], ["Área das unidades", "94,59 m²", "lk-kpi__value--ink"]],
+  seed: 131, countFmt: LK.fmt.mil,
+  dorm: [["0", 66], ["1", 5900], ["2", 13500], ["3", 12400], ["4", 1900], ["5", 107], ["6", 15]], banh: [["1", 10000], ["2", 14100], ["3", 5800], ["4", 2600], ["5", 1000], ["6", 209], ["7", 35], ["8", 10], ["9", 3], ["10", 3], ["11", 1], ["12", 1], ["15", 1]], suites: [["", 4600], ["0", 3800], ["1", 18000], ["2", 4000], ["3", 2700], ["4", 462], ["5", 46], ["6", 5]],
+  area: [["Até 45m²", 3649, 17652.32], ["46 a 60m²", 3391, 13100.29], ["61 a 75m²", 7152, 13292.45], ["76 a 90m²", 6149, 13206.39], ["91 a 115m²", 6128, 13533.51], ["116 a 145m²", 3532, 14743.22], ["146 a 175m²", 1588, 17701.76], ["176 a 200m²", 567, 18241.12], ["201 a 300m²", 1264, 18938.68], ["Maior 300m²", 447, 23279.74]], valor: [["Até 500 mil", 2555, 9959.86], ["500 a 750 mil", 6742, 11764.15], ["751 a 1 mi", 7762, 12303.34], ["1 a 1.5 mi", 8510, 14674.22], ["1.5 a 2 mi", 3434, 16733.31], ["2 a 3 mi", 2521, 18386.41], ["3 a 4 mi", 652, 23104.94], ["4 a 5 mi", 727, 24394.77], ["Acima de 5 mi", 964, 32326.66]], cols: [{ label: "Título", title: true, sort: "desc" }, { label: "Quartos", align: "c" }, { label: "Valor", align: "c", fmt: (v) => LK.fmt.brl(v) }, { label: "Área", align: "c" }, { label: "vm²", align: "c", fmt: (v) => LK.fmt.brl(v) }, { label: "Link", link: "Link do Anúncio", align: "c" }],
+  rows: [["MORAR NO CENTRO DE FLORIPA POR R$ 450 MIL? TEM!", 2, 650000, 55, 11818.18], ["Brio 778 | Pré-lançamento com condição facilitada de pagamento", 2, 976124, 79, 12356], ["APARTAMENTO IMPECÁVEL À VENDA | 2 DORMITÓRIOS (1 SUÍTE) | ELEVADOR | APENAS 90…", 2, 465000, 70, 6642.86], ["Realize o Sonho de Morar Perto da Praia – Apartamento com Piscina, Academia e Espaço G…", 1, 530000, 42, 12619.05], ["APARTAMENTO À VENDA NOS INGLESES – R$ 260.000,00", 2, 260000, 63, 4126.98], ["COBERTURA COM VISTA PERMANENTE PARA A NATUREZA NOS INGLESES", 3, 450000, 121, 3719.01], ["APARTAMENTO À VENDA NA PRAIA DOS INGLESES – FLORIANÓPOLIS/SC", 2, 650000, 65, 10000], ["APARTAMENTO À VENDA NA PRAIA DOS INGLESES – 500M DO MAR | R$ 550.000,00", 2, 550000, 60, 9166.67], ["Apartamento mobiliado à venda no Itacorubi – Florianópolis!", 2, 1060000, 65, 16307.69], ["APARTAMENTO À VENDA NOS INGLESES – R$ 397.000,00", 2, 397000, 70, 5671.43], ["APARTAMENTO À VENDA NOS INGLESES – FLORIANÓPOLIS/SC", 2, 328000, 55, 5963.64], ["APARTAMENTO TÉRREO À VENDA NOS INGLESES – R$298.000", 2, 298000, 60, 4966.67], ["APARTAMENTO SEMIMOBILIADO À VENDA – INGLESES | FLORIANÓPOLIS/SC", 2, 329000, 55, 5981.82], ["APARTAMENTO SEMIMOBILIADO À VENDA NA PRAIA DOS INGLESES – R$390.000", 2, 390000, 60, 6500], ["APARTAMENTO COM GARDEN À VENDA NOS INGLESES – R$ 420.000,00", 2, 420000, 87, 4827.59], ["APARTAMENTO AMPLO À VENDA NOS INGLESES – R$ 350.000,00", 2, 350000, 65, 5384.62], ["Lindo Apartamento de Alto Padrão, vista mar", 3, 1424750, 99, 14391.41], ["JS-Apartamento 1 Dormitório no Centro | Mobiliado | Ideal para Airbnb | Garagem", 1, 630000, 47, 13404.26]], pager: "1 - 20 / 33867"
+});
+LK.icons();
+</script>
+</body>
+</html>

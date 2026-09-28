@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Obras · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/lk.css">
+</head>
+<body>
+<main></main>
+<script src="assets/icons.js"></script>
+<script src="assets/lk.js"></script>
+<script>
+const { card } = LK;
+LK.page({ report: "obs", section: "obras" }, `
+  <div class="lk-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+    <div class="lk-col">
+      <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Mapa de <b>obras</b></h2></div><div id="map"></div></section>
+      ${card({ title: "Obras por segmento do <b>CNAE</b>", id: "t-cnae", flush: true })}
+      ${card({ title: "<b>Incorporadores</b>", id: "t-inc", flush: true })}
+    </div>
+    <div class="lk-col">
+      <div class="lk-bar">${LK.dd("Bairro")}${LK.dd("Segmento")}${LK.dd("Status: Ativa", 1)}${LK.dd("Destinação")}</div>
+      ${card({ title: "Status da <b>obra</b>", id: "p-status" })}
+      <div class="lk-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        ${card({ title: "Destinação da <b>obra</b>", id: "p-dest" })}
+        ${card({ title: "Tipologia da <b>obra</b>", id: "p-tipo" })}
+      </div>
+      ${card({ title: "Área total da <b>obra</b>", id: "p-area" })}
+      ${card({ title: "Ano de início das <b>obras</b>", chip: "Total", id: "c-ano" })}
+    </div>
+  </div>`);
+LK.map("#map", { seed: 151, height: 560, kind: "city", points: { n: 190, r: 6, dense: true, colors: ["--c4", "--c5", "--c6", "--c8"], weights: [48, 24, 24, 4], alpha: 0.75 } });
+LK.pie("#p-status", { items: [{ label: "Ativa", value: 100, color: "--c4" }] });
+// "est: true" = fatia sem rótulo na captura
+LK.pie("#p-dest", { small: true, items: [{ label: "Obra Nova", value: 77.6, color: "--c3" }, { label: "Existente", value: 10.6, color: "--c5" }, { label: "Reforma", value: 6.7, color: "--c8" }, { label: "Demolição", value: 3, color: "--c2", est: true }, { label: "Acréscimo", value: 2.1, color: "--c6", est: true }] });
+LK.pie("#p-tipo", { small: true, items: [{ label: "Residencial unifamiliar", value: 48.3, color: "--c4" }, { label: "Residencial multifamiliar", value: 24, color: "--c5", text: "24%" }, { label: "Comercial salas e lojas", value: 23.6, color: "--c6" }, { label: "Galpão industrial", value: 3, color: "--c7", est: true }, { label: "Edifício de Garagens", value: 0.6, color: "--c3", est: true }, { label: "Conjunto habitacional popular", value: 0.5, color: "--c8", est: true }] });
+LK.pie("#p-area", { items: [{ label: "Pequeno porte (< 500 m2)", value: 58.9, color: "#f4a6b8", ink: "#6a2236" }, { label: "Médio porte (500 > e < 5000 m2)", value: 28.7, color: "#f6c38e", ink: "#6a3f10" }, { label: "Grande porte (> 5000 m2)", value: 12.4, color: "#b39ef2", ink: "#34236e" }] });
+LK.columns("#c-ano", { height: 260, data: [["2019", 125], ["2020", 96], ["2021", 133], ["2022", 234], ["2023", 234], ["2024", 313], ["2025", 441], ["2026", 307]] });
+LK.table("#t-cnae", { index: true, columns: [{ label: "CNAE" }, { label: "Total de obras", heat: "green", sort: "desc", fmt: (v) => (v >= 1000 ? LK.fmt.mil(v) : LK.fmt.int(v)) }], pager: "1 - 10 / 14", rows: [
+  ["Construção de edifícios", 1100], ["Obras de alvenaria", 495], ["Demolição de edifícios e outras estruturas", 104], ["Outras obras de engenharia civil não especificadas a...", 91], ["Serviços especializados para construção não especifi...", 57],
+  ["Construção de redes de abastecimento de água, col...", 28], ["Obras de urbanização ruas, praças e calçadas", 18], ["Obras de fundações", 13], ["Construção de estações e redes de telecomunicações", 12]] });
+LK.table("#t-inc", { index: true, columns: [{ label: "Nome incorporador" }, { label: "Total de obras", heat: "green", sort: "desc" }], pager: "1 - 10 / 792", rows: [
+  ["", 732], ["ECO VILAS CAMPECHE CONSTRUCAO E INCORPOR...", 37], ["EVA CONSTRUCOES LTDA", 28], ["ARO PROJETO & EXECUCAO LTDA", 21], ["MARESIA NEGOCIOS IMOBILIARIOS LTDA", 10],
+  ["TRIO CONSTRUTORA E INCORPORADORA LTDA", 8], ["LITORAL ENGENHARIA E CONSTRUCOES LTDA", 8], ["LA FORTE ENGENHARIA LTDA", 8], ["HS CONSTRUTORA E INCORPORADORA LTDA", 7]] });
+LK.icons();
+</script>
+</body>
+</html>

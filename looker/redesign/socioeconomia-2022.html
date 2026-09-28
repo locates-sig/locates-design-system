@@ -3,52 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Socioeconômico · 2022 · Locates BI</title>
+<title>Socioeconômico · Socioeconomia 2022 · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
 <script>
-const { fmt } = LBI;
-document.querySelector("main").innerHTML = `
-  <div class="bi-toolbar"><div data-subnav></div></div>
-  <div class="bi-toolbar">${LBI.rangeHtml({ label: "Distância do imóvel", min: 0, max: 1000, lo: 0, hi: 1000, unit: " m" })}</div>
-  <h2 class="section-title"><i data-lucide="wallet"></i>Renda média e distribuição de renda<small>Censo 2022 · setores censitários</small></h2>
-  <div class="grid grid--2">
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Renda média</h2><p class="card__subtitle">Renda domiciliar média mensal por setor censitário</p></div></div>
-      <div id="map1"></div>
-      <div class="grid grid--2" style="gap:12px">
-        <div class="kpi"><span class="kpi__label"><i data-lucide="map-pin"></i>Setor do imóvel</span><span class="kpi__value">R$ 10.285,45</span><span class="kpi__foot">Predomínio de classe: não identificado</span></div>
-        <div class="kpi"><span class="kpi__label"><i data-lucide="circle-dashed"></i>Setores do entorno</span><span class="kpi__value">R$ 9.463,53</span><span class="kpi__foot">Média no raio de 1 km</span></div>
-      </div>
-      <div><div class="eyebrow" style="margin-bottom:8px">Classes de renda no entorno</div><div id="classes"></div></div>
-      <div class="note"><i data-lucide="info"></i><p><b>Popular, Média e Alta</b> são a distribuição percentual das faixas de renda (baixa, média e alta) dos moradores na região expandida e mostram o perfil socioeconômico predominante no entorno.</p></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Variação da renda</h2><p class="card__subtitle">Desigualdade de renda entre os moradores de cada setor</p></div></div>
-      <div id="map2"></div>
-      <div class="grid grid--2" style="gap:12px">
-        <div class="kpi"><span class="kpi__label"><i data-lucide="map-pin"></i>Setor do imóvel</span><span class="kpi__value">Diversificada</span><span class="kpi__foot">Distribuição de renda no setor</span></div>
-        <div class="kpi"><span class="kpi__label"><i data-lucide="circle-dashed"></i>Setores do entorno</span><span class="kpi__value">Desigual</span><span class="kpi__foot">Classificação mais frequente (39,5%)</span></div>
-      </div>
-      <div><div class="eyebrow" style="margin-bottom:8px">Distribuição de renda no entorno</div><div id="distrib"></div></div>
-      <div class="note"><i data-lucide="info"></i><p><b>Homogênea:</b> a maioria dos moradores tem renda parecida. <b>Diversificada:</b> mistura equilibrada de faixas de renda, sem grupo dominante. <b>Desigual:</b> grande disparidade, com a renda concentrada em um grupo pequeno.</p></div>
-    </section>
-  </div>`;
-LBI.shell({ section: "socioeconomico", sub: "2022" });
-const ords = ["--ord-1", "--ord-2", "--ord-3", "--ord-4", "--ord-5"];
-LBI.map("#map1", { seed: 79, height: 320, controls: false, water: "bay", sectors: { n: 16, spread: 150, colors: ords, opacity: 0.6 },
-  legend: `<span class="eyebrow">Renda média</span><div class="map-gradient"><span>R$ 1.918</span><i style="background:linear-gradient(90deg,var(--ord-1),var(--ord-3),var(--ord-5))"></i><span>R$ 14.986</span></div>` });
-LBI.map("#map2", { seed: 83, height: 320, controls: false, water: "bay", heat: [[500, 280, 150], [560, 360, 110], [470, 200, 90], [600, 470, 80]],
-  legend: `<span class="eyebrow">Variação de renda</span><div class="map-gradient"><span>Baixa</span><i style="background:linear-gradient(90deg,#fff0,var(--color-brand-primary-light),var(--primary))"></i><span>Alta</span></div>` });
-LBI.stackbar("#classes", { label: "Classes de renda", items: [{ label: "Popular", value: 4.8, color: "--ord-1", ink: "dark" }, { label: "Média", value: 28.6, color: "--ord-3" }, { label: "Alta", value: 66.7, color: "--ord-5" }], fmt: (v) => fmt.pct(v) });
-LBI.stackbar("#distrib", { label: "Distribuição de renda", items: [{ label: "Homogênea", value: 23.7, color: "--cat-1" }, { label: "Diversificada", value: 36.8, color: "--cat-2", ink: "dark" }, { label: "Desigual", value: 39.5, color: "--cat-3", ink: "dark" }], fmt: (v) => fmt.pct(v) });
-LBI.icons();
+const { card } = LK;
+const kcard = (ic, t1, t2, body) => `<div class="lk-kpi-card"><div class="lk-kpi-card__head"><span>${t1}<br><b>${t2}</b></span><i data-lucide="${ic}"></i></div>${body}</div>`;
+const lines = (rows) => `<dl class="lk-stats" style="grid-template-columns:1fr auto">${rows.map(([k, v]) => `<dt style="color:var(--lk-up);font-weight:500">${k}</dt><dd style="color:var(--lk-up)">${v}</dd>`).join("")}</dl>`;
+LK.page({ section: "socioeconomico", sub: "2022" }, `
+  <div class="lk-bar"><span style="font-size:14px;font-weight:700">Distância do imóvel:</span>${LK.range("Distância", "0", "1.000")}</div>
+  <div class="lk-section-title">Renda média e distribuição de renda</div>
+  <div class="lk-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+    ${card({ title: "Mapa dos setores censitários - <b>Renda média</b>", body: `<div class="lk-grid" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)">
+        <div class="lk-card" style="box-shadow:none"><div id="map1"></div><div class="lk-gradient"><b>Renda Média</b><span>1.917,66</span><i style="background:linear-gradient(90deg,#e7f0ff,#5b8def)"></i><span>14.986,02</span></div></div>
+        <div class="lk-col">
+          ${kcard("circle-dollar-sign", "Renda média", "no setor do imóvel", `<span class="lk-kpi-card__big">R$ 10.285,45</span><span style="font-size:12px;color:var(--lk-ink-2)">Renda média no setor</span><span style="font-size:12.5px;margin-top:6px">Predomínio de classe</span><span style="color:var(--lk-up)">-</span>`)}
+          ${kcard("circle-dollar-sign", "Renda média", "nos setores do entorno", `<span class="lk-kpi-card__big">R$ 9.463,53</span><span style="font-size:12px;color:var(--lk-ink-2)">Renda média no setor</span>${lines([["Popular", "4,8%"], ["Média", "28,6%"], ["Alta", "66,7%"]])}`)}
+        </div></div>
+      <div class="lk-note-box"><i data-lucide="info"></i><span>As classificações "Popular", "Média" e "Alta" representam a distribuição percentual das faixas de renda (baixa, média e alta) dos moradores nessa região expandida, indicando o perfil socioeconômico predominante no entorno.</span></div>` })}
+    ${card({ title: "Mapa dos setores censitários - <b>Variação da renda</b>", body: `<div class="lk-grid" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)">
+        <div class="lk-card" style="box-shadow:none"><div id="map2"></div><div class="lk-gradient" style="flex-wrap:wrap"><span>0</span><i style="background:linear-gradient(90deg,#fff3c4,#f29a3a,#9b2d1f)"></i><span>123</span><b style="margin-left:8px">Interpretação</b><span style="color:#c2512a">●</span> Alta <span style="color:#e07a2f">●</span> Média <span style="color:#f0a340">●</span> Baixa Variação de Renda</div></div>
+        <div class="lk-col">
+          ${kcard("chart-pie", "Distribuição da renda", "no setor do imóvel", `<span class="lk-kpi-card__big lk-kpi-card__big--accent">Diversificada</span><span style="font-size:12px;color:var(--lk-ink-2)">distribuição de renda no setor</span>`)}
+          ${kcard("chart-pie", "Distribuição da renda", "nos setores do entorno", lines([["Homogênea", "23,7%"], ["Diversificada", "36,8%"], ["Desigual", "39,5%"]]))}
+        </div></div>
+      <div class="lk-note-box"><i data-lucide="info"></i><span>"Homogênea" indica que a maioria dos moradores possui renda similar. "Diversificada" aponta para uma mistura equilibrada de diferentes faixas de renda, sem um grupo dominante. "Desigual" revela uma grande disparidade, com uma forte concentração de renda em um pequeno grupo.</span></div>` })}
+  </div>`);
+LK.map("#map1", { seed: 79, height: 340, sectors: { n: 12, colors: ["#5b8def"], opacity: 0.35 }, water: true, parks: 4 });
+LK.map("#map2", { seed: 83, height: 340, sectors: { n: 7, colors: ["#e07a2f", "#c2512a", "#f0a340"], opacity: 0.55 }, water: true, parks: 4 });
+LK.icons();
 </script>
 </body>
 </html>
