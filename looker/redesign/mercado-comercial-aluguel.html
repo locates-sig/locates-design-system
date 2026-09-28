@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercado · Comercial · Aluguel · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+LBI_MERCADO.comercial({
+  page: { section: "mercado", sub: "comercial", mode: "aluguel" },
+  selects: [{ label: "Tipologia", value: "Comercial", count: 3 }],
+  summary: [["vm² médio (aluguel)", "R$ 56,76"], ["Área média", "37 m²"], ["Anúncios", "1"]],
+  mapTitle: "Mapa de anúncios", mapSub: "Comercial para locação · raio de 1 km", count: 1, seed: 59, water: "bay",
+  listSub: "Salas, lojas e conjuntos para locação · valores mensais",
+  area: [["31 a 50 m²", 1, 56.76]],
+  valor: [["R$ 1.500 a 2.500", 1, 56.76]],
+  rows: [["Anúncio comercial para locação (exemplo)", 2100.12, 37, 56.76]],
+  pager: "1–1 de 1"
+});
+LBI.icons();
+</script>
+</body>
+</html>

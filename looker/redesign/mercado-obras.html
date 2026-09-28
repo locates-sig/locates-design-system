@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercado · Obras · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const { fmt } = LBI, M = LBI_MERCADO;
+const status = [
+  { label: "Encerrada", value: 62.5, color: "--cat-1" }, { label: "Ativa", value: 25, color: "--cat-2" },
+  { label: "Nula", value: 10.4, color: "--cat-3" }, { label: "Paralisada", value: 2.1, color: "--cat-4" }];
+document.querySelector("main").innerHTML = M.toolbar({
+  selects: [{ label: "Tipologia da obra", value: "Todas" }],
+  summary: [["Obras no raio", "114"], ["Ativas", "25%"], ["Iniciadas desde 2020", "69"]],
+}) + `
+  <div class="grid grid--3">
+    <section class="card card--flush span-2">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa de obras</h2><p class="card__subtitle">Cadastro Nacional de Obras (CNO) · cor por status</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    ${M.card("d-status", "Status da obra", "Participação no total de obras")}
+  </div>
+  <div class="grid grid--3">
+    ${M.card("d-estagio", "Estágio da obra", "Participação no total de obras")}
+    ${M.card("d-tipo", "Tipologia da obra", "Quantidade de obras")}
+    ${M.card("d-porte", "Porte (área total da obra)", "Participação no total de obras")}
+  </div>
+  <section class="card">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Ano de início das obras</h2><p class="card__subtitle">Quantidade de obras iniciadas por ano · 2000 a 2026</p></div></div>
+    <div id="c-ano"></div>
+  </section>
+  <div class="grid grid--2">
+    ${M.card("b-cnae", "Obras por segmento do CNAE", "Quantidade de obras por atividade econômica")}
+    <section class="card card--flush">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Incorporadores</h2><p class="card__subtitle">Construtoras e incorporadoras com obras no raio</p></div></div>
+      <div id="t-inc" style="margin-top:16px"></div>
+    </section>
+  </div>`;
+LBI.shell({ section: "mercado", sub: "obras" });
+const leg = `<span class="eyebrow">Status</span><ul class="legend">${status.map((s) => `<li><span class="swatch" style="border-radius:50%;background:${LBI.color(s.color)}"></span>${s.label}</li>`).join("")}</ul>`;
+LBI.map("#map", { seed: 67, height: 440, radius: true, slider: true, points: { n: 114, spread: 150, colors: status.map((s) => s.color), weights: status.map((s) => s.value) }, legend: leg });
+const pct = (v) => fmt.pct(v);
+LBI.donut("#d-status", { items: status, fmt: pct, showValue: false, center: { value: "114", label: "obras" } });
+LBI.donut("#d-estagio", { items: [
+  { label: "Obra nova", value: 71.5, color: "--cat-1" }, { label: "Existente", value: 14, color: "--cat-2" }, { label: "Reforma", value: 10.5, color: "--cat-3" },
+  { label: "Acréscimo", value: 2, color: "--cat-4" }, { label: "Demolição", value: 2, color: "--cat-5" }], fmt: pct, showValue: false, center: { value: "114", label: "obras" } });
+LBI.donut("#d-tipo", { items: [
+  { label: "Residencial unifamiliar", value: 59, color: "--cat-1" }, { label: "Comercial (salas e lojas)", value: 37, color: "--cat-2" },
+  { label: "Residencial multifamiliar", value: 15, color: "--cat-3" }, { label: "Galpão industrial", value: 3, color: "--cat-4" }], fmt: "int", center: { value: "114", label: "obras" } });
+LBI.donut("#d-porte", { items: [
+  { label: "Pequeno (< 500 m²)", value: 57, color: "--ord-1" }, { label: "Médio (500 a 5.000 m²)", value: 38.6, color: "--ord-3" },
+  { label: "Grande (> 5.000 m²)", value: 4.4, color: "--ord-5" }], fmt: pct, showValue: false, center: { value: "114", label: "obras" } });
+const anos = [[2000,1],[2001,0],[2002,0],[2003,0],[2004,0],[2005,1],[2006,1],[2007,0],[2008,4],[2009,1],[2010,2],[2011,2],[2012,0],[2013,1],[2014,9],[2015,1],[2016,1],[2017,3],[2018,9],[2019,9],[2020,6],[2021,12],[2022,14],[2023,7],[2024,12],[2025,12],[2026,6]];
+LBI.columns("#c-ano", { data: anos.map(([a, v]) => [String(a), v]), labelAll: true, height: 220, xName: "Ano", valueName: "Obras iniciadas" });
+LBI.bars("#b-cnae", { fmt: "int", rows: [
+  { label: "Construção de edifícios", value: 70 }, { label: "Obras de alvenaria", value: 30 },
+  { label: "Outras obras de engenharia civil não especificadas", value: 6 }, { label: "Demolição de edifícios e outras estruturas", value: 3 },
+  { label: "Construção de estações e redes de telecomunicações", value: 2 }, { label: "Serviços especializados para construção não especificados", value: 2 },
+  { label: "Construção de estações e redes de distribuição de energia elétrica", value: 1 }] });
+LBI.table("#t-inc", {
+  columns: [{ label: "Incorporador" }, { label: "Obras", num: true, bar: true, sort: "descending" }],
+  rows: [["LITORAL ENGENHARIA E CONSTRUCOES LTDA", 5], ["PROENCA SOLUCOES EM ENGENHARIA LTDA", 3], ["ESCOLA AUTONOMIA LTDA", 3], ["MAXI EMPREENDIMENTOS IMOBILIARIOS LTDA", 3], ["VINCULO CONSTRUCOES LTDA", 2], ["ZEITTEC SOLUCOES EM CONECTIVIDADE LTDA", 2], ["B4 ENGENHARIA LTDA", 2], ["ETAPLAN ENGENHARIA & CONSTRUCAO LTDA", 2], ["VAHL COMERCIO DE IMOVEIS LTDA", 1]],
+  pager: "1–10 de 39",
+});
+LBI.icons();
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercado · Comercial · Evolução · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const Q = []; for (let y = 2023, q = 2; Q.length < 13; q = q === 4 ? 1 : q + 1, y += q === 1 ? 1 : 0) Q.push(`T${q}/${String(y).slice(2)}`);
+LBI_MERCADO.evolucao({
+  page: { section: "mercado", sub: "comercial", mode: "evolucao" },
+  spatialOpts: ["Raio", "Bairro"],
+  selects: [{ label: "Tipologia", value: "Todas" }, { label: "Negócio", value: "Venda", count: 1 }],
+  summary: [["vm² médio no período", "R$ 14.399,46"], ["Último trimestre", "R$ 13.615"]],
+  sub: "Comercial para venda · T2/2023 a T2/2026 · raio de 1 km · amostra pequena, oscila mais",
+  labels: Q,
+  values: [12689, 9419, 12937, 15712, 14427, 14632, 15468, 15295, 13962, 12577, 15886, 16523, 13615]
+});
+LBI.icons();
+</script>
+</body>
+</html>

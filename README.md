@@ -86,6 +86,10 @@ Dois cenários. **Mapa:** o mapa ocupa o fundo e painéis flutuantes (`radius-pa
 
 Para usar numa página sem build: carregue `tokens.css`, `components/bundle.css`, React 18 e ReactDOM 18 (UMD) e `components/bundle.js`; depois `React.createElement(LocatesApp.Button, { variant: 'secondary' }, 'Comparar bairros')`. Num projeto React, copie os `.tsx` de `uxpilot/src/components/ui/` e o `cn` de `lib/utils`. `components/static.css` mantém as classes `lc-*` da versão estática anterior, para páginas sem React.
 
+## Telas do BI
+
+`looker/redesign/` aplica este sistema às 17 telas do relatório de BI (Looker Studio) capturadas em `looker/`: protótipos em HTML (`index.html`), capturas em `previews/` e um guia de tema e componentes para refazer o relatório no Looker Studio, com a paleta de gráficos validada e as inconsistências de dados encontradas.
+
 ## Ativos
 
 - `Logos/logo.svg`: wordmark roxo com o "O" em anel verde.

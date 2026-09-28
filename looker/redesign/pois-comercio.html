@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pontos de interesse · Comércio e serviços · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const { fmt } = LBI;
+const cats = [["Igrejas", 3, "church"], ["Padarias", 0, "croissant"], ["Bancos", 0, "banknote"], ["Mercados", 0, "shopping-cart"], ["Hostels", 0, "bed"], ["Hotéis", 0, "hotel"], ["Restaurantes", 0, "utensils"], ["Fast-food", 0, "sandwich"], ["Farmácias", 0, "pill"], ["Postos de gasolina", 0, "fuel"], ["Bares", 0, "beer"]];
+document.querySelector("main").innerHTML = `
+  <div class="bi-toolbar"><div data-subnav></div><span class="bi-toolbar__spacer"></span>
+    <div class="summary"><div class="summary__item"><span class="summary__label">POIs no raio</span><span class="summary__value">3</span></div><div class="summary__item"><span class="summary__label">Categorias presentes</span><span class="summary__value">1 de 11</span></div><div class="summary__item"><span class="summary__label">Mais próximo</span><span class="summary__value">239 m</span></div></div></div>
+  <div class="grid grid--3">
+    <section class="card card--flush span-2">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa dos pontos de interesse</h2><p class="card__subtitle">Comércio e serviços no raio selecionado</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    <section class="card">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">POIs por categoria</h2><p class="card__subtitle">Quantidade no raio · categorias sem ocorrência em cinza</p></div></div>
+      <ul id="b-cat"></ul>
+    </section>
+  </div>
+  <section class="card card--flush">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Lista de pontos de interesse</h2><p class="card__subtitle">Ordenada pela distância até o imóvel</p></div></div>
+    <div id="t-poi" style="margin-top:16px"></div>
+  </section>`;
+LBI.shell({ section: "pois", sub: "comercio" });
+LBI.map("#map", { seed: 97, height: 480, radius: true, slider: true, points: { n: 3, spread: 150, r: 7, colors: ["--cat-1"] },
+  legend: `<ul class="legend"><li><span class="swatch" style="border-radius:50%;background:var(--cat-1)"></span>Igrejas</li></ul>` });
+LBI.bars("#b-cat", { fmt: "int", inline: true, rows: cats.map(([label, value, icon]) => ({ label, value, icon })) });
+LBI.table("#t-poi", { columns: [{ label: "Categoria" }, { label: "Nome" }, { label: "Distância (m)", num: true, sort: "ascending", fmt: (v) => fmt.dec(v, 1) }],
+  rows: [["Igrejas", "Bola de Neve Church", 238.84], ["Igrejas", "Sara Nossa Terra - Ilha", 710.4], ["Igrejas", "Igreja Deus é Amor", 869.65]], pager: "1–3 de 3" });
+LBI.icons();
+</script>
+</body>
+</html>

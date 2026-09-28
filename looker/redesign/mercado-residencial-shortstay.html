@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercado · Residencial · Shortstay · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const { fmt } = LBI, M = LBI_MERCADO;
+document.querySelector("main").innerHTML = M.toolbar({
+  spatial: true,
+  selects: [{ label: "Tipologia", value: "Todas" }],
+  summary: [["Diária média", "R$ 363,90"], ["Ocupação média", "71,12%"], ["Anúncios", "71"]],
+}) + `
+  <div class="bi-toolbar" aria-label="Filtros de faixa">
+    ${LBI.rangeHtml({ label: "Valor da diária", min: 114.01, max: 2060.66, lo: 114.01, hi: 2060.66, fmt: (v) => fmt.brl(v) })}
+    ${LBI.rangeHtml({ label: "Ocupação", min: 23.89, max: 98.85, lo: 23.89, hi: 98.85, fmt: (v) => fmt.pct(v, 2) })}
+    ${LBI.rangeHtml({ label: "Quartos", min: 1, max: 5, lo: 1, hi: 5 })}
+    ${LBI.rangeHtml({ label: "Hóspedes", min: 2, max: 12, lo: 2, hi: 12 })}
+  </div>
+  <div class="grid grid--3">
+    <section class="card card--flush span-2">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa de anúncios</h2><p class="card__subtitle">Residencial para shortstay (temporada) · raio de 1 km</p></div>
+      <div class="card__aside"><span class="badge badge--secondary"><i data-lucide="map-pin"></i>71 anúncios</span></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    <div class="stack">
+      ${M.card("c-q", "Anúncios por quartos", "Quantidade de anúncios")}
+      ${M.card("c-h", "Anúncios por hóspedes", "Capacidade máxima do imóvel")}
+    </div>
+  </div>
+  <div class="grid grid--2">
+    ${M.card("b-diaria", "Diária média", "Anúncios por faixa de diária (R$)")}
+    ${M.card("c-ocup", "Taxa de ocupação anual média", "Anúncios por faixa de ocupação (% dos dias ofertados)")}
+  </div>
+  <section class="card card--flush">
+    <div class="card__head"><div class="card__titles"><h2 class="card__title">Anúncios</h2><p class="card__subtitle">Todos do tipo espaço inteiro · ordenado pela diária média · receita dos últimos 12 meses</p></div>
+    <div class="card__aside"><button class="btn btn--outline btn--sm" type="button"><i data-lucide="download"></i>Exportar CSV</button></div></div>
+    <div id="t-list" style="margin-top:16px"></div>
+  </section>`;
+LBI.shell({ section: "mercado", sub: "residencial", mode: "shortstay" });
+LBI.map("#map", { seed: 41, height: 520, radius: true, slider: true, water: "right", points: { n: 71, spread: 130 }, chip: "Somente anúncios georreferenciados aparecem no mapa" });
+LBI.columns("#c-q", { data: [["1", 33], ["2", 25], ["3", 10], ["4", 2], ["5", 1]], xTitle: "Quartos", xName: "Quartos:", valueName: "Anúncios", height: 170 });
+LBI.columns("#c-h", { data: [["2", 15], ["3", 9], ["4", 24], ["5", 7], ["6", 8], ["7", 2], ["8", 2], ["10", 3], ["12", 1]], xTitle: "Hóspedes", xName: "Hóspedes:", valueName: "Anúncios", height: 170 });
+LBI.bars("#b-diaria", { inline: true, fmt: "int", rows: [
+  { label: "R$ 100 a 250", value: 31 }, { label: "R$ 250 a 500", value: 26 }, { label: "R$ 500 a 750", value: 11 },
+  { label: "R$ 750 a 1.000", value: 1 }, { label: "R$ 1.000 a 1.500", value: 0 }, { label: "R$ 1.500 a 2.000", value: 1 }, { label: "R$ 2.000 a 3.000", value: 1 } ] });
+LBI.columns("#c-ocup", { data: [["20–30", 2], ["30–40", 3], ["40–50", 4], ["50–60", 5], ["60–70", 19], ["70–80", 13], ["80–90", 18], ["> 90", 7]], xTitle: "Ocupação (%)", xName: "Ocupação", valueName: "Anúncios", height: 230 });
+const nota = (v) => (v == null ? "—" : fmt.dec(v, 1));
+const dec = (v) => (Number.isInteger(v) ? fmt.int(v) : fmt.dec(v, 1));
+LBI.table("#t-list", {
+  columns: [{ label: "Título", title: true }, { label: "Diária média", num: true, fmt: (v) => fmt.brl0(v), sort: "descending" }, { label: "Dias ofertados", num: true }, { label: "Ocupação", num: true, bar: true, fmt: (v) => v + "%" }, { label: "Receita anual", num: true, fmt: (v) => fmt.brl0(v) }, { label: "Receita potencial", num: true, fmt: (v) => fmt.brl(v) }, { label: "Quartos", num: true }, { label: "Banheiros", num: true, fmt: dec }, { label: "Hóspedes", num: true }, { label: "Nota", num: true, fmt: nota }, { label: "Link", link: true }],
+  rows: [
+    ["Comfort on the island of magic, in a …", 2061, 264, 24, 55638, 63144.79, 5, 4, 10, 5],
+    ["House in a condominium with an exc…", 1516, 215, 30, 47009, 91600.61, 4, 5, 8, 5],
+    ["Complete house in Floripa: comfort cl…", 924, 309, 68, 194135, 203767.39, 4, 3, 10, 4.9],
+    ["Apartment on Caminho da Lagoa - 2 …", 689, 182, 67, 37218, 40261.47, 1, 2, 4, null],
+    ["Spacious House in Floripa", 685, 195, 74, 55480, 68291.61, 3, 2, 8, 5],
+    ["Sophisticated Serenity", 666, 209, 49, 47958, 61068.91, 2, 2, 5, 5],
+    ["Sunset View at Itacorubi | 2 Spots Ava…", 660, 72, 85, 39620, 73061.57, 3, 2, 6, 5],
+    ["Comfort and Perfect Location", 656, 188, 73, 55740, 71581.94, 2, 2, 3, 5],
+    ["Lanai Residence club", 626, 311, 39, 58254, 63206.75, 3, 2, 7, 5],
+    ["Apartment in a club condominium.", 611, 314, 49, 88051, 91148.67, 2, 2, 4, 5],
+    ["Luxurious 3 Bedrooms Top Floor Apar…", 579, 358, 62, 127401, 128803.73, 3, 2, 7, 5],
+    ["Ape 4 km from Lagoa da Conceição …", 578, 292, 75, 100510, 109478.47, 3, 2.5, 6, 4.8],
+    ["House, 1st floor, spacious, with pool, g…", 524, 364, 34, 36182, 36450.41, 3, 3, 12, 4.8],
+    ["Comfortable and Large Apartment 2…", 522, 241, 74, 81967, 83250.77, 2, 2, 5, 5],
+    ["Full apartment, good location.", 473, 356, 69, 53924, 56089.1, 2, 2, 4, 5],
+    ["Modern apartment with full amenitie…", 466, 330, 47, 61997, 62337.51, 2, 1, 4, 5],
+    ["Spacious house in the heart of Floripa", 453, 185, 70, 44867, 52544.2, 3, 2.5, 10, 5]
+  ].map((r) => [...r, ""]),
+  foot: ["Média dos 71 anúncios", "R$ 364", "301,73", "71%", "R$ 54.366", "R$ 60.516,42", "1,77", "1,6", "4,34", "4,9", ""],
+  pager: "1–20 de 71",
+  maxHeight: 560,
+});
+LBI.icons();
+</script>
+</body>
+</html>

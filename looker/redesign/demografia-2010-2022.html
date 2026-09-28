@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demográfico · 2010 × 2022 · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script>
+const { fmt } = LBI;
+const cmp = (name, a, b) => {
+  const d = (b / a - 1) * 100, upd = d >= 0;
+  return `<div class="compare"><span class="compare__name">${name}</span><div class="compare__vals"><span class="compare__from"><b>${fmt.int(a)}</b></span><span class="compare__arrow">→</span><span class="compare__to">${fmt.int(b)}</span></div><span class="delta ${upd ? "delta--up" : "delta--down"}"><i data-lucide="${upd ? "arrow-up" : "arrow-down"}"></i>${upd ? "+" : ""}${fmt.pct(d, 2)}</span><span class="compare__years"><span>2010</span><span>→</span><span>2022</span></span></div>`;
+};
+const block = (icon, title, sub, cols, items) => `<section class="card"><div class="card__head"><span class="card__icon"><i data-lucide="${icon}"></i></span><div class="card__titles"><h2 class="card__title">${title}</h2><p class="card__subtitle">${sub}</p></div></div><div class="grid grid--${cols}" style="gap:12px">${items.map((i) => cmp(...i)).join("")}</div></section>`;
+document.querySelector("main").innerHTML = `
+  <div class="bi-toolbar"><div data-subnav></div></div>
+  <div class="grid grid--3">
+    <section class="card card--flush">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Setores censitários (2022)</h2><p class="card__subtitle">Setores que tocam o raio selecionado</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    <div class="stack span-2">
+      ${block("users", "População", "Moradores do setor · Censo 2010 → 2022", 3, [["Moradores", 12036, 15995], ["Sexo feminino", 6165, 8471], ["Sexo masculino", 5871, 7524]])}
+      ${block("house", "Domicílios por tipo", "Domicílios particulares permanentes", 3, [["Casa", 2413, 2594], ["Apartamento", 1873, 3908], ["Casa em condomínio", 67, 185]])}
+    </div>
+  </div>
+  ${block("baby", "Grupos etários", "Pessoas por faixa de idade", 4, [["Crianças (0 a 14 anos)", 1924, 2451], ["Jovens (15 a 29 anos)", 3380, 3172], ["Adultos (30 a 59 anos)", 5598, 7746], ["Idosos (60 anos ou mais)", 1183, 2621]])}
+  ${block("users", "Domicílios por número de moradores", "Domicílios particulares permanentes", 5, [["1 morador", 845, 1822], ["2 moradores", 1220, 2295], ["3 moradores", 1053, 1516], ["4 moradores", 823, 854], ["5 ou mais moradores", 418, 247]])}`;
+LBI.shell({ section: "demografico", sub: "2010-2022" });
+LBI.map("#map", { seed: 73, height: 470, controls: false, slider: true, water: "right", sectors: { n: 22, spread: 170 }, parks: 5 });
+LBI.icons();
+</script>
+</body>
+</html>
