@@ -5,26 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercado · Comercial · Aluguel · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-LBI_MERCADO.comercial({
-  page: { section: "mercado", sub: "comercial", mode: "aluguel" },
-  selects: [{ label: "Tipologia", value: "Comercial", count: 3 }],
-  summary: [["vm² médio (aluguel)", "R$ 56,76"], ["Área média", "37 m²"], ["Anúncios", "1"]],
-  mapTitle: "Mapa de anúncios", mapSub: "Comercial para locação · raio de 1 km", count: 1, seed: 59, water: "bay",
-  listSub: "Salas, lojas e conjuntos para locação · valores mensais",
-  area: [["31 a 50 m²", 1, 56.76]],
-  valor: [["R$ 1.500 a 2.500", 1, 56.76]],
-  rows: [["Anúncio comercial para locação (exemplo)", 2100.12, 37, 56.76]],
-  pager: "1–1 de 1"
+LKM.estudoComercial({
+  mode: "aluguel", tipologia: ["Co...", 3], kpis: [["Vm²", "R$ 56,76"], ["Área", "37 m²", "lk-kpi__value--ink"]],
+  mapTitle: "Mapa de anúncios - Comercial para locação", seed: 59, kind: "city", points: 1, valorHead: "Metragens",
+  area: [["31 a 50m²", 1, 56.76]], valor: [["1.500 a 2.500", 1, 56.76]],
+  // A captura original lista estes 5 anúncios de venda nesta tabela; mantidos como na fonte
+  rows: [["Sala comercial à venda no Córrego Grande", 365000, 37, 9864.86], ["Sala Comercial à Venda no Córrego Grand…", 320000, 37, 8648.65], ["Sala Comercial de 55.32m² no bairro Córre…", 590000, 55, 10727.27], ["Sala Comercial de 39.77m² no bairro Saco …", 380000, 39, 9743.59], ["Loja de 46.3m² no bairro Córrego Grande", 750000, 46, 16304.35]], pager: "1 - 5 / 5"
 });
-LBI.icons();
+LK.icons();
 </script>
 </body>
 </html>

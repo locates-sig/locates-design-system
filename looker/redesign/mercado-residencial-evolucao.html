@@ -5,31 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercado · Residencial · Evolução · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-const Q = []; for (let y = 2023, q = 2; Q.length < 14; q = q === 4 ? 1 : q + 1, y += q === 1 ? 1 : 0) Q.push(`T${q}/${String(y).slice(2)}`);
-LBI_MERCADO.evolucao({
-  page: { section: "mercado", sub: "residencial", mode: "evolucao" },
-  spatialOpts: ["Raio", "Bairro"],
-  selects: [{ label: "Tipologia", value: "Apartamento", count: 1 }, { label: "Negócio", value: "Venda", count: 1 }],
-  summary: [["vm² médio no período", "R$ 12.669,31"], ["Último trimestre", "R$ 13.678"]],
-  sub: "Residencial para venda · T2/2023 a T3/2026 · raio de 1 km",
-  labels: Q,
-  values: [11103, 11294, 11529, 11976, 12343, 12523, 12950, 13185, 13127, 13433, 13468, 13578, 13521, 13678],
-  multiples: [
-    { name: "1 quarto", avg: 11813, values: [11518, 11551, 11655, 11503, 11332, 11911, 12500, 11458, 11432, 11615, 12199, 12584, 12930, 12621] },
-    { name: "2 quartos", avg: 12008, values: [10890, 10884, 11038, 11431, 11749, 11754, 11995, 12241, 12157, 12588, 12704, 13061, 13111, 13180] },
-    { name: "3 quartos", avg: 13272, values: [11354, 11664, 12051, 12573, 12987, 13209, 13746, 13833, 13837, 14059, 14028, 14105, 13901, 14268] },
-    { name: "4 quartos ou mais", avg: 13666, values: [10941, 11692, 12182, 12548, 12787, 13396, 14337, 14532, 14446, 14666, 14638, 14499, 14220, 15104] }
-  ]
-});
-LBI.icons();
+LKM.estudoEvolucao({ sub: "residencial", tipCount: 1, avg: "R$ 12.669,31", labels: ["T2, 2023", "T3, 2023", "T4, 2023", "T1, 2024", "T2, 2024", "T3, 2024", "T4, 2024", "T1, 2025", "T2, 2025", "T3, 2025", "T4, 2025", "T1, 2026", "T2, 2026", "T3, 2026"], values: [11103, 11294, 11529, 11976, 12343, 12523, 12950, 13185, 13127, 13433, 13468, 13578, 13521, 13678], multiples: [{"name": "1 QUARTO", "avg": 11813, "values": [11518, 11551, 11655, 11503, 11332, 11911, 12500, 11458, 11432, 11615, 12199, 12584, 12930, 12621]}, {"name": "2 QUARTOS", "avg": 12008, "values": [10890, 10884, 11038, 11431, 11749, 11754, 11995, 12241, 12157, 12588, 12704, 13061, 13111, 13180]}, {"name": "3 QUARTOS", "avg": 13272, "values": [11354, 11664, 12051, 12573, 12987, 13209, 13746, 13833, 13837, 14059, 14028, 14105, 13901, 14268]}, {"name": "4 QUARTOS OU MAIS", "avg": 13666, "values": [10941, 11692, 12182, 12548, 12787, 13396, 14337, 14532, 14446, 14666, 14638, 14499, 14220, 15104]}] });
+LK.icons();
 </script>
 </body>
 </html>

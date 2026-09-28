@@ -5,48 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercado · Residencial · Longstay · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-LBI_MERCADO.listing({
-  page: { section: "mercado", sub: "residencial", mode: "longstay" },
-  selects: [{ label: "Tipologia", value: "Apartamento", count: 1 }],
-  summary: [["vm² médio (aluguel)", "R$ 62,08"], ["Área média", "80,94 m²"], ["Anúncios", "18"]],
-  mapTitle: "Mapa de anúncios", mapSub: "Residencial para locação · raio de 1 km", count: 18, seed: 23, mapStyle: "satellite",
-  listSub: "Residencial para locação (longstay) · valores mensais",
-  area: [["28 a 45 m²", 1, 57.5], ["46 a 60 m²", 2, 68.05], ["61 a 75 m²", 6, 65.81], ["76 a 90 m²", 5, 63.58], ["91 a 115 m²", 2, 57.57], ["116 a 145 m²", 2, 47.95]],
-  valor: [["R$ 1.500 a 2.500", 1, 57.5], ["R$ 2.500 a 3.500", 1, 57.14], ["R$ 3.500 a 5.000", 10, 59.47], ["R$ 5.000 a 7.000", 4, 63.46], ["R$ 7.000 a 10.000", 2, 77.11]],
-  quartos: [["1", 2], ["2", 7], ["3", 9]],
-  banheiros: [["1", 4], ["2", 12], ["3", 2]],
-  suites: [["1", 12], ["2", 2]],
-  rows: [
-    ["Studio mobiliado co…", 3200, 56, 57.14, 1, 0, 1, 1],
-    ["Apartamento 40.2M…", 2300, 40, 57.5, 1, 0, 1, 0],
-    ["Residencial Mirante…", 4300, 65, 66.15, 2, 1, 2, 2],
-    ["Imóvel para aluguel…", 3800, 68, 55.88, 2, 1, 2, 1],
-    ["Apartamento com 2…", 4500, 65, 69.23, 2, 1, 2, 2],
-    ["Apartamento com 2…", 4400, 68, 64.71, 2, 0, 1, 1],
-    ["Apartamento 2 quar…", 4501, 57, 78.96, 2, 0, 1, 1],
-    ["Apartamento 2 Qua…", 4300, 75, 57.33, 2, 1, 2, 1],
-    ["2 quartos, mobiliad…", 5300, 65, 81.54, 2, 1, 2, 1],
-    ["Imóvel para aluguel…", 4500, 88, 51.14, 3, 1, 2, 1],
-    ["Imóvel para aluguel…", 8000, 80, 100, 3, 1, 2, 2],
-    ["Imóvel para aluguel…", 7700, 142, 54.23, 3, 2, 3, 2],
-    ["Excelente Apartame…", 4700, 100, 47, 3, 1, 2, 1],
-    ["Duplex para aluguel…", 6000, 144, 41.67, 3, 2, 3, 2],
-    ["Apartamento semi…", 4300, 83, 51.81, 3, 1, 2, 1],
-    ["Apartamento com 3…", 6200, 91, 68.13, 3, 1, 2, 1],
-    ["Apartamento 3 quar…", 5500, 88, 62.5, 3, 1, 2, 1],
-    ["APARTAMENTO 3 Q…", 4300, 82, 52.44, 3, 1, 2, 1]
-  ],
-  pager: "1–18 de 18"
+LKM.estudoResidencial({
+  mode: "longstay", tipologia: ["Ap...", 1], kpis: [["Vm²", "R$ 62,08"], ["Área", "80,94 m²", "lk-kpi__value--ink"]],
+  mapTitle: "Mapa de anúncios - Residencial para locação", seed: 23, style: "satellite", points: 18,
+  dorm: [["1", 2], ["2", 7], ["3", 9]], banh: [["1", 4], ["2", 12], ["3", 2]], suites: [["1", 12], ["2", 2]],
+  area: [["28 a 45m²", 1, 57.5], ["46 a 60m²", 2, 68.05], ["61 a 75m²", 6, 65.81], ["76 a 90m²", 5, 63.58], ["91 a 115m²", 2, 57.57], ["116 a 145m²", 2, 47.95]], valor: [["1.500 a 2.500", 1, 57.5], ["2.500 a 3.500", 1, 57.14], ["3.500 a 5.000", 10, 59.47], ["5.000 a 7.000", 4, 63.46], ["7.000 a 10.000", 2, 77.11]],
+  rows: [["Studio mobiliado co…", 3200, 56, 57.14, 1, 0, 1, 1], ["Apartamento 40.2M…", 2300, 40, 57.5, 1, 0, 1, 0], ["Residencial Mirante…", 4300, 65, 66.15, 2, 1, 2, 2], ["Imóvel para aluguel…", 3800, 68, 55.88, 2, 1, 2, 1], ["Apartamento com 2…", 4500, 65, 69.23, 2, 1, 2, 2], ["Apartamento com 2…", 4400, 68, 64.71, 2, 0, 1, 1], ["Apartamento 2 quar…", 4501, 57, 78.96, 2, 0, 1, 1], ["Apartamento 2 Qua…", 4300, 75, 57.33, 2, 1, 2, 1], ["2 quartos, mobiliad…", 5300, 65, 81.54, 2, 1, 2, 1], ["Imóvel para aluguel…", 4500, 88, 51.14, 3, 1, 2, 1], ["Imóvel para aluguel…", 8000, 80, 100, 3, 1, 2, 2], ["Imóvel para aluguel…", 7700, 142, 54.23, 3, 2, 3, 2], ["Excelente Apartame…", 4700, 100, 47, 3, 1, 2, 1], ["Duplex para aluguel…", 6000, 144, 41.67, 3, 2, 3, 2], ["Apartamento semi…", 4300, 83, 51.81, 3, 1, 2, 1], ["Apartamento com 3…", 6200, 91, 68.13, 3, 1, 2, 1], ["Apartamento 3 quar…", 5500, 88, 62.5, 3, 1, 2, 1], ["APARTAMENTO 3 Q…", 4300, 82, 52.44, 3, 1, 2, 1]], pager: "1 - 18 / 18"
 });
-LBI.icons();
+LK.icons();
 </script>
 </body>
 </html>

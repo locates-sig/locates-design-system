@@ -5,32 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Observatório · Valorização · Longstay residencial · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
-<script src="assets/observatorio.js"></script>
+<script src="assets/lk.js"></script>
+<script src="assets/lk-mercado.js"></script>
 <script>
-LBI_OBS.valorizacao({
-  page: { section: "longstay", sub: "valorizacao", mode: "residencial" },
-  selects: [{ label: "Negócio", value: "Aluguel", count: 1 }, { label: "Tipo de imóvel", value: "1 tipo", count: 1 }, { label: "Quartos", value: "Todos" }, { label: "Bairro", value: "Todos" }],
-  decimals: 2,
-  sub: "Residencial para locação mensal · Florianópolis · setembro/2025 a agosto/2026",
-  gapNote: "Outubro/2025 não tem dado na fonte e aparece como lacuna.",
-  vars: [2.33, 6.46, 5.5],
-  values: [67.9, null, 67.71, 65.55, 65.23, 67.24, 67.29, 77.98, 70.78, 70, 71.09, 71.63],
-  windows: false,
-  multiples: [
-    { name: "1 quarto", kpi: "R$ 89", values: [91, null, 90, 87, 89, 89, 86, 78, 88, 89, 91, 93] },
-    { name: "2 quartos", kpi: "R$ 56", values: [55, null, 55, 54, 50, 54, 56, null, 59, 58, 61, 60] },
-    { name: "3 quartos", kpi: "R$ 55", values: [52, null, 49, 51, 52, 54, 53, null, 54, 51, 55, 54] },
-    { name: "4 quartos", values: Array(12).fill(null) }
-  ]
+LKM.obsValorizacao({
+  section: "longstay", mode: "residencial", filters: [["Tipo negóci...", 1], ["Tipo imóvel: ...", 1], ["Quartos", 0], ["Bairro", 0]], vars: [2.33, 6.46, 5.5], xTitle: "Data (Ano e trimestre)",
+  labels: ["09 2025", "11 2025", "12 2025", "01 2026", "02 2026", "03 2026", "04 2026", "05 2026", "06 2026", "07 2026", "08 2026"], values: [67.9, 67.71, 65.55, 65.23, 67.24, 67.29, 77.98, 70.78, 70, 71.09, 71.63], multFmt: (v) => "R$ " + v,
+  multiples: [{"name": "3 QUARTOS", "big": "R$ 89", "labels": ["09 2025", "11 2025", "12 2025", "01 2026", "02 2026", "03 2026", "04 2026", "05 2026", "06 2026", "07 2026", "08 2026"], "values": [91, 90, 87, 89, 89, 86, 78, 88, 89, 91, 93]}, {"name": "2 QUARTOS", "big": "R$ 56", "labels": ["09 2025", "11 2025", "12 2025", "01 2026", "02 2026", "03 2026", "05 2026", "06 2026", "07 2026", "08 2026"], "values": [55, 55, 54, 50, 54, 56, 59, 58, 61, 60]}, {"name": "3 QUARTOS", "big": "R$ 55", "labels": ["09 2025", "11 2025", "12 2025", "01 2026", "02 2026", "03 2026", "05 2026", "06 2026", "07 2026", "08 2026"], "values": [52, 49, 51, 52, 54, 53, 54, 51, 55, 54]}, {"name": "4 QUARTOS", "big": "R$ 51"}]
 });
-LBI.icons();
+LK.icons();
 </script>
 </body>
 </html>

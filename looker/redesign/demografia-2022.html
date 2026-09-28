@@ -3,105 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Demográfico · 2022 · Locates BI</title>
+<title>Demográfico · Demografia 2022 · Locates BI</title>
 <link rel="stylesheet" href="../../tokens.css">
-<link rel="stylesheet" href="assets/bi.css">
+<link rel="stylesheet" href="assets/lk.css">
 </head>
 <body>
-<main class="bi-main"></main>
+<main></main>
 <script src="assets/icons.js"></script>
-<script src="assets/bi.js"></script>
-<script src="assets/mercado.js"></script>
+<script src="assets/lk.js"></script>
 <script>
-const { fmt } = LBI, M = LBI_MERCADO;
-const P = (v) => fmt.pct(v, 2);
-document.querySelector("main").innerHTML = `
-  <div class="bi-toolbar"><div data-subnav></div></div>
-  <div class="bi-toolbar">
-    ${LBI.rangeHtml({ label: "Distância do imóvel", min: 0, max: 1000, lo: 0, hi: 1000, unit: " m" })}
-    <span class="bi-toolbar__spacer"></span>
-    <div class="summary"><div class="summary__item"><span class="summary__label">População</span><span class="summary__value">15.995</span></div><div class="summary__item"><span class="summary__label">Domicílios</span><span class="summary__value">6.783</span></div><div class="summary__item"><span class="summary__label">Alfabetizados</span><span class="summary__value">84,58%</span></div></div>
-  </div>
-  <div class="grid grid--3">
-    <section class="card card--flush">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Setores censitários (2022)</h2><p class="card__subtitle">Setores que tocam o raio selecionado</p></div></div>
-      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">População residente por sexo</h2><p class="card__subtitle">Setores do raio · Censo 2022</p></div></div>
-      <div id="d-sexo"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">População por faixa etária</h2><p class="card__subtitle">Pessoas e participação no total</p></div></div>
-      <ul id="b-idade"></ul>
-      <p class="footnote">Crianças 0–14 · Jovens 15–29 · Adultos 30–59 · Idosos 60+</p>
-    </section>
-  </div>
-  <div class="grid grid--3">
-    <section class="card span-2">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Pirâmide etária</h2><p class="card__subtitle">Pessoas por faixa de idade e sexo</p></div>
-      <div class="card__aside"><ul class="legend"><li><span class="swatch" style="background:var(--sex-f)"></span>Mulheres</li><li><span class="swatch" style="background:var(--sex-m)"></span>Homens</li></ul></div></div>
-      <div id="pyr"></div>
-    </section>
-    <section class="card">
-      <div class="card__head"><span class="card__icon"><i data-lucide="house"></i></span><div class="card__titles"><h2 class="card__title">Domicílios no setor</h2><p class="card__subtitle">Censo 2022</p></div></div>
-      <div class="kpi kpi--plain"><span class="kpi__label">Domicílios</span><span class="kpi__value">6.783</span></div>
-      <div id="s-tipo"></div>
-      <hr class="divider">
-      <div class="eyebrow">Por quantidade de moradores</div>
-      <ul id="b-mor"></ul>
-    </section>
-  </div>
-  <div class="grid grid--3">
-    ${M.card("b-dom", "Moradores por tipo de domicílio", "Participação na população residente")}
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Composição das famílias</h2><p class="card__subtitle">Status das moradias</p></div></div>
-      <ul id="b-fam"></ul>
-      <dl class="defs"><dt>Nuclear</dt><dd>Pais e filhos, sem outros parentes</dd><dt>Unipessoal</dt><dd>Pessoa morando sozinha</dd><dt>Estendida</dt><dd>Inclui outros parentes além do núcleo</dd><dt>Composta</dt><dd>Inclui pessoas sem parentesco</dd></dl>
-    </section>
-    ${M.card("b-conj", "Domicílios com cônjuges", "Participação dos moradores")}
-  </div>
-  <div class="grid grid--3">
-    ${M.card("b-banh", "Banheiros nos domicílios", "Participação dos domicílios")}
-    <section class="card">
-      <div class="card__head"><div class="card__titles"><h2 class="card__title">Saneamento</h2><p class="card__subtitle">Participação dos domicílios</p></div></div>
-      <div class="eyebrow">Acesso à água</div><ul id="b-agua"></ul>
-      <div class="eyebrow">Destinação do lixo</div><ul id="b-lixo"></ul>
-      <div class="eyebrow">Destinação do esgoto</div><ul id="b-esg"></ul>
-    </section>
-    <div class="stack">
-      ${M.card("b-raca", "Composição étnico-racial", "Participação na população")}
-      <section class="card">
-        <div class="card__head"><span class="card__icon"><i data-lucide="book-open"></i></span><div class="card__titles"><h2 class="card__title">População alfabetizada</h2><p class="card__subtitle">Pessoas com 15 anos ou mais</p></div></div>
-        <div class="kpi kpi--plain kpi--hero"><span class="kpi__value">84,58%</span></div>
-      </section>
+const { card } = LK;
+const rows = (items) => `<ul class="lk-rows">${items.map(([ic, l, v]) => `<li><span class="ic"><i data-lucide="${ic}"></i></span><span>${l}</span><span class="v">${v}</span></li>`).join("")}</ul>`;
+LK.page({ section: "demografico", sub: "2022" }, `
+  <div class="lk-grid" style="grid-template-columns:32% minmax(0,1fr) minmax(0,1fr)">
+    <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Mapa dos setores <b>censitários (2022)</b></h2></div><div id="map"></div></section>
+    ${card({ title: "População residente total e <b>por sexo setor</b>", body: `<div class="lk-grid" style="grid-template-columns:1.3fr 1fr 1fr;align-items:center"><div class="lk-bignum"><span>População</span><b>15.995</b></div><div class="lk-icons4" style="grid-column:span 2;grid-template-columns:1fr 1fr"><div><i data-lucide="user-round"></i><b>7.524</b></div><div><i data-lucide="user-round"></i><b>8.471</b></div></div></div><div id="p-sexo"></div>` })}
+    ${card({ title: "População residente por <b>faixa etária no setor</b>", body: `<div class="lk-icons4"><div><i data-lucide="baby"></i><b>2.451</b></div><div><i data-lucide="user"></i><b>3.172</b></div><div><i data-lucide="user-round"></i><b>7.746</b></div><div><i data-lucide="user-round"></i><b>2.621</b></div></div><div id="p-idade"></div>` })}
+    ${card({ title: "Domicílios <b>no setor</b>", body: `<div class="lk-bignum"><span>Domicílios</span><b>6.783</b></div>
+      <div class="lk-trio"><div><span>Permanentes</span><b class="lk-val">98,79%</b></div><div><span>Coletivos</span><b class="lk-val">1,21%</b></div><div><span>Improvisados</span><b class="lk-val">0,00%</b></div></div>
+      <p class="lk-subtitle">Domicílios pela quantidade de moradores</p>${rows([["user", "Com 1 morador", "27,1%"], ["users", "Com 2 moradores", "34,1%"], ["users", "Com 3 moradores", "22,5%"], ["users", "Com 4 ou mais moradores", "16,3%"]])}
+      <p class="lk-subtitle">Banheiros nos domicílios</p>${rows([["toilet", "Residências com 1 banheiro", "30,32%"], ["toilet", "Residências com 2 banheiros", "45,97%"], ["toilet", "Residências com 3 ou mais banheiros", "23,71%"], ["house", "Outros (uso comum e sem banheiro)", "0,00%"]])}` })}
+    ${card({ title: "População residente por <b>tipo de domicílio</b>", body: `${rows([["house", "Casa", "38,30%"], ["building", "Condomínio", "2,73%"], ["building-2", "Apartamento", "57,70%"], ["house-plus", "Outros", "1,27%"]])}
+      <p class="lk-subtitle">Status das moradias</p>${rows([["house", "Nuclear", "64,09%"], ["house", "Unipessoal", "26,08%"], ["house", "Estendida", "6,89%"], ["house", "Composta", "2,94%"]])}
+      <ul class="lk-defs"><li>UNIPESSOAL: Pessoa morando sozinha.</li><li>NUCLEAR: Pais e filhos, sem outros parentes.</li><li>ESTENDIDA: Inclui outros parentes além do núcleo familiar.</li><li>COMPOSTA: Inclui pessoas sem parentesco na residência.</li></ul>` })}
+    ${card({ title: "Pirâmide etária <b>da população</b>", id: "pyr" })}
+    <div class="lk-col">
+      ${card({ title: "População <b>alfabetizada</b>", body: `<div class="lk-bignum"><span>Alfabetizados</span><b>84,58%</b></div>` })}
+      ${card({ title: "Composição étnica racial <b>da população</b>", body: rows([["users", "Branca", "85,16%"], ["users", "Índigena ou amarela", "1,01%"], ["users", "Parda", "10,11%"], ["users", "Preta", "3,72%"]]) })}
     </div>
-  </div>
-  <section class="card">
-    <div class="card__head"><div class="card__titles"><h2 class="card__title">Pirâmide etária dos cônjuges</h2><p class="card__subtitle">Toda a população casada (sexo diferente e mesmo sexo), por faixa de idade</p></div></div>
-    <div id="c-conj"></div>
-  </section>`;
-LBI.shell({ section: "demografico", sub: "2022", updated: "28/09/2026" });
-LBI.map("#map", { seed: 71, height: 380, controls: false, sectors: { n: 14, spread: 130 }, slider: false, parks: 5, legend: `<ul class="legend"><li><span class="swatch" style="background:var(--color-brand-primary-light)"></span>Setores do raio</li><li><span class="swatch" style="border-radius:50%;background:var(--primary)"></span>Imóvel</li></ul>` });
-LBI.donut("#d-sexo", { items: [{ label: "Mulheres", value: 8471, color: "--sex-f" }, { label: "Homens", value: 7524, color: "--sex-m" }], fmt: "int", center: { value: "15.995", label: "pessoas" } });
-LBI.bars("#b-idade", { fmt: "int", rows: [
-  { label: "Crianças · 15,3%", value: 2451, icon: "baby", color: "--ord-2" }, { label: "Jovens · 19,8%", value: 3172, icon: "user", color: "--ord-3" },
-  { label: "Adultos · 48,4%", value: 7746, icon: "user", color: "--ord-4" }, { label: "Idosos · 16,4%", value: 2621, icon: "user", color: "--ord-5" }] });
-LBI.pyramid("#pyr", { fmt: "int", left: { name: "Mulheres", color: "--sex-f" }, right: { name: "Homens", color: "--sex-m" }, rows: [
-  ["70+", 665, 523], ["60–69", 809, 618], ["50–59", 1000, 845], ["40–49", 1470, 1301], ["30–39", 1635, 1488], ["25–29", 702, 611],
-  ["20–24", 581, 497], ["15–19", 377, 397], ["10–14", 411, 384], ["5–9", 440, 433], ["0–4", 362, 411]] });
-LBI.stackbar("#s-tipo", { label: "Espécie de domicílio", items: [{ label: "Permanentes", value: 98.79, color: "--cat-1" }, { label: "Coletivos", value: 1.21, color: "--cat-2" }, { label: "Improvisados", value: 0, color: "--cat-3" }], fmt: P });
-LBI.bars("#b-mor", { inline: true, fmt: (v) => fmt.pct(v), rows: [{ label: "1 morador", value: 27.1 }, { label: "2 moradores", value: 34.1 }, { label: "3 moradores", value: 22.5 }, { label: "4 ou mais", value: 16.3 }] });
-LBI.bars("#b-dom", { fmt: P, rows: [{ label: "Apartamento", value: 57.7, icon: "building-2" }, { label: "Casa", value: 38.3, icon: "house" }, { label: "Casa em condomínio", value: 2.73, icon: "building" }, { label: "Outros", value: 1.27, icon: "circle-help" }] });
-LBI.bars("#b-fam", { inline: true, fmt: P, rows: [{ label: "Nuclear", value: 64.09 }, { label: "Unipessoal", value: 26.08 }, { label: "Estendida", value: 6.89 }, { label: "Composta", value: 2.94 }] });
-LBI.bars("#b-conj", { fmt: P, rows: [{ label: "Casados (sexo diferente)", value: 55.99, icon: "users" }, { label: "Solteiros", value: 43, icon: "user" }, { label: "Casados (mesmo sexo)", value: 1.02, icon: "users" }] });
-LBI.bars("#b-banh", { fmt: P, rows: [{ label: "1 banheiro", value: 30.32, icon: "bath" }, { label: "2 banheiros", value: 45.97, icon: "bath" }, { label: "3 ou mais banheiros", value: 23.71, icon: "bath" }, { label: "Uso comum ou sem banheiro", value: 0, icon: "bath" }] });
-LBI.bars("#b-agua", { inline: true, fmt: P, max: 100, rows: [{ label: "Rede geral", value: 93.95 }, { label: "Poço", value: 0.16 }, { label: "Outras", value: 5.89 }] });
-LBI.bars("#b-lixo", { inline: true, fmt: P, max: 100, rows: [{ label: "Coletado", value: 96.11 }, { label: "Depositado", value: 3.77 }, { label: "Outras", value: 0.12 }] });
-LBI.bars("#b-esg", { inline: true, fmt: P, max: 100, rows: [{ label: "Rede geral", value: 46.65 }, { label: "Fossa séptica", value: 43.87 }, { label: "Outras", value: 9.47 }] });
-LBI.bars("#b-raca", { inline: true, fmt: P, rows: [{ label: "Branca", value: 85.16 }, { label: "Parda", value: 10.11 }, { label: "Preta", value: 3.72 }, { label: "Indígena ou amarela", value: 1.01 }] });
-LBI.columns("#c-conj", { labelAll: true, height: 200, xName: "Idade", valueName: "Pessoas casadas", data: [["10–14", 0], ["15–19", 4], ["20–24", 98], ["25–29", 294], ["30–34", 469], ["35–39", 542], ["40–44", 574], ["45–49", 432], ["50–54", 330], ["55–59", 265], ["60–64", 254], ["65–69", 207], ["70–74", 158], ["75–79", 72], ["80+", 35]] });
-LBI.icons();
+    ${card({ title: "Acesso <b>a água</b>", body: `${rows([["droplets", "Rede geral", "93,95%"], ["droplets", "Poço", "0,16%"], ["droplets", "Outras", "5,89%"]])}
+      <p class="lk-subtitle">Destinação do lixo</p>${rows([["trash-2", "Coletado", "96,11%"], ["trash-2", "Depositado", "3,77%"], ["trash-2", "Outras", "0,12%"]])}
+      <p class="lk-subtitle">Destinação do esgoto</p>${rows([["waves", "Rede geral", "46,65%"], ["waves", "Fossa séptica", "43,87%"], ["waves", "Outras", "9,47%"]])}` })}
+    ${card({ title: "Domicílios <b>com conjugês</b>", body: `${rows([["users", "Casados (sexo diferente)", "55,99%"], ["users", "Casados (mesmo sexo)", "1,02%"], ["user", "Solteiros", "43,00%"]])}
+      <p class="lk-subtitle">Pirâmide etária dos conjugês</p><div class="lk-bignum" style="font-size:12.5px;text-align:center">Toda a população casada asados (sexo diferente e mesmo sexo)</div><div id="pyr-conj"></div>` })}
+  </div>`);
+LK.map("#map", { seed: 71, height: 380, slider: true, sectors: { n: 14, colors: ["--c8"], opacity: 0.38 }, parks: 4 });
+LK.pie("#p-sexo", { donut: true, items: [{ label: "Mulheres", value: 53, color: "--c1" }, { label: "Homens", value: 47, color: "--c2" }] });
+LK.pie("#p-idade", { donut: true, items: [{ label: "Adultos", value: 48.4, color: "--c6" }, { label: "Jovens", value: 19.8, color: "--c3" }, { label: "Idosos", value: 16.4, color: "--c5" }, { label: "Infância", value: 15.3, color: "--c2" }] });
+LK.pyramid("#pyr", { left: { name: "Mulheres", color: "--c1" }, right: { name: "Homens", color: "--c2" }, rows: [["70 mais", 665, 523], ["60-69", 809, 618], ["50-59", 1000, 845], ["30-49", 1470, 1301], ["30-39", 1635, 1488], ["25-29", 702, 611], ["20-24", 581, 497], ["15-19", 377, 397], ["10-14", 411, 384], ["5-9", 440, 433], ["0-4", 362, 411]] });
+LK.hbars("#pyr-conj", { valueName: "Pessoas casadas", rows: [["80 mais", 35], ["75-79", 72], ["70-74", 158], ["65-69", 207], ["60-64", 254], ["55-59", 265], ["50-54", 330], ["45-49", 432], ["40-44", 574], ["35-39", 542], ["30-34", 469], ["25-29", 294], ["20-24", 98], ["15-19", 4], ["10-14", 0]] });
+LK.icons();
 </script>
 </body>
 </html>
