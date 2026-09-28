@@ -1,0 +1,77 @@
+/* fontes: importadas em ../tokens.css */
+/* Locates App — componentes reconstituídos das classes Tailwind/shadcn do app (estático, sem JS) */
+body{font-family:var(--font-sans);color:var(--foreground);margin:0}
+.lc-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px}
+.lc-col{display:flex;flex-direction:column;gap:12px;padding:16px}
+/* Button — cva do app: rounded-lg border-transparent text-sm font-medium, h-8 px-2.5 gap-1.5 */
+.lc-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 10px;border:1px solid transparent;border-radius:var(--radius-lg);font:500 14px/20px var(--font-sans);white-space:nowrap;cursor:pointer;transition:all .15s;background:transparent;color:var(--foreground)}
+.lc-btn:focus-visible{outline:none;border-color:var(--ring);box-shadow:0 0 0 3px color-mix(in oklab,var(--ring) 50%,transparent)}
+.lc-btn:active{transform:translateY(1px)}
+.lc-btn:disabled{opacity:.5;pointer-events:none}
+.lc-btn svg{width:16px;height:16px;flex:none}
+.lc-btn--default{background:var(--primary);color:var(--primary-foreground)}
+.lc-btn--default:hover{background:var(--color-brand-primary-dark)}
+.lc-btn--outline{border-color:var(--border);background:var(--background)}
+.lc-btn--outline:hover,.lc-btn--ghost:hover{background:var(--muted);color:var(--foreground)}
+.lc-btn--secondary{background:var(--secondary);color:var(--secondary-foreground)}
+.lc-btn--secondary:hover{background:color-mix(in oklab,var(--secondary) 80%,transparent)}
+.lc-btn--destructive{background:color-mix(in oklab,var(--destructive) 10%,transparent);color:var(--destructive)}
+.lc-btn--destructive:hover{background:color-mix(in oklab,var(--destructive) 20%,transparent)}
+.lc-btn--link{color:var(--primary);text-underline-offset:4px}
+.lc-btn--link:hover{text-decoration:underline}
+.lc-btn--xs{height:24px;padding:0 8px;gap:4px;font-size:12px;border-radius:var(--radius-md)}
+.lc-btn--sm{height:28px;padding:0 10px;gap:4px;font-size:.8rem;border-radius:var(--radius-md)}
+.lc-btn--lg{height:36px}
+.lc-btn--icon{width:32px;padding:0}
+.lc-btn--cta{width:100%;height:auto;padding:24px 10px;font-weight:700;background:var(--color-brand-primary);color:#fff}
+.lc-btn--cta:hover{background:var(--color-brand-primary-dark)}
+/* FloatingInput — label flutuante + trilho 2px que fica roxo no foco */
+.lc-field{display:flex;flex-direction:column;width:100%}
+.lc-field__box{position:relative;display:flex;align-items:center;gap:8px;height:48px}
+.lc-field__input{flex:1;height:100%;border:0;background:transparent;padding:20px 0 4px;font:400 14px var(--font-sans);color:var(--foreground);outline:none}
+.lc-field__label{position:absolute;left:0;top:50%;transform:translateY(-50%);font:500 14px var(--font-sans);color:var(--color-gray-secondary);pointer-events:none;transition:all .15s}
+.lc-field__input:focus+.lc-field__label,.lc-field__input:not(:placeholder-shown)+.lc-field__label{top:4px;transform:none;font-size:11px;line-height:1}
+.lc-field__track{height:2px;background:var(--color-gray-border);transition:background .15s}
+.lc-field:focus-within .lc-field__track{background:var(--color-brand-primary)}
+.lc-field--invalid .lc-field__track{background:var(--destructive)}
+.lc-field__error{margin-top:6px;font-size:12px;color:var(--destructive)}
+.lc-field__icon{background:none;border:0;padding:0;cursor:pointer;color:var(--color-gray-secondary)}
+.lc-field__icon:hover{color:var(--color-brand-primary)}
+/* Checkbox */
+.lc-check{display:inline-flex;align-items:center;gap:8px;font-size:12px;cursor:pointer}
+.lc-check__box{width:16px;height:16px;border:1px solid var(--input);border-radius:var(--radius-xs);display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#fff}
+.lc-check__box[data-checked]{background:var(--primary);border-color:var(--primary)}
+.lc-check__box svg{width:12px;height:12px}
+.lc-link{font-weight:600;font-size:12px;color:var(--color-brand-primary);text-decoration:none}
+.lc-link:hover{color:var(--color-brand-primary-dark)}
+/* AuthCard */
+.lc-auth{display:flex;min-height:100%}
+.lc-auth__art{width:35%;background:center/cover var(--color-brand-primary-dark);display:flex;align-items:center;justify-content:center;padding:32px;color:#fff}
+.lc-auth__main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;background:#fff}
+.lc-auth__card{width:100%;max-width:var(--auth-card-max);display:flex;flex-direction:column;align-items:center;padding:40px;background:#fff;border:1px solid var(--color-gray-border);border-radius:var(--radius-2xl);box-shadow:var(--shadow-xl);box-sizing:border-box}
+.lc-auth__title{margin:0 0 4px;font:600 24px/32px var(--font-sans);color:var(--color-brand-primary)}
+.lc-auth__sub{margin:0 0 16px;font-size:14px;color:var(--color-gray-secondary)}
+/* MapPopup / MapTooltip — overrides do Mapbox GL */
+.lc-popup{background:#fff;border-radius:var(--radius-md);display:flex;flex-direction:column;gap:8px;min-width:300px;max-width:var(--map-popup-max);padding:16px;box-shadow:var(--shadow-popup);box-sizing:border-box}
+.lc-popup__eyebrow{font:600 10px/14px var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--color-gray-secondary)}
+.lc-popup__title{font:600 16px/22px var(--font-sans);color:var(--color-brand-primary)}
+.lc-popup__kv{display:flex;justify-content:space-between;font-size:13px;color:var(--color-gray-secondary)}
+.lc-popup__kv b{color:var(--foreground);font-weight:600;font-variant-numeric:tabular-nums}
+.lc-tooltip{color:#fff;text-align:center;background:var(--map-tooltip-bg);border-radius:var(--radius-xs);min-width:70px;max-width:80px;padding:6px 8px;font-size:11px;box-shadow:0 2px 4px #0003}
+.lc-measure{display:inline-block;color:#fff;font:600 11px var(--font-sans);padding:4px 8px;border-radius:var(--radius-sm);background:var(--color-measure-area-tag-bg)}
+.lc-measure--edge{background:var(--color-measure-edge-tag-bg)}
+/* Menu / Select item */
+.lc-menu{background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:4px;width:220px}
+.lc-menu__item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;font-size:14px;color:var(--popover-foreground);cursor:pointer}
+.lc-menu__item:hover{background:var(--lilac-50)}
+.lc-menu__item[data-highlighted]{background:var(--lilac-highlight)}
+.lc-menu__item[data-selected]{background:var(--color-brand-primary-light);color:var(--color-brand-primary);font-weight:600}
+.lc-menu__item[data-variant=destructive]:hover{background:var(--danger-soft);color:var(--danger-text)}
+.lc-menu__sep{height:1px;background:var(--border);margin:4px 0}
+/* utilidades do app */
+.custom-scrollbar{scrollbar-width:thin;scrollbar-color:var(--scrollbar-thumb) var(--scrollbar-track)}
+.custom-scrollbar::-webkit-scrollbar{width:6px}
+.custom-scrollbar::-webkit-scrollbar-track{background:var(--scrollbar-track);border-radius:3px}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:3px}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover{background:var(--scrollbar-thumb-hover)}
+.no-scrollbar{scrollbar-width:none}.no-scrollbar::-webkit-scrollbar{display:none}

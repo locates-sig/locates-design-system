@@ -1,0 +1,53 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../static.css">
+<title>Locates App</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--card); color:var(--foreground); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .brand { fill:var(--color-brand-primary); }
+  .deep { fill:var(--navy-950); }
+  .tint { fill:var(--lilac-50); }
+  .light { fill:var(--color-brand-primary-light); }
+  .green { fill:var(--color-brand-secondary); }
+  .ring { fill:none; stroke:var(--color-brand-secondary); }
+  .ring.l { stroke:var(--color-brand-primary-light); }
+  .blk { rx:var(--radius-2xl); }
+  .words { position:absolute; left:40px; bottom:40px; max-width:440px; }
+  .name { margin:0; font-size:100px; line-height:.95; font-weight:600; letter-spacing:-.02em; color:var(--color-brand-primary); }
+  .tag { margin:12px 0 0 4px; font-size:14px; line-height:20px; color:var(--color-gray-secondary); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      color-brand-primary 200×264 sangrando no topo (o roxo é a marca) · navy-950 160×176 sangrando à direita · lilac-50 136×104 (a tinta) · color-brand-primary-light 96×64 · color-brand-secondary só no anel — ≈40% de 960×288
+  arrangement laje roxa alta com satélites, bases alinhadas a space-6 da borda, gutters space-4
+  pattern     anéis, do "O" verde do logo (o motivo literal da marca): 1 anel grande verde cortando a laje roxa, 3 anéis concêntricos lilás no bloco escuro
+  scales      lados em múltiplos de space-2; gutters space-4; cantos radius-2xl; traço 16px = espessura do anel do logo em escala
+-->
+<rect class="brand blk" x="16" y="-24" width="200" height="288" rx="16"/>
+<rect class="tint blk" x="232" y="160" width="136" height="104" rx="16"/>
+<rect class="light blk" x="232" y="80" width="96" height="64" rx="16"/>
+<rect class="deep blk" x="344" y="-16" width="160" height="160" rx="16"/>
+<circle class="ring" cx="116" cy="168" r="64" stroke-width="18"/>
+<circle class="green" cx="300" cy="212" r="12"/>
+<circle class="ring l" cx="424" cy="64" r="24" stroke-width="4"/>
+<circle class="ring l" cx="424" cy="64" r="44" stroke-width="4"/>
+<circle class="ring l" cx="424" cy="64" r="64" stroke-width="4"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Locates<br>App</h1>
+<p class="tag">Plataforma inteligente para maximizar ativos imobiliários</p>
+</div>
+</div>
+</body>
+</html>
