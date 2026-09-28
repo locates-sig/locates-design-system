@@ -154,7 +154,8 @@
       const H = o.height || 240;
       const m = { t: 24, r: 20, b: 30, l: 56 };
       const iw = W - m.l - m.r, ih = H - m.t - m.b;
-      const lo0 = o.domain ? o.domain[0] : Math.min(...vals), hi0 = o.domain ? o.domain[1] : Math.max(...vals);
+      const nn = vals.filter((v) => v != null);
+      const lo0 = o.domain ? o.domain[0] : Math.min(...nn), hi0 = o.domain ? o.domain[1] : Math.max(...nn);
       const pad = (hi0 - lo0) * 0.12;
       const { lo, hi, ticks } = niceTicks(o.zero ? 0 : lo0 - pad, hi0 + pad, 4);
       const x = (i) => m.l + (vals.length === 1 ? iw / 2 : (i / (vals.length - 1)) * iw);
@@ -165,17 +166,25 @@
       // rótulos do eixo x: no máx. ~8
       const every = Math.max(1, Math.ceil(labs.length / Math.max(2, Math.floor(iw / 90))));
       labs.forEach((l, i) => { if ((i % every === 0 && labs.length - 1 - i >= every) || i === labs.length - 1) s += `<text class="tick" x="${x(i)}" y="${H - 8}" text-anchor="${i === 0 ? "start" : i === labs.length - 1 ? "end" : "middle"}">${esc(l)}</text>`; });
-      const pts = vals.map((v, i) => [x(i), y(v)]);
-      const d = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join("");
-      if (o.area !== false) s += `<path d="${d}L${x(vals.length - 1)},${m.t + ih}L${x(0)},${m.t + ih}Z" fill="${col}" opacity=".08"/>`;
-      s += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+      const pts = vals.map((v, i) => (v == null ? null : [x(i), y(v)]));
+      // um trecho por sequência contínua; mês sem dado vira lacuna (linha tracejada cinza liga as pontas)
+      const runs = [];
+      pts.forEach((p, i) => { if (!p) return; if (i && pts[i - 1]) runs[runs.length - 1].push(p); else runs.push([p]); });
+      const path = (r) => r.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join("");
+      for (let k = 1; k < runs.length; k++) { const a = runs[k - 1][runs[k - 1].length - 1], b = runs[k][0]; s += `<path d="M${a[0]},${a[1]}L${b[0]},${b[1]}" stroke="${css("--color-gray-300")}" stroke-width="1.5" stroke-dasharray="3 4" fill="none"/>`; }
+      runs.forEach((r) => {
+        if (o.area !== false) s += `<path d="${path(r)}L${r[r.length - 1][0]},${m.t + ih}L${r[0][0]},${m.t + ih}Z" fill="${col}" opacity=".08"/>`;
+        s += `<path d="${path(r)}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+        if (r.length === 1) s += `<circle cx="${r[0][0]}" cy="${r[0][1]}" r="3" fill="${col}"/>`;
+      });
       // rótulos seletivos: primeiro, último, máximo e mínimo
-      const iMax = vals.indexOf(Math.max(...vals)), iMin = vals.indexOf(Math.min(...vals));
-      const keep = new Set(o.labelMode === "last" ? [vals.length - 1] : [0, vals.length - 1, iMax, iMin]);
+      const iFirst = vals.findIndex((v) => v != null), iLast = vals.length - 1 - [...vals].reverse().findIndex((v) => v != null);
+      const iMax = vals.indexOf(Math.max(...nn)), iMin = vals.indexOf(Math.min(...nn));
+      const keep = new Set(o.labelMode === "last" ? [iLast] : [iFirst, iLast, iMax, iMin]);
       pts.forEach((p, i) => {
-        if (!keep.has(i)) return;
+        if (!p || !keep.has(i)) return;
         s += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="${col}" stroke="#fff" stroke-width="2"/>`;
-        const below = i === iMin && i !== iMax && i !== vals.length - 1 && i !== 0;
+        const below = i === iMin && i !== iMax && i !== iLast && i !== iFirst;
         const anchor = i === 0 ? "start" : i === vals.length - 1 ? "end" : "middle";
         s += `<text class="dlabel" x="${p[0]}" y="${below ? p[1] + 18 : p[1] - 10}" text-anchor="${anchor}">${esc(f(vals[i]))}</text>`;
       });
@@ -190,9 +199,10 @@
         const px = ((e.clientX - r.left) / r.width) * W;
         const i = Math.max(0, Math.min(vals.length - 1, Math.round(((px - m.l) / iw) * (vals.length - 1))));
         ch.setAttribute("x1", x(i)); ch.setAttribute("x2", x(i)); ch.style.display = "";
+        if (vals[i] == null) { dot.style.display = "none"; showTip(e, labs[i], [{ label: o.valueName || "Valor", value: "sem dados" }]); return; }
         dot.setAttribute("cx", x(i)); dot.setAttribute("cy", y(vals[i])); dot.style.display = "";
         const rows = [{ label: o.valueName || "Valor", value: f(vals[i]), color: col }];
-        if (i > 0) { const dv = (vals[i] / vals[i - 1] - 1) * 100; rows.push({ label: "vs. anterior", value: (dv >= 0 ? "+" : "") + fmt.pct(dv) }); }
+        if (i > 0 && vals[i - 1] != null) { const dv = (vals[i] / vals[i - 1] - 1) * 100; rows.push({ label: "vs. anterior", value: (dv >= 0 ? "+" : "") + fmt.pct(dv) }); }
         showTip(e, labs[i], rows);
       });
       hit.addEventListener("mouseleave", () => { ch.style.display = "none"; dot.style.display = "none"; hideTip(); });
@@ -432,7 +442,7 @@
       for (let i = 0; i < pts.n; i++) {
         let k = r() * tw, ci = 0;
         while (k > wts[ci]) { k -= wts[ci]; ci++; }
-        const px = cx + gauss(r) * (pts.spread || 120), py = cy + gauss(r) * (pts.spread || 120) * 0.7;
+        const px = cx + gauss(r) * (pts.sx || pts.spread || 120), py = cy + gauss(r) * (pts.sy || (pts.spread || 120) * 0.7);
         s += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${pts.r || 6}" fill="${cols[ci]}" stroke="#fff" stroke-width="2"/>`;
       }
     }
@@ -498,6 +508,8 @@
 
   function shell(page) {
     const logo = "../../assets/Logos/logo.svg";
+    const nav = page.nav || NAV;
+    const ctx = page.context || { eyebrow: "Estudo de área · raio de 1 km", title: "6523 · Itacorubi, Florianópolis-SC" };
     const header = document.createElement("header");
     header.className = "bi-header";
     header.innerHTML = `
@@ -505,17 +517,17 @@
         <a href="index.html" aria-label="Índice das telas"><img class="bi-header__logo" src="${logo}" alt="Locates"></a>
         <span class="bi-header__divider"></span>
         <div class="bi-header__context">
-          <span class="bi-header__eyebrow">Estudo de área · raio de 1 km</span>
-          <span class="bi-header__title">6523 · Itacorubi, Florianópolis-SC</span>
+          <span class="bi-header__eyebrow">${esc(ctx.eyebrow)}</span>
+          <span class="bi-header__title">${esc(ctx.title)}</span>
         </div>
         <div class="bi-header__actions">
           <button class="btn btn--outline" type="button"><i data-lucide="filter-x"></i>Limpar filtros</button>
         </div>
       </div>
-      <nav class="bi-tabs" aria-label="Seções do relatório">${NAV.map((s) => `<a class="bi-tab" href="${s.href}"${s.id === page.section ? ' aria-current="page"' : ""}${s.disabled ? ' aria-disabled="true" title="Sem tela de referência"' : ""}><i data-lucide="${s.icon}"></i>${esc(s.label)}</a>`).join("")}</nav>`;
+      <nav class="bi-tabs" aria-label="Seções do relatório">${nav.map((s) => `<a class="bi-tab" href="${s.href}"${s.id === page.section ? ' aria-current="page"' : ""}${s.disabled ? ' aria-disabled="true" title="Sem tela de referência"' : ""}><i data-lucide="${s.icon}"></i>${esc(s.label)}</a>`).join("")}</nav>`;
     document.body.prepend(header);
 
-    const sec = NAV.find((s) => s.id === page.section);
+    const sec = nav.find((s) => s.id === page.section);
     document.querySelectorAll("[data-subnav]").forEach((slot) => {
       if (!sec || !sec.subs) { slot.remove(); return; }
       let h = `<nav class="pill-tabs" aria-label="${esc(sec.label)}">${sec.subs.map((s) => `<a class="pill-tab" href="${s.href}"${s.id === page.sub ? ' aria-current="page"' : ""}>${esc(s.label)}</a>`).join("")}</nav>`;

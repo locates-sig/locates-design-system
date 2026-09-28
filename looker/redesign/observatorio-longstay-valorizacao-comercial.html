@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Valorização · Longstay comercial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+LBI_OBS.valorizacao({
+  page: { section: "longstay", sub: "valorizacao", mode: "comercial" },
+  selects: [{ label: "Negócio", value: "Aluguel", count: 1 }, { label: "Tipo de imóvel", value: "Todos" }, { label: "Bairro", value: "Todos" }],
+  decimals: 2,
+  sub: "Comercial para locação mensal · Florianópolis · setembro/2025 a agosto/2026",
+  gapNote: "Outubro/2025 não tem dado na fonte e aparece como lacuna.",
+  vars: [2.58, 8.29, 8.31],
+  values: [61.25, null, 59.84, 59.12, 59.05, 60.37, 61.25, 60.77, 66.11, 64.66, 66.07, 66.34]
+});
+LBI.icons();
+</script>
+</body>
+</html>

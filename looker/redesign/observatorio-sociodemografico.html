@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Sociodemográfico · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+const { fmt } = LBI, O = LBI_OBS;
+const kpi = (icon, label, value, d) => `<div class="kpi"><span class="kpi__label"><i data-lucide="${icon}"></i>${label}</span><span class="kpi__value">${value}</span><span class="kpi__foot">${O.delta(d)} vs. 2010</span></div>`;
+const block = (icon, title, sub, cols, items) => `<section class="card"><div class="card__head"><span class="card__icon"><i data-lucide="${icon}"></i></span><div class="card__titles"><h2 class="card__title">${title}</h2><p class="card__subtitle">${sub}</p></div></div><div class="grid grid--${cols}" style="gap:12px">${items.map((i) => O.compare(...i)).join("")}</div></section>`;
+const tcard = (id, title, sub) => `<section class="card card--flush"><div class="card__head"><div class="card__titles"><h2 class="card__title">${title}</h2><p class="card__subtitle">${sub}</p></div></div><div id="${id}" style="margin-top:16px"></div></section>`;
+document.querySelector("main").innerHTML = `
+  <div class="bi-toolbar"><button class="select" type="button"><span class="select__label">Bairro</span><span class="select__value">Todos</span><i data-lucide="chevron-down"></i></button><span class="bi-toolbar__spacer"></span>
+    <div class="summary"><div class="summary__item"><span class="summary__label">Fonte</span><span class="summary__value">Censo IBGE 2010 e 2022</span></div><div class="summary__item"><span class="summary__label">Bairros</span><span class="summary__value">56</span></div></div></div>
+  <div class="grid grid--3">
+    <section class="card card--flush">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa dos bairros</h2><p class="card__subtitle">Um ponto por bairro de Florianópolis</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    <div class="stack span-2">
+      <section class="card">
+        <div class="card__head"><div class="card__titles"><h2 class="card__title">Dados gerais</h2><p class="card__subtitle">Florianópolis · Censo 2022</p></div></div>
+        <div class="kpi-row">${kpi("users", "População", "534.604", 28.2)}${kpi("house", "Domicílios", "221.116", 50)}${kpi("wallet", "Renda média", "R$ 5.935", 110.7)}</div>
+      </section>
+      ${block("house", "Moradores por domicílio", "Domicílios particulares permanentes · 2010 → 2022", 3, [["1 morador", 25763, 57869], ["2 moradores", 41597, 73919], ["3 moradores", 36986, 48389]])}
+    </div>
+  </div>
+  ${block("baby", "Grupos etários", "Pessoas por faixa de idade · 2010 → 2022", 4, [["Crianças (0 a 14 anos)", 74677, 82785], ["Jovens (15 a 29 anos)", 117278, 116339], ["Adultos (30 a 59 anos)", 179115, 243873], ["Idosos (60 anos ou mais)", 48183, 91463]])}
+  <h2 class="section-title"><i data-lucide="trending-up"></i>Bairros que mais cresceram<small>2010 → 2022 · 10 de 56 bairros</small></h2>
+  <div class="grid grid--3">
+    ${tcard("t-pop", "População", "Moradores")}
+    ${tcard("t-dom", "Domicílios", "Domicílios particulares permanentes")}
+    ${tcard("t-renda", "Renda média", "R$ por mês, arredondado")}
+  </div>`;
+LBI.shell(O.page({ section: "sociodemografico" }));
+LBI.map("#map", { ...O.CITY_MAP, seed: 157, height: 520, points: O.cityPoints(56, { r: 6, colors: ["--cat-2"] }) });
+const pctv = (v) => "+" + fmt.pct(v, 2);
+const cols = (f) => [{ label: "Bairro" }, { label: "2010", num: true, fmt: f }, { label: "2022", num: true, fmt: f }, { label: "Variação", num: true, heat: true, sort: "descending", fmt: pctv }];
+LBI.table("#t-pop", { columns: cols("int"), pager: "1–10 de 56", rows: [["Moçambique", 1527, 4164, 172.69], ["Rio Vermelho", 10606, 26548, 150.31], ["Ingleses", 26055, 46292, 77.67], ["Vargem Pequena", 1214, 2143, 76.52], ["Campeche", 16904, 29728, 75.86], ["Alto Ribeirão", 4428, 7395, 67.01], ["Vargem do Bom Jesus", 5612, 9168, 63.36], ["Vargem Grande", 3852, 6143, 59.48], ["Ratones", 2436, 3680, 51.07], ["Itacorubi", 15631, 23591, 50.92]] });
+LBI.table("#t-dom", { columns: cols("int"), pager: "1–10 de 56", rows: [["Moçambique", 519, 1547, 198.07], ["Rio Vermelho", 4055, 9911, 144.41], ["Vargem Pequena", 400, 831, 107.75], ["Campeche", 6067, 12510, 106.2], ["Alto Ribeirão", 1403, 2883, 105.49], ["Ingleses", 8927, 18331, 105.34], ["Vargem Grande", 1235, 2272, 83.97], ["Vargem do Bom Jesus", 1813, 3304, 82.24], ["Praia Brava", 77, 140, 81.82], ["Pantanal", 2139, 3767, 76.11]] });
+LBI.table("#t-renda", { columns: cols("int"), pager: "1–10 de 56", rows: [["Cachoeira do Bom Jesus", 1799, 5468.3, 203.96], ["Morro das Pedras", 2380, 7060.34, 196.65], ["Ribeirão da Ilha", 1387.56, 3751.03, 170.33], ["Ratones", 1461, 3883.87, 165.84], ["Costa da Lagoa", 828.5, 2155.67, 160.19], ["Rio Vermelho", 1205.5, 3115.82, 158.47], ["Carianos", 2211.09, 5685.85, 157.15], ["Ponta das Canas", 1540.71, 3885.41, 152.18], ["Santo Antônio de Lisboa", 3340.8, 8331.53, 149.39], ["Barra da Lagoa", 1838.45, 4570.47, 148.6]] });
+LBI.icons();
+</script>
+</body>
+</html>

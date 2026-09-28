@@ -88,7 +88,7 @@ Para usar numa página sem build: carregue `tokens.css`, `components/bundle.css`
 
 ## Telas do BI
 
-`looker/redesign/` aplica este sistema às 17 telas do relatório de BI (Looker Studio) capturadas em `looker/`: protótipos em HTML (`index.html`), capturas em `previews/` e um guia de tema e componentes para refazer o relatório no Looker Studio, com a paleta de gráficos validada e as inconsistências de dados encontradas.
+`looker/redesign/` aplica este sistema às telas dos relatórios de BI (Looker Studio) capturadas em `looker/` (17 do estudo de área e 10 do Observatório do mercado): protótipos em HTML (`index.html`), capturas em `previews/` e um guia de tema e componentes para refazer o relatório no Looker Studio, com a paleta de gráficos validada e as inconsistências de dados encontradas.
 
 ## Ativos
 

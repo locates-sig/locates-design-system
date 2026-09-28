@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Valorização · Venda comercial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+LBI_OBS.valorizacao({
+  page: { section: "venda", sub: "valorizacao", mode: "comercial" },
+  selects: [{ label: "Negócio", value: "Venda", count: 1 }, { label: "Tipo de imóvel", value: "Todos" }, { label: "Bairro", value: "Todos" }],
+  sub: "Comercial à venda · Florianópolis · setembro/2025 a agosto/2026",
+  vars: [1.54, 1.74, 0.86],
+  values: [11661, 11292, 11419, 12156, 11389, 11472, 11561, 12882, 12737, 11584, 11892, 11762]
+});
+LBI.icons();
+</script>
+</body>
+</html>

@@ -39,7 +39,7 @@
       <div class="grid grid--3">
         <section class="card card--flush span-2">
           <div class="card__head"><div class="card__titles"><h2 class="card__title">${o.mapTitle}</h2><p class="card__subtitle">${o.mapSub}</p></div>
-          <div class="card__aside"><span class="badge badge--secondary"><i data-lucide="map-pin"></i>${o.count} anúncios</span></div></div>
+          <div class="card__aside"><span class="badge badge--secondary"><i data-lucide="map-pin"></i>${o.countLabel || o.count} anúncios</span></div></div>
           <div id="map" style="margin:16px 0 0;border-radius:0;flex:1"></div>
         </section>
         <div class="stack">
@@ -58,17 +58,17 @@
         <div id="t-list" style="margin-top:16px"></div>
       </section>`;
     LBI.shell(o.page);
-    LBI.map("#map", { seed: o.seed || 11, height: o.mapHeight || 560, radius: true, slider: true, points: { n: Math.min(o.count, 140), spread: 130 }, chip: "Somente anúncios georreferenciados aparecem no mapa", style: o.mapStyle });
+    LBI.map("#map", { seed: o.seed || 11, height: o.mapHeight || 560, radius: true, slider: true, points: { n: Math.min(o.count, 140), spread: 130 }, chip: "Somente anúncios georreferenciados aparecem no mapa", style: o.mapStyle, ...(o.mapOpts || {}) });
     rangeTable("t-area", "Metragem", o.area, d);
     rangeTable("t-valor", "Valor", o.valor, d);
-    LBI.columns("#c-q", { data: o.quartos, xTitle: "Quartos", xName: "Quartos:", valueName: "Anúncios", height: 190 });
-    LBI.columns("#c-b", { data: o.banheiros, xTitle: "Banheiros", xName: "Banheiros:", valueName: "Anúncios", height: 190 });
-    LBI.columns("#c-s", { data: o.suites, xTitle: "Suítes", xName: "Suítes:", valueName: "Anúncios", height: 190 });
+    LBI.columns("#c-q", { data: o.quartos, xTitle: "Quartos", xName: "Quartos:", valueName: "Anúncios", height: 190, fmt: o.countFmt });
+    LBI.columns("#c-b", { data: o.banheiros, xTitle: "Banheiros", xName: "Banheiros:", valueName: "Anúncios", height: 190, fmt: o.countFmt });
+    LBI.columns("#c-s", { data: o.suites, xTitle: "Suítes", xName: "Suítes:", valueName: "Anúncios", height: 190, fmt: o.countFmt });
     const full = o.rows[0].length > 5;
     LBI.table("#t-list", {
-      columns: full
+      columns: o.columns || (full
         ? [{ label: "Título", title: true, sort: "descending" }, { label: "Valor", num: true, fmt: brlOrDec(2) }, { label: "Área (m²)", num: true }, { label: "vm²", num: true, fmt: brlOrDec(2) }, { label: "Quartos", num: true }, { label: "Suítes", num: true }, { label: "Banheiros", num: true }, { label: "Vagas", num: true }, { label: "Link", link: true }]
-        : [{ label: "Título", title: true, sort: "descending" }, { label: "Valor", num: true, fmt: brlOrDec(2) }, { label: "Área (m²)", num: true }, { label: "vm²", num: true, fmt: brlOrDec(2) }, { label: "Link", link: true }],
+        : [{ label: "Título", title: true, sort: "descending" }, { label: "Valor", num: true, fmt: brlOrDec(2) }, { label: "Área (m²)", num: true }, { label: "vm²", num: true, fmt: brlOrDec(2) }, { label: "Link", link: true }]),
       rows: o.rows.map((r) => [...r, ""]),
       pager: o.pager,
       maxHeight: 520,
@@ -83,7 +83,7 @@
       <div class="grid grid--3">
         <section class="card card--flush span-2">
           <div class="card__head"><div class="card__titles"><h2 class="card__title">${o.mapTitle}</h2><p class="card__subtitle">${o.mapSub}</p></div>
-          <div class="card__aside"><span class="badge badge--secondary"><i data-lucide="map-pin"></i>${o.count} ${o.count === 1 ? "anúncio" : "anúncios"}</span></div></div>
+          <div class="card__aside"><span class="badge badge--secondary"><i data-lucide="map-pin"></i>${o.countLabel || o.count} ${o.count === 1 ? "anúncio" : "anúncios"}</span></div></div>
           <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
         </section>
         <div class="stack">
@@ -97,13 +97,14 @@
         <div id="t-list" style="margin-top:16px"></div>
       </section>`;
     LBI.shell(o.page);
-    LBI.map("#map", { seed: o.seed || 5, height: 420, radius: true, slider: true, points: { n: o.count, spread: 110, r: 7 }, chip: "Somente anúncios georreferenciados aparecem no mapa", water: o.water });
+    LBI.map("#map", { seed: o.seed || 5, height: 420, radius: true, slider: true, points: { n: o.count, spread: 110, r: 7 }, chip: "Somente anúncios georreferenciados aparecem no mapa", water: o.water, ...(o.mapOpts || {}) });
     rangeTable("t-area", "Metragem", o.area, d);
     rangeTable("t-valor", "Valor", o.valor, d);
     LBI.table("#t-list", {
-      columns: [{ label: "Título", title: true, sort: "descending" }, { label: "Valor", num: true, fmt: brlOrDec(2) }, { label: "Área (m²)", num: true }, { label: "vm²", num: true, fmt: brlOrDec(2) }, { label: "Link", link: true }],
+      columns: o.columns || [{ label: "Título", title: true, sort: "descending" }, { label: "Valor", num: true, fmt: brlOrDec(2) }, { label: "Área (m²)", num: true }, { label: "vm²", num: true, fmt: brlOrDec(2) }, { label: "Link", link: true }],
       rows: o.rows.map((r) => [...r, ""]),
       pager: o.pager,
+      maxHeight: 520,
     });
   }
 

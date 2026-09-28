@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Obras · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+const { fmt } = LBI, M = LBI_MERCADO, O = LBI_OBS;
+const tipo = [
+  { label: "Residencial unifamiliar", value: 48.3, color: "--cat-1" }, { label: "Residencial multifamiliar", value: 24, color: "--cat-2" },
+  { label: "Comercial (salas e lojas)", value: 23.6, color: "--cat-3" }, { label: "Outros", value: 4.1, color: "--cat-4" }];
+document.querySelector("main").innerHTML = M.toolbar({
+  spatial: false,
+  selects: [{ label: "Bairro", value: "Todos" }, { label: "Segmento", value: "Todos" }, { label: "Status", value: "Ativa", count: 1 }, { label: "Destinação", value: "Todas" }],
+  summary: [["Iniciadas 2019–2026", "1.883"], ["Incorporadores", "792"]],
+}) + `
+  <div class="grid grid--3">
+    <section class="card card--flush span-2">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Mapa de obras</h2><p class="card__subtitle">Cadastro Nacional de Obras (CNO) · obras ativas · cor por tipologia</p></div></div>
+      <div id="map" style="margin-top:16px;border-radius:0;flex:1"></div>
+    </section>
+    ${M.card("d-dest", "Destinação da obra", "Participação nas obras ativas")}
+  </div>
+  <div class="grid grid--3">
+    <section class="card">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Tipologia da obra</h2><p class="card__subtitle">Participação nas obras ativas</p></div></div>
+      <div id="d-tipo"></div>
+      <p class="footnote">Outros: galpão industrial, edifício-garagem e conjunto habitacional popular.</p>
+    </section>
+    ${M.card("d-porte", "Porte (área total da obra)", "Participação nas obras ativas")}
+    ${M.card("c-ano", "Ano de início das obras", "Obras ativas por ano de início")}
+  </div>
+  <div class="grid grid--2">
+    <section class="card">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Obras por segmento do CNAE</h2><p class="card__subtitle">9 dos 14 segmentos · atividade econômica da obra</p></div></div>
+      <ul id="b-cnae"></ul>
+    </section>
+    <section class="card card--flush">
+      <div class="card__head"><div class="card__titles"><h2 class="card__title">Incorporadores</h2><p class="card__subtitle">Construtoras e incorporadoras com mais obras ativas</p></div></div>
+      <div id="t-inc" style="margin-top:16px"></div>
+    </section>
+  </div>`;
+LBI.shell(O.page({ section: "obras" }));
+const leg = `<span class="eyebrow">Tipologia</span><ul class="legend">${tipo.map((t) => `<li><span class="swatch" style="border-radius:50%;background:${LBI.color(t.color)}"></span>${t.label}</li>`).join("")}</ul>`;
+LBI.map("#map", { ...O.CITY_MAP, seed: 151, height: 460, points: O.cityPoints(170, { colors: tipo.map((t) => t.color), weights: tipo.map((t) => t.value) }), legend: leg });
+const pct = (v) => fmt.pct(v);
+LBI.donut("#d-dest", { items: [
+  { label: "Obra nova", value: 77.6, color: "--cat-1" }, { label: "Existente", value: 10.6, color: "--cat-2" }, { label: "Reforma", value: 6.7, color: "--cat-3" },
+  { label: "Demolição", value: 3, color: "--cat-4" }, { label: "Acréscimo", value: 2.1, color: "--cat-5" }], fmt: pct, showValue: false, center: { value: "100%", label: "obras ativas" } });
+LBI.donut("#d-tipo", { items: tipo, fmt: pct, showValue: false, center: { value: "100%", label: "obras ativas" } });
+LBI.donut("#d-porte", { items: [
+  { label: "Pequeno (< 500 m²)", value: 58.9, color: "--ord-1" }, { label: "Médio (500 a 5.000 m²)", value: 28.7, color: "--ord-3" },
+  { label: "Grande (> 5.000 m²)", value: 12.4, color: "--ord-5" }], fmt: pct, showValue: false, center: { value: "100%", label: "obras ativas" } });
+LBI.columns("#c-ano", { data: [["2019", 125], ["2020", 96], ["2021", 133], ["2022", 234], ["2023", 234], ["2024", 313], ["2025", 441], ["2026", 307]], height: 230, xName: "Início em", valueName: "Obras ativas" });
+LBI.bars("#b-cnae", { fmt: (v) => fmt.compact(v), rows: [
+  { label: "Construção de edifícios", value: 1100 }, { label: "Obras de alvenaria", value: 495 },
+  { label: "Demolição de edifícios e outras estruturas", value: 104 }, { label: "Outras obras de engenharia civil não especificadas anteriormente", value: 91 },
+  { label: "Serviços especializados para construção não especificados anteriormente", value: 57 },
+  { label: "Construção de redes de abastecimento de água, coleta de esgoto e construções correlatas", value: 28 },
+  { label: "Obras de urbanização: ruas, praças e calçadas", value: 18 }, { label: "Obras de fundações", value: 13 },
+  { label: "Construção de estações e redes de telecomunicações", value: 12 }] });
+LBI.table("#t-inc", {
+  columns: [{ label: "Incorporador" }, { label: "Obras", num: true, bar: true, sort: "descending" }],
+  rows: [["Não informado no CNO", 732], ["ECO VILAS CAMPECHE CONSTRUCAO E INCORPOR…", 37], ["EVA CONSTRUCOES LTDA", 28], ["ARO PROJETO & EXECUCAO LTDA", 21], ["MARESIA NEGOCIOS IMOBILIARIOS LTDA", 10], ["TRIO CONSTRUTORA E INCORPORADORA LTDA", 8], ["LITORAL ENGENHARIA E CONSTRUCOES LTDA", 8], ["LA FORTE ENGENHARIA LTDA", 8], ["HS CONSTRUTORA E INCORPORADORA LTDA", 7]],
+  pager: "1–10 de 792",
+});
+document.querySelector("#t-inc tbody tr td").classList.add("muted");
+LBI.icons();
+</script>
+</body>
+</html>

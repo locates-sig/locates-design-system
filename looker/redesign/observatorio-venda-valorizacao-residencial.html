@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Valorização · Venda residencial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+LBI_OBS.valorizacao({
+  page: { section: "venda", sub: "valorizacao", mode: "residencial" },
+  selects: [{ label: "Negócio", value: "Venda", count: 1 }, { label: "Tipo de imóvel", value: "1 tipo", count: 1 }, { label: "Quartos", value: "Todos" }, { label: "Bairro", value: "Todos" }],
+  avg: "R$ 13.450,06",
+  sub: "Residencial à venda · Florianópolis · setembro/2025 a agosto/2026",
+  vars: [-2.57, -0.35, -0.67],
+  values: [13837, 13545, 13863, 13776, 13709, 13718, 13793, 13979, 13964, 14107, 13996, 13744],
+  multiples: [
+    { vars: [-0.34, 0.05, 2.91], name: "1 quarto", values: [15723, 15620, 15924, 16141, 16014, 15981, 16172, 16088, 16095, 16236, 16187, 16180] },
+    { vars: [-2.07, 0.71, 0.36], name: "2 quartos", values: [12916, 12502, 12844, 12860, 12837, 12810, 12870, 13028, 12979, 13237, 13241, 12962] },
+    { vars: [-4.89, -3.44, -5.87], name: "3 quartos", values: [12505, 12303, 12670, 12713, 12770, 12866, 12864, 12754, 12691, 12969, 12941, 12664] },
+    { vars: [2.23, 7.23, 11.45], name: "4 quartos", values: [13735, 13722, 13940, 13890, 13890, 14050, 14277, 14791, 14577, 14975, 14561, 15308] }
+  ]
+});
+LBI.icons();
+</script>
+</body>
+</html>

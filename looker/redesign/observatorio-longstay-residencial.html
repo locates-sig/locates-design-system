@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Longstay · Residencial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+const O = LBI_OBS;
+LBI_MERCADO.listing({
+  page: O.page({ section: "longstay", sub: "ofertas", mode: "residencial" }),
+  spatial: false,
+  selects: [{ label: "Negócio", value: "Aluguel", count: 1 }, { label: "Tipo de imóvel", value: "1 tipo", count: 1 }, { label: "Quartos", value: "Todos" }, { label: "Bairro", value: "Todos" }],
+  summary: [["Anúncios", "4.422"], ["vm² médio (aluguel)", "R$ 72,85"], ["Área média", "74,5 m²"]],
+  countFmt: (v) => LBI.fmt.compact(v),
+  mapTitle: "Mapa de anúncios", mapSub: "Residencial para locação mensal em Florianópolis", count: 4422, countLabel: "4.422", seed: 139,
+  mapOpts: { ...O.CITY_MAP, points: O.cityPoints(150) },
+  listSub: "Residencial para locação · valores mensais · a captura não mostrava área e vm² desta lista",
+  area: [["Até 45 m²", 1225, 97.8], ["46 a 60 m²", 685, 65.49], ["61 a 75 m²", 886, 60.99], ["76 a 90 m²", 570, 62.48], ["91 a 115 m²", 494, 63.57], ["116 a 145 m²", 264, 62.29], ["146 a 175 m²", 135, 72.92], ["176 a 200 m²", 60, 63.44], ["201 a 300 m²", 85, 61.27], ["Acima de 300 m²", 18, 61.92]],
+  valor: [["Até R$ 1.500", 23, 53.52], ["R$ 1.500 a 2.500", 448, 59.06], ["R$ 2.500 a 3.500", 1114, 66.27], ["R$ 3.500 a 5.000", 1461, 73.38], ["R$ 5.000 a 7.000", 726, 75.81], ["R$ 7.000 a 10.000", 316, 77.53], ["R$ 10.000 a 15.000", 182, 92.59], ["R$ 15.000 a 20.000", 99, 103.57], ["Acima de R$ 20.000", 53, 127.87]],
+  quartos: [["0", 20], ["1", 1600], ["2", 1700], ["3", 950], ["4", 127], ["5", 4], ["6", 1]],
+  banheiros: [["1", 2500], ["2", 1600], ["3", 530], ["4", 193], ["5", 76], ["6", 15], ["7", 1], ["8", 1]],
+  suites: [["N/I", 1100], ["0", 1200], ["1", 1900], ["2", 372], ["3", 191], ["4", 39]],
+  columns: [{ label: "Título", title: true, sort: "descending" }, { label: "Quartos", num: true }, { label: "Aluguel mensal", num: true, fmt: (v) => LBI.fmt.brl(v) }, { label: "Link", link: true }],
+  rows: [
+    ["Apartamento mobiliado para locação no Itacorubi – Florianópolis", 3, 5800],
+    ["APARTAMENTO MOBILIADO PARA LOCAÇÃO NO VILLA DOS MARES – INGLESES", 2, 3500],
+    ["Temporada de Inverno: Apartamento de 02 quartos em condomínio pé na areia - Canasvieiras!", 2, 3000],
+    ["Temporada de Inverno na Lemuria Aparts – Conforto a 250m do Mar - aluguel mensal", 1, 1900],
+    ["Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis", 1, 4750],
+    ["Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis", 1, 4300],
+    ["Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis", 1, 4750],
+    ["Studio mobiliado para locação no D/NEX Residence Club – Jardim Atlântico, Florianópolis", 1, 4250],
+    ["Studio mobiliado de 35m² próximo à UFSC | Studio Vêneto", 1, 2900],
+    ["Lindíssimo Apartamento Mobiliado de 03 Dormitórios para Locação próximo a Beira Mar Norte", 3, 5200],
+    ["Apartamento de 1 quarto Mobiliado para Locação – Rua Tereza Lopes - Campeche", 1, 1795],
+    ["Ótimo studio totalmente mobiliado para locação no bairro Trindade!", 1, 3200],
+    ["Ótimo studio para locação no bairro Trindade!", 1, 3000],
+    ["Ótimo studio mobiliado de 1 dormitório no bairro Trindade!", 1, 1900],
+    ["Ótimo apartamento semi-mobiliado de 2 dormitórios para locação no bairro Carvoeira, ao lado da UFSC!", 2, 2700],
+    ["Ótimo apartamento para locação no bairro José Mendes!", 2, 4500],
+    ["Ótimo apartamento no Centro de Florianópolis", 2, 12500],
+    ["Ótimo apartamento no Centro com 2 vagas cobertas", 2, 5800]
+  ],
+  pager: "1–20 de 4.422"
+});
+LBI.icons();
+</script>
+</body>
+</html>

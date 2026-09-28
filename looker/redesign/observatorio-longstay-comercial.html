@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Longstay · Comercial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+const O = LBI_OBS;
+LBI_MERCADO.comercial({
+  page: O.page({ section: "longstay", sub: "ofertas", mode: "comercial" }),
+  spatial: false,
+  selects: [{ label: "Negócio", value: "Aluguel", count: 1 }, { label: "Tipo de imóvel", value: "Todos" }, { label: "Bairro", value: "Todos" }],
+  summary: [["Anúncios", "2.489"], ["vm² médio (aluguel)", "R$ 70,20"], ["Área média", "133,15 m²"]],
+  mapTitle: "Mapa de anúncios", mapSub: "Comercial para locação em Florianópolis", count: 2489, countLabel: "2.489", seed: 149,
+  mapOpts: { ...O.CITY_MAP, height: 520, points: O.cityPoints(120) },
+  listSub: "Salas, lojas e pontos comerciais para locação · valores mensais",
+  decimals: 2,
+  area: [["Até 20 m²", 226, 137.12], ["21 a 30 m²", 661, 98.6], ["31 a 50 m²", 1849, 83.75], ["51 a 80 m²", 2321, 64.16], ["81 a 150 m²", 2211, 64.18], ["151 a 300 m²", 1477, 59.42], ["301 a 500 m²", 582, 53.59], ["501 a 1.000 m²", 239, 51.66], ["Acima de 1.000 m²", 50, 37.9]],
+  valor: [["Até R$ 1.500", 275, 37.76], ["R$ 1.500 a 2.500", 982, 59.81], ["R$ 2.500 a 3.500", 1638, 67.67], ["R$ 3.500 a 5.000", 2198, 72], ["R$ 5.000 a 7.000", 1296, 71.5], ["R$ 7.000 a 10.000", 1024, 68.73], ["R$ 10.000 a 15.000", 922, 80.1], ["R$ 15.000 a 20.000", 561, 74.31], ["Acima de R$ 20.000", 720, 80.88]],
+  columns: [{ label: "Título", title: true, sort: "descending" }, { label: "Aluguel mensal", num: true, fmt: (v) => LBI.fmt.brl(v) }, { label: "Área (m²)", num: true }, { label: "vm²", num: true, fmt: (v) => LBI.fmt.brl(v) }, { label: "Link", link: true }],
+  rows: [
+    ["Excelente Oportunidade Comercial – Rua Tenente Silveira imóvel c/ 60m² de térreo mais subsolo", 17000, 60, 283.33],
+    ["SALA COMERCIAL PARA LOCAÇÃO – 55m² | MOBILIADA | 2 VAGAS DE GARAGEM", 4000, 55, 72.73],
+    ["Excelente oportunidade para instalar sua empresa em uma das regiões mais estratégicas da Trindade!", 3250, 55, 59.09],
+    ["Ótima sala comercial para locação no bairro Trindade!", 1400, 30, 46.67],
+    ["Ótima sala comercial para locação no bairro Trindade!", 1500, 24, 62.5],
+    ["Ótima sala comercial para locação no bairro Santa Mônica!", 3500, 45, 77.78],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Itacorubi!", 1900, 37, 51.35],
+    ["Ótima sala comercial para locação no bairro Estreito!", 2000, 31, 64.52],
+    ["Ótima sala comercial para locação no bairro Córrego Grande!", 2800, 74, 37.84],
+    ["Ótima sala comercial para locação no bairro Centro!", 4000, 44, 90.91],
+    ["Ótima sala comercial no centro de Floripa!", 1000, 39, 25.64],
+    ["Ótima sala comercial no bairro Carvoeira!", 1000, 26, 38.46]
+  ],
+  pager: "1–20 de 2.489"
+});
+LBI.icons();
+</script>
+</body>
+</html>

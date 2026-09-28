@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório · Venda · Comercial · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/bi.css">
+</head>
+<body>
+<main class="bi-main"></main>
+<script src="assets/icons.js"></script>
+<script src="assets/bi.js"></script>
+<script src="assets/mercado.js"></script>
+<script src="assets/observatorio.js"></script>
+<script>
+const O = LBI_OBS;
+LBI_MERCADO.comercial({
+  page: O.page({ section: "venda", sub: "ofertas", mode: "comercial" }),
+  spatial: false,
+  selects: [{ label: "Negócio", value: "Venda", count: 1 }, { label: "Tipo de imóvel", value: "5 tipos", count: 5 }, { label: "Bairro", value: "Todos" }],
+  summary: [["Anúncios", "2.389"], ["vm² médio", "R$ 10.581,67"], ["Área média", "95,56 m²"]],
+  mapTitle: "Mapa de anúncios", mapSub: "Comercial à venda em Florianópolis", count: 2389, countLabel: "2.389", seed: 137,
+  mapOpts: { ...O.CITY_MAP, height: 520, points: O.cityPoints(120) },
+  listSub: "Salas, lojas, terrenos e pontos comerciais à venda",
+  area: [["Até 45 m²", 1213, 10512.19], ["46 a 60 m²", 339, 10006.43], ["61 a 75 m²", 169, 13001.61], ["76 a 90 m²", 123, 12436.2], ["91 a 115 m²", 112, 9985.18], ["116 a 145 m²", 70, 11726.53], ["146 a 175 m²", 69, 9869.72], ["176 a 200 m²", 43, 14182.25], ["201 a 300 m²", 110, 8886.01], ["Acima de 300 m²", 141, 8522.74]],
+  valor: [["Até R$ 500 mil", 1319, 8640.93], ["R$ 500 a 750 mil", 355, 11492.88], ["R$ 751 mil a 1 mi", 153, 13806.25], ["R$ 1 a 1,5 mi", 211, 13767.06], ["R$ 1,5 a 2 mi", 121, 14816.61], ["R$ 2 a 3 mi", 91, 12116.62], ["R$ 3 a 4 mi", 54, 12852.93], ["R$ 4 a 5 mi", 24, 15498.47], ["Acima de R$ 5 mi", 61, 13501.42]],
+  rows: [
+    ["Negócio dos sonhos na Trindade: restaurante lucrativo, clientela fiel e pronto para faturar desde", 250000, 240, 1041.67],
+    ["Ótima sala à venda no bairro Centro de Florianópolis/SC.", 767254, 60, 12787.57],
+    ["Ótima sala comercial no centro de Floripa!", 150000, 39, 3846.15],
+    ["Ótima sala comercial no Centro - Florianópolis", 975000, 61, 15983.61],
+    ["Ótima sala comercial na Trindade", 400000, 45, 8888.89],
+    ["Ótima sala comercial a venda no centro de Florianópolis", 299000, 48, 6229.17],
+    ["Ótima Sala no Square Corporate venda e locação", 700000, 49, 14285.71],
+    ["Ótima Sala no Koerich Empresarial!", 650000, 38, 17105.26],
+    ["Ótima Sala Comercial no Centro de Florianópolis", 430000, 35, 12285.71],
+    ["Ótima Sala Comercial a venda com 70m² privativo, no centro de Florianópolis/SC", 280000, 70, 4000],
+    ["Ótima Sala Comercial a venda com 70m² privativo, no centro de Florianópolis/SC", 280000, 70, 4000],
+    ["Ótima Sala Comercial a venda com 70m² privativo, no centro de Florianópolis/SC", 280000, 70, 4000],
+    ["Ótima Loja Com 99m² De Área Privativa No Bairro Trindade!", 830000, 99, 8383.84],
+    ["ÓTIMA SALA COMERCIAL COM GARAGEM - ALTO PADRÃO", 367000, 42, 8738.1],
+    ["ÓTIMA SALA COMERCIAL - REGIÃO CENTRAL", 268000, 38, 7052.63],
+    ["ÓTIMA SALA COMERCIAL", 195000, 32, 6093.75],
+    ["Área à venda, 6397 m² por R$ 7.300.000,00 - Vargem Grande - Florianópolis/SC", 7300000, 6397, 1141.16],
+    ["Á venda - Sala Comercial Mobiliada no Centro de Florianópolis", 220000, 40, 5500]
+  ],
+  pager: "1–20 de 2.389"
+});
+LBI.icons();
+</script>
+</body>
+</html>
