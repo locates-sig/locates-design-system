@@ -88,7 +88,7 @@ Para usar numa página sem build: carregue `tokens.css`, `components/bundle.css`
 
 ## Telas do BI
 
-`looker/redesign/` recria no tema moderno Locates (referência em `looker/referencia/`) as telas dos relatórios de BI (Looker Studio) capturadas em `looker/` (17 do estudo de área e 10 do Observatório do mercado), mantendo o layout e as informações originais: protótipos em HTML (`index.html`), capturas em `previews/` e um guia para aplicar o tema no Looker Studio.
+`looker/redesign/` recria no tema moderno Locates (referência em `looker/referencia/`) as telas dos relatórios de BI (Looker Studio) capturadas em `looker/` (18 do estudo de área e 10 do Observatório do mercado), mantendo o layout e as informações originais: protótipos em HTML (`index.html`), capturas em `previews/` e um guia para aplicar o tema no Looker Studio.
 
 ## Ativos
 

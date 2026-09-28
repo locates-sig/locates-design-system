@@ -2,7 +2,7 @@
 
 Recriação das telas dos relatórios de BI (Looker Studio) capturadas em `looker/`, **mantendo o layout e as informações de cada tela original** e trocando só o visual pelo tema moderno do print de referência (`looker/referencia/tema-moderno.png`). O cliente reconhece as mesmas seções, cartões, gráficos, tabelas e filtros, nas mesmas posições e com os mesmos números.
 
-São 27 telas: 17 do **estudo de área** (imóvel 6523, Itacorubi, raio de 1 km) e 10 do **Observatório do mercado** (Florianópolis, versão 3.0).
+São 28 telas: 18 do **estudo de área** (imóvel 6523, Itacorubi, raio de 1 km) e 10 do **Observatório do mercado** (Florianópolis, versão 3.0).
 
 **Como abrir:** abra `index.html` no navegador ou veja as capturas em `previews/` (1440 px, página inteira). Não há build nem dependências. A Montserrat vem do Google Fonts via `tokens.css`.
 
@@ -28,6 +28,7 @@ São 27 telas: 17 do **estudo de área** (imóvel 6523, Itacorubi, raio de 1 km)
 | | `socioeconomia-2010.html` | `sociodemografico/` (7ª e 8ª) |
 | Pontos de interesse | `pois-comercio.html` | `pois/` (1ª) |
 | | `pois-pgt.html` | `pois/` (2ª) |
+| Empresas | `empresas.html` | `empresas/` |
 | Equipamentos urbanos | `equipamentos-urbanos.html` | `equipamentos-urbanos/` |
 
 ### Observatório do mercado
@@ -45,7 +46,7 @@ São 27 telas: 17 do **estudo de área** (imóvel 6523, Itacorubi, raio de 1 km)
 | Obras | `observatorio-obras.html` | `obras/` |
 | Sociodemográfico | `observatorio-sociodemografico.html` | `sociodemografico/` |
 
-As abas **Empresas** (estudo de área) e **Shortstay** (Observatório) não tinham captura e aparecem desabilitadas.
+A aba **Shortstay** do Observatório não tinha captura e aparece desabilitada.
 
 ## O que mudou (só o visual)
 
@@ -108,7 +109,7 @@ Estão reproduzidas como na fonte e devem ser corrigidas no relatório:
 ## O que é ilustrativo
 
 - Os mapas são desenhos que imitam o Google Maps (quadras, orla, pontos, setores); no Looker continuam sendo o mapa real.
-- Onde uma fatia de pizza não tinha rótulo na captura, a fatia aparece sem percentual e com tamanho aproximado.
+- Onde uma fatia de pizza não tinha rótulo na captura (por exemplo, as naturezas jurídicas menores em Empresas), a fatia aparece sem percentual e com tamanho aproximado.
 - As contagens dos gráficos do Observatório vêm dos rótulos arredondados da fonte ("1,6 mil").
 - A tabela de equipamentos mostra as 8 linhas visíveis das 21; as listas de anúncios mostram as linhas visíveis de cada captura.
 

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empresas · Locates BI</title>
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="assets/lk.css">
+</head>
+<body>
+<main></main>
+<script src="assets/icons.js"></script>
+<script src="assets/lk.js"></script>
+<script>
+const { card } = LK;
+LK.page({ section: "empresas", sub: "empresas", footnote: "Data da última atualização: 28/09/2026 14:34:41" }, `
+  <div class="lk-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+    <div class="lk-col">
+      <section class="lk-card"><div class="lk-card__head"><h2 class="lk-card__title">Mapa de <b>empresas</b></h2>${LK.range("Distância", "0", "1.000")}</div><div id="map"></div></section>
+      ${card({ title: "Ano de abertura <b>das empresas</b>", chip: "Total", id: "c-ano" })}
+      ${card({ title: "Natureza jurídica <b>das empresas</b>", id: "p-nat" })}
+      ${card({ title: "Porte <b>das empresas</b>", id: "p-porte" })}
+    </div>
+    <div class="lk-col">
+      <section class="lk-card"><div class="lk-card__body"><div class="lk-grid" style="grid-template-columns:minmax(0,1fr) 160px;align-items:stretch">
+        <div class="lk-col" style="justify-content:center">${LK.dd("Segmento", 0, true)}${LK.dd("Atividade", 0, true)}</div>
+        <section class="lk-card">${LK.score("Quantidade", "6.210")}</section>
+      </div></div></section>
+      ${card({ title: "Empresas por <b>SEGMENTO</b>", id: "t-seg", flush: true })}
+      ${card({ title: "Empresas por <b>ATIVIDADE</b>", id: "t-cnae", flush: true })}
+    </div>
+  </div>`);
+LK.map("#map", { seed: 173, height: 470, slider: false, parks: 4, points: { n: 260, spread: 120, r: 7, alpha: 0.8, colors: ["--c1", "--c2", "--c3", "--c4", "--c5", "--c6", "--c7", "--c8"] } });
+LK.columns("#c-ano", { height: 250, valueName: "Total", data: [[2010, 80], [2011, 89], [2012, 102], [2013, 107], [2014, 110], [2015, 135], [2016, 167], [2017, 197], [2018, 229], [2019, 271], [2020, 330], [2021, 484], [2022, 534], [2023, 692], [2024, 804], [2025, 1113], [2026, 766]].map(([a, v]) => [String(a), v]) });
+// "est: true" = fatia sem rótulo na captura (tamanho aproximado)
+LK.pie("#p-nat", { donut: true, items: [
+  { label: "Empresário (Individual)", value: 64.4, color: "#7a1d4a" }, { label: "Sociedade Empresária Limitada", value: 32.8, color: "#4eb3c8" },
+  { label: "Associação Privada", value: 0.8, color: "#7a6a1f", est: true }, { label: "Sociedade Simples Limitada", value: 0.7, color: "#f0772d", est: true },
+  { label: "Sociedade Unipessoal de Advocacia", value: 0.6, color: "#f5a524", est: true }, { label: "Sociedade Anônima Fechada", value: 0.4, color: "#7cb85a", est: true },
+  { label: "Outros", value: 0.3, color: "--c8", est: true }] });
+LK.pie("#p-porte", { donut: true, items: [{ label: "Não informado", value: 81.6, color: "#b0284f", text: "81,6%" }, { label: "Demais", value: 11.4, color: "#6b6fc8" }, { label: "Empresa de pequeno porte", value: 6.9, color: "#f2c94c", ink: "#5a4300" }] });
+LK.table("#t-seg", { columns: [{ label: "Segmento" }, { label: "Total de empresas", align: "r", heat: "green", sort: "desc" }], pager: "1 - 19 / 19", rows: [
+  ["ATIVIDADES PROFISSIONAIS, CIENTÍFICAS E TÉCNICAS", 876], ["COMÉRCIO", 747], ["ATIVIDADES ADMINISTRATIVAS E SERVIÇOS COMPLEMENTARES", 744], ["INFORMAÇÃO E COMUNICAÇÃO", 718],
+  ["EDUCAÇÃO", 587], ["OUTRAS ATIVIDADES DE SERVIÇOS", 525], ["ALOJAMENTO E ALIMENTAÇÃO", 413], ["SAÚDE HUMANA E SERVIÇOS SOCIAIS", 409], ["CONSTRUÇÃO", 302],
+  ["ATIVIDADES IMOBILIÁRIAS", 195], ["INDÚSTRIAS DE TRANSFORMAÇÃO", 193], ["TRANSPORTE, ARMAZENAGEM E CORREIO", 188], ["ATIVIDADES FINANCEIRAS, DE SEGUROS E SERVIÇOS RELACIONADOS", 130],
+  ["ARTES, CULTURA, ESPORTE E RECREAÇÃO", 111], ["-", 31], ["SERVIÇOS DOMÉSTICOS", 31], ["AGRICULTURA, PECUÁRIA, PRODUÇÃO FLORESTAL, PESCA E AQÜICULTURA", 4],
+  ["ÁGUA, ESGOTO, ATIVIDADES DE GESTÃO DE RESÍDUOS E DESCONTAMINAÇÃO", 4], ["ELETRICIDADE E GÁS", 2]] });
+LK.table("#t-cnae", { columns: [{ label: "CNAE", title: true }, { label: "Total de empresas", align: "r", heat: "green", sort: "desc" }], pager: "1 - 25 / 427", rows: [
+  ["Preparação de documentos e serviços especializados de apoio administrativo n...", 349], ["Promoção de vendas", 289], ["Treinamento em desenvolvimento profissional e gerencial", 259],
+  ["Cabeleireiros, manicure e pedicure", 174], ["Outras atividades de ensino não especificadas anteriormente", 169], ["Comércio varejista de artigos do vestuário e acessórios", 137],
+  ["Serviços combinados de escritório e apoio administrativo", 136], ["Restaurantes e similares", 134], ["Atividades de Estética e outros serviços de cuidados com a beleza", 117],
+  ["Lanchonetes, casas de chá, de sucos e similares", 114], ["Atividades de psicologia e psicanálise", 109], ["Desenvolvimento de programas de computador sob encomenda", 107],
+  ["Atividades de pós-produção cinematográfica, de vídeos e de programas de telev...", 107], ["Edição de cadastros, listas e outros produtos gráficos", 102],
+  ["Fornecimento de alimentos preparados preponderantemente para consumo do...", 101], ["Corretagem na compra e venda e avaliação de imóveis", 97], ["Incorporação de empreendimentos imobiliários", 96],
+  ["Serviços de organização de feiras, congressos, exposições e festas", 83], ["Atividade médica ambulatorial restrita a consultas", 81], ["Serviços de engenharia", 80],
+  ["Consultoria em tecnologia da informação", 80], ["Reparação e manutenção de computadores e de equipamentos periféricos", 79],
+  ["Atividades de consultoria em gestão empresarial, exceto consultoria técnica esp...", 77], ["Serviços advocatícios", 73], ["Serviços de entrega rápida", 61]] });
+LK.icons();
+</script>
+</body>
+</html>
